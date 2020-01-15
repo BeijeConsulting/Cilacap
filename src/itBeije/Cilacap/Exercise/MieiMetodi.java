@@ -1,17 +1,22 @@
 package itBeije.Cilacap.Exercise;
 
 public class MieiMetodi {
-	String miaStringa;
+	static String miaStringa;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		
 		MieiMetodi m = new MieiMetodi();
-		m.miaStringa="pippo";
+		m.miaStringa=" p i p p o ";
 		System.out.println(m.myContains("p"));
 		System.out.println(m.myStartsWith("pi"));
 		System.out.println(m.myEndsWith("pippo"));
+		System.out.println(m.myEquals("pippo"));
+		System.out.println(m.myReplace('p','P'));
+		System.out.println(m.mySubstring(0,5));
+		System.out.println(m.myTrim());
+		System.out.println(m.myReverse(miaStringa));
 	}
 
 	
@@ -84,7 +89,8 @@ public class MieiMetodi {
 		{
 			i=miaStringa.indexOf(stringa, miaStringa.length()-stringa.length());
 		}
-		if(i==-1)
+		
+		if(i==-1 || stringa.length()>miaStringa.length())
 		{
 			return false;
 		}
@@ -112,7 +118,41 @@ public class MieiMetodi {
 	}
 	
 	public String myTrim() {
-		return null;
+		int i,j=0,cont=0;
+		String copiaMiaStringa="";
+		String finalString="";
+		if(miaStringa.charAt(0)!=' ' && miaStringa.charAt(miaStringa.length()-1)!=' ')
+		{
+			return miaStringa;
+		}
+		for(i=0;i<miaStringa.length();i++)
+		{
+			
+			if(miaStringa.charAt(i)==' ' && j==0)
+			{
+				
+			}
+			else
+				{
+					copiaMiaStringa= copiaMiaStringa + miaStringa.charAt(i);
+					j=2;
+				}
+			
+			
+		}
+		i=0;
+		for(cont=copiaMiaStringa.length()-1;copiaMiaStringa.charAt(cont)==' ';cont--)
+		{
+			i++;
+					
+		}
+		
+		for(j=0;j<copiaMiaStringa.length()-i;j++)
+		{
+			finalString=finalString + copiaMiaStringa.charAt(j);
+		}
+		
+		return finalString;
 		
 	}
 	public boolean myEquals(String stringa) {
@@ -122,19 +162,72 @@ public class MieiMetodi {
 			return true;
 		}
 		else
+			return false;
+		
+	}
+	public String myReplace(char oldChar , char newChar) {
+		int i=0;
+		String copiaMiaStringa = "";
+		for(i=0;i<miaStringa.length() && miaStringa.length()>0;i++)
+		{
+			if(miaStringa.indexOf(oldChar)!=-1)
+			{
+				if(i!=miaStringa.indexOf(oldChar,i)) 
+				{
+					copiaMiaStringa= copiaMiaStringa + miaStringa.charAt(i);
+					
+				}
+				else 
+					copiaMiaStringa= copiaMiaStringa + newChar;
+			}
+			else
+				return miaStringa;
+//			c=miaStringa.charAt(miaStringa.indexOf(oldChar,i));
 			
-		return false;
-		
-	}
-	public String myReplace() {
-		return null;
-		
-	}
-	
-	public String mmySubstring() {
-		return null;
+			
+		}
+			return copiaMiaStringa;
 		
 	}
 	
+	public String mySubstring(int startIndex , int endIndex) {
+		
+		int i;
+		String copiaMiaStringa="";
+		
+		if(startIndex==endIndex)
+		{
+			return "";
+		}
+		else 
+			if(endIndex < startIndex || miaStringa.length()<=0 || endIndex>miaStringa.length())
+			{
+				return "input non validi";
+			}
+			else
+			{
+				for(i=0;i<miaStringa.length();i++)
+				{
+					if(i>=startIndex && i<endIndex)
+					{
+						copiaMiaStringa= copiaMiaStringa + miaStringa.charAt(i);
+						
+					}
+					
+				}
+				return copiaMiaStringa;
+			}
+		
+	}
+	
+	public String myReverse(String stringa)
+	{
+		String copiaMiaStringa="";
+		for(int i=miaStringa.length()-1;i>=0;i--)
+		{
+			copiaMiaStringa+=miaStringa.charAt(i);
+		}
+		return copiaMiaStringa;
+	}
 	
 }
