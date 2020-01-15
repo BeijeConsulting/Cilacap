@@ -57,4 +57,10 @@ public class MyStringImm {
 		for( int i = start; i<end; i++) s+=string.charAt(i);
 		return new MyStringImm(s);
 	}
+	
+	public MyStringImm myReverse() {
+		String s = "";
+		for (int i=string.length()-1; i>=0; i--) s+=string.charAt(i);
+		return new MyStringImm(s);
+	}
 }

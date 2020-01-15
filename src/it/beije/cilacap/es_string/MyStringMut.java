@@ -60,4 +60,11 @@ public class MyStringMut {
 		string = s;
 		return this;
 	}
+	
+	public MyStringMut myReverse() {
+		String s = "";
+		for (int i=string.length()-1; i>=0; i--) s+=string.charAt(i);
+		string = s;
+		return this;
+	}
 }
