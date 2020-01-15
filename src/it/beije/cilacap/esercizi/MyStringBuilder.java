@@ -8,20 +8,24 @@ public class MyStringBuilder {
 		
 		// trim().charAt()
 		System.out.println("charAt(1): " + sb.charAt(1));
-		System.out.println("charAt(10): " + sb.charAt(10) + "\n");
+		System.out.println("charAt(10): " + sb.charAt(10));
+		System.out.println();
 		
 		// length()
-		System.out.println("length: " + sb.length() + "\n");
+		System.out.println("length: " + sb.length());
+		System.out.println();
 		
 		// substring
 		System.out.println("substring: " + sb.substring(1, 7));
-		System.out.println("substring: " + sb.substring(8, 17) + "\n");
+		System.out.println("substring: " + sb.substring(8, 17));
+		System.out.println();
 		
 		// indexOf()
 		System.out.println("indexOf(\"A\"): " + sb.indexOf("A"));
 		System.out.println("indexOf(\"G\"): " + sb.indexOf("G"));
 		System.out.println("indexOf(\"g\"): " + sb.indexOf("g"));
-		System.out.println("indexOf(\"e\"): " + sb.indexOf("e") + "\n");
+		System.out.println("indexOf(\"e\"): " + sb.indexOf("e"));
+		System.out.println();
 		
 		// converto sb in String e applico trim
 		String s = sb.toString();
@@ -44,6 +48,7 @@ public class MyStringBuilder {
 		// delete()
 		int startIndex = newSb.indexOf("true");
 		System.out.println(newSb.delete(startIndex, newSb.length()));
+		System.out.println();
 		
 		// deleteCharAt()
 		int index = newSb.indexOf("-");
