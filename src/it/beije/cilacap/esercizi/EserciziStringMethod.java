@@ -40,7 +40,6 @@ public class EserciziStringMethod {
 	}
 
 	public EserciziStringMethod myTrim() {
-		String response;
 		int firstLetter = 0;
 		int lastLetter = 0;
 		
@@ -58,8 +57,7 @@ public class EserciziStringMethod {
 				break forLastLetter;
 			}
 		}
-		response = s1.substring(firstLetter, (lastLetter + 1));
-		return new EserciziStringMethod(response);
+		return this.mySubString(firstLetter + 1, lastLetter + 2);
 	}
 
 	public boolean myEquals(String s) {
@@ -106,10 +104,19 @@ public class EserciziStringMethod {
 
 	public EserciziStringMethod mySubString(int indexBegin, int indexEnd) {
 		String response = "";
-		for (int i = indexBegin-1; i < indexEnd; i++) {
+		for (int i = indexBegin -1 ; i < indexEnd - 1; i++) 
 			response += Character.toString(s1.charAt(i));
-		}
+		
 		return new EserciziStringMethod(response);
 	}
+	
+	public EserciziStringMethod myReverse() {
+		String response = "";
+		for (int i = s1.length()-1; i >= 0; i--) 
+			response += Character.toString(s1.charAt(i));
+		
+		return new EserciziStringMethod(response);
+	}
+	
 }
 	
