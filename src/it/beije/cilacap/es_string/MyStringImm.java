@@ -29,9 +29,14 @@ public class MyStringImm {
 	
 	public MyStringImm myTrim() {	
 		int i, j;
-		for( i=0; i<string.length() && string.charAt(i)==' '; i++);
-		for( j=string.length()-1; j>=0 && string.charAt(j)==' '; j--);
+		for( i=0; i<string.length() && verificaTab(i); i++);
+		for( j=string.length()-1; j>=0 && verificaTab(j); j--);
 		return mySubstring(i, ++j);
+	}
+	private boolean verificaTab(int i) {
+		return   string.charAt(i)==' ' || string.charAt(i)=='\n' ||
+				string.charAt(i)=='\t' || string.charAt(i)=='\b' ||
+				string.charAt(i)=='\r' || string.charAt(i)=='\f';
 	}
 	
 	public MyStringImm myReplace(char oldC, char newC) {
