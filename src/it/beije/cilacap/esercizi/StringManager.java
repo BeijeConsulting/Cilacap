@@ -2,11 +2,20 @@ package it.beije.cilacap.esercizi;
 
 public interface StringManager {
 
-	public boolean myContains(String strToMatch, String character);
-	public boolean MyStartWith(String strToMatch, String character);
-	public boolean MyEndWith(String strToMatch, char character);
-	public String myTrim();
-	public boolean myEquals(String strToMatch1, String strToMatch2);
-	public String mySubString(int beginIndex, int endIndex);
+	/*sezione String - metodi*/
+	public String toString();
+	public boolean myContains(String character);
+	public boolean MyStartWith(String prefixStr);
+	public boolean MyEndWith(String suffixStr);
+	public StringManagerImpl myTrim();
+	public boolean myEquals(String strToMatch);
+	public StringManagerImpl mySubString(int beginIndex, int endIndex);
+	public String reverse(String strToReverse);
+	void String();
+	
+	
+	/*sezione StringBuilder*/
+	
+	
 	
 }
