@@ -142,6 +142,14 @@ public class MetodiString {
 		return newString;
 	}
 	
+	
+	public String myReverse(String s) {
+		String newStr = "";
+		for(int i = s.length()-1; i >= 0; i--) {
+			newStr += s.charAt(i);
+		}
+		return newStr;
+	}
 
 	public static void main(String[] args) {
 		
@@ -174,6 +182,9 @@ public class MetodiString {
 		// myEndswith
 		System.out.println(ms.myEndsWith(s, "po"));
 		System.out.println(ms.myEndsWith(s, "ciao"));
+		
+		// reverse
+		System.out.println(ms.myReverse(s));
 		
 	}
 
