@@ -35,23 +35,6 @@ public class TestString {
 		}
 	}
 	
-	
-	/* static String MyTrim() {
-		String trim = "  MyTrim string  ";
-		String newtrim = "";
-		if (trim.charAt(0) == ' ') {
-			for (int i = 0; i < trim.length() - 1; i++) {
-				newtrim = newtrim + trim.charAt(i+1);
-			}
-		}
-		
-		/* (trim.charAt(trim.length() - 1) == ' ') {
-			newtrim.charAt(newtrim.length() - 1) = trim.charAt(trim.length() - 1);
-		}
-		
-		return newtrim;
-	}*/
-	
 	static boolean MyEquals(String s) {
 		String equals = "MyEquals string";
 		int j = 0;
@@ -69,6 +52,24 @@ public class TestString {
 			}	
 	}
 	
+	static String MyReplace(char oldChar, char newChar) {
+		String replace = "MyReplace string";
+		String newReplace = "";
+		char newcharacter = newChar;
+		char oldcharacter = oldChar;
+
+		for (int i = 0; i < replace.length(); i++) {
+			
+			if (replace.charAt(i) == oldcharacter) {
+				newReplace += newcharacter;
+			}
+			else {
+				newReplace += replace.charAt(i);
+			}
+		}
+		return newReplace;
+	}
+	
 	static String MySubstring(int startIndex, int endIndex) {
 		String substring = "MySubstring string";
 		String newSubstring = "";
@@ -79,34 +80,48 @@ public class TestString {
 			return null;
 		}
 		
-		for (int i = 0; i < substring.length() - 1; i++) {
-			//char cursor = substring.charAt(i); 
-			while (startI >= substring.indexOf(substring.charAt(i)) && endI <= substring.indexOf(substring.charAt(i))) {
+		for (int i = 0; i < substring.length(); i++) {
+			if (i >= startI && i < endI) {
 				newSubstring += substring.charAt(i);
 			}
 		}
 		return newSubstring;
 	} 
 	
-	static String MyReplace(char oldChar, char newChar) {
-		String replace = "MyReplace string";
-		String newreplace = "";
-		char newcharacter = newChar;
-		char oldcharacter = oldChar;
-
-		for (int i = 0; i < replace.length(); i++) {
-			
-			if (replace.charAt(i) == oldcharacter) {
-				newreplace += newcharacter;
-			}
-			else {
-				newreplace += replace.charAt(i);
-			}
+	static String MyTrim() {
+		String trim = "  MyTrim string  ";
+		String newtrim = "";
+		int countInitial = 0;
+		int countFinal = trim.length() -1;
+		
+		while (trim.charAt(countInitial) == ' ') {
+			countInitial++;
 		}
-		return newreplace;
+		
+		while (trim.charAt(countFinal) == ' ') {
+			countFinal--;
+		}
+	
+		for ( ; countInitial < countFinal+1; countInitial++) {
+			newtrim += trim.charAt(countInitial);
+			}	
+		return newtrim;
+		}
+		
+	
+	static String MyReverse() {
+		String reverse = "MyReverse string";
+		String newReverse = "";
+		int j = reverse.length() -1;
+		
+		for (int i=0; i<reverse.length();i++) {
+			newReverse += reverse.charAt(j);
+			j--;
+		}
+		
+		return newReverse;
 	}
-	
-	
+
 	public static void main(String[] args) {
 		/*String test = "This is a test";
 		System.out.println(test.length());
@@ -122,9 +137,9 @@ public class TestString {
 		System.out.println("This is a test".endsWith("t"));
 		System.out.println(test.contains("x"));
 		System.out.println(test.replace(" ", ""));
-		System.out.println(test.trim()); */
 		
-		/*System.out.println(MyContains("a"));
+		
+		System.out.println(MyContains("a"));
 		System.out.println(MyContains("x"));
 		System.out.println(MyContains(" "));
 		
@@ -136,13 +151,20 @@ public class TestString {
 		
 		System.out.println(MyEquals("MyEquals string"));
 		System.out.println(MyEquals("MyEquals strings"));
-		System.out.println(MyEquals("MyEquals string "));
-		System.out.println(MyEquals("MYEquals string"));*/
+		System.out.println(MyEquals("MyEquals strin"));
+		System.out.println(MyEquals("MYEquals string"));
 		
 		System.out.println(MyReplace('M', 'F'));
-		System.out.println(MyReplace('y', 'u'));
+		System.out.println(MyReplace('l', 'r'));
 		System.out.println(MyReplace(' ', 'X'));
-		//System.out.println(MySubstring(0, 5));
+		
+		System.out.println(MySubstring(5, 7));
+		System.out.println(MySubstring(0, 7));
+		System.out.println(MySubstring(4, 9));*/
+		
+		System.out.println(MyTrim());
+		
+		//System.out.println(MyReverse());
 	}
 
 }
