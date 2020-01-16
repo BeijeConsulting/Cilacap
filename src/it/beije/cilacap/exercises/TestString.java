@@ -1,5 +1,8 @@
 package it.beije.cilacap.exercises;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+
 public class TestString {
 	
 	static boolean MyContains(String s) {
@@ -136,10 +139,54 @@ public class TestString {
 		System.out.println("This is a test".startsWith("T"));
 		System.out.println("This is a test".endsWith("t"));
 		System.out.println(test.contains("x"));
-		System.out.println(test.replace(" ", ""));
+		System.out.println(test.replace(" ", ""));*/
 		
+	/*	StringBuilder testSB = new StringBuilder("This is a test");
+		System.out.println(testSB.length());
+		System.out.println(testSB.charAt(2));
+		System.out.println(testSB.indexOf("a"));
+		System.out.println(testSB.substring(3, 11));
+		System.out.println(testSB.append('!'));
+		System.out.println(testSB.insert(7, " not"));
+		System.out.println(testSB.delete(8,12));
+		System.out.println(testSB.deleteCharAt(8));
+		System.out.println(testSB.reverse());
+		System.out.println(testSB.toString()); */
 		
-		System.out.println(MyContains("a"));
+	/*	int numbers[] = new int[] {106, 235, 23, 63};
+		Arrays.sort(numbers);
+		for (int i = 0; i < numbers.length; i++) {
+			System.out.println(numbers[i] + " ");
+		}
+		System.out.println(Arrays.binarySearch(numbers, 3));
+		System.out.println(Arrays.binarySearch(numbers, 55));
+		System.out.println(Arrays.binarySearch(numbers, 23)); */
+		
+		ArrayList<String> testAL = new ArrayList<>(); 
+		testAL.add("A");
+		testAL.add("B");
+		testAL.add("C");
+		testAL.add("D");
+		testAL.add("E");
+		System.out.println(testAL);
+		testAL.remove(4);
+		System.out.println(testAL);
+		testAL.set(2, "c");
+		System.out.println(testAL);
+		System.out.println(testAL.isEmpty());
+		System.out.println(testAL.size());
+		System.out.println(testAL.contains("A"));
+		System.out.println(testAL.contains("C"));
+		ArrayList<String> testAL2 = new ArrayList<>();
+		testAL2.add("A");
+		testAL2.add("B");
+		testAL2.add("c");
+		testAL2.add("D");
+		System.out.println(testAL.equals(testAL2));
+		testAL2.clear();
+		System.out.println(testAL2);
+		
+	 /* System.out.println(MyContains("a"));
 		System.out.println(MyContains("x"));
 		System.out.println(MyContains(" "));
 		
@@ -160,11 +207,11 @@ public class TestString {
 		
 		System.out.println(MySubstring(5, 7));
 		System.out.println(MySubstring(0, 7));
-		System.out.println(MySubstring(4, 9));*/
+		System.out.println(MySubstring(4, 9));
 		
 		System.out.println(MyTrim());
 		
-		//System.out.println(MyReverse());
+		//System.out.println(MyReverse());*/
 	}
 
 }
