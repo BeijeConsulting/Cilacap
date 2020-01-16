@@ -23,6 +23,8 @@ public class MetodiStringhe
 		}
 		System.out.println("La stringa contiene il carattere in ingresso? " + contains);
 		
+		contains(s, charingresso);
+		
 		boolean starts = false; // startsWith()
 		if(s.charAt(0) == charingresso) starts = true;
 		System.out.println("La stringa inizia per per il carattere in ingresso? " + starts);
@@ -43,5 +45,15 @@ public class MetodiStringhe
 		System.out.println("La frase senza spazi iniziali è la seguente:" + trim);
 		
 		
+	}
+	
+	public static void contains(String s, char c)
+	{
+		boolean contains = false; // contains()
+		for (int i=0; i<s.length(); i++)
+		{
+			if(s.charAt(i) == c) contains = true;
+		}
+		System.out.println("La stringa contiene il carattere in ingresso? " + contains);
 	}
 }
