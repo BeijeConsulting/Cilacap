@@ -32,7 +32,6 @@ public class MorraMain {
 	}
 	
 	private static void partita(int a, int b) {
-		int c = vincitore(a,b);
 		if (a%3>b%3) System.out.println("Vince giocatore 1!");
 		else if (a%3<b%3) System.out.println("Vince giocatore 2!");
 		else System.out.println("Pareggio!");
