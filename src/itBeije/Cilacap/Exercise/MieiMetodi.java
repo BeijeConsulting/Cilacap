@@ -1,22 +1,44 @@
 package itBeije.Cilacap.Exercise;
 
+import java.util.ArrayList;
+
 public class MieiMetodi {
 	static String miaStringa;
-	
-	public static void main(String[] args) {
+	static StringBuilder miaStringaBuild=new StringBuilder("Testo");
+	String[] mioArray= {"Testo","i","metodi"};
+	String[] tuoArray= {"Testo","i","metodi"};
+	ArrayList<String> lista= new ArrayList<>();
+ 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
+	
+ 		
+ 		
 		MieiMetodi m = new MieiMetodi();
-		m.miaStringa=" p i p p o ";
-		System.out.println(m.myContains("p"));
-		System.out.println(m.myStartsWith("pi"));
-		System.out.println(m.myEndsWith("pippo"));
-		System.out.println(m.myEquals("pippo"));
-		System.out.println(m.myReplace('p','P'));
-		System.out.println(m.mySubstring(0,5));
+		m.miaStringa=" p i p p o ";	
+		System.out.println("contains " + m.myContains("p"));
+		System.out.println("StartsWith " + m.myStartsWith("pi"));
+		System.out.println("EndsWith" + m.myEndsWith("pippo"));
+		System.out.println("Equals " + m.myEquals("pippo"));
+		System.out.println("replace "+ m.myReplace('p','P'));
+		System.out.println("substring " + m.mySubstring(0,5));
 		System.out.println(m.myTrim());
-		System.out.println(m.myReverse(miaStringa));
+		System.out.println("reverse" + m.myReverse(miaStringa));
+		System.out.println(m.mioArray.equals(m.tuoArray));
+		System.out.println(m.mioArray==m.tuoArray);
+		System.out.println(miaStringaBuild.append("as"));
+		System.out.println(miaStringaBuild.delete(3,4));
+		System.out.println(miaStringaBuild.insert(2, 2));
+		System.out.println(miaStringaBuild.length());
+		System.out.println(m.lista.add("taa") + " " + m.lista);
+		
+		
+//		Integer i = new Integer(null);
+//		System.out.println(i);NullPointerException
+		
+//		List<Integer> heights=new ArrayList<>();
+//		heights.add(null);
+//		Integer provaa = heights.get(0);
+//		int h = heights.get(0); 
 	}
 
 	
