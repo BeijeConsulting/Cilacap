@@ -29,8 +29,8 @@ public class MyStringImm {
 	
 	public MyStringImm myTrim() {	
 		int i, j;
-		for( i=0; i<string.length() && verificaTab(i); i++);
-		for( j=string.length()-1; j>=0 && verificaTab(j); j--);
+		for ( i=0; i<string.length() && verificaTab(i); i++ );
+		for ( j=string.length()-1; j>=0 && verificaTab(j); j-- );
 		return mySubstring(i, ++j);
 	}
 	private boolean verificaTab(int i) {
@@ -50,22 +50,23 @@ public class MyStringImm {
 	
 	public boolean myEquals(String s) {
 		if ( s.length() != string.length() ) return false;
-		for( int i = 0; i<s.length(); i++) {
+		for ( int i = 0; i<s.length(); i++ ) {
 			if( s.charAt(i) != string.charAt(i) ) return false;
 		}
 		return true;
 	}
 	
+	public MyStringImm mySubstring(int start) { return mySubstring(start, string.length()-1); }
 	public MyStringImm mySubstring(int start, int end) {
 		String s="";
 		if ( start > end || end > string.length() ) return null;
-		for( int i = start; i<end; i++) s+=string.charAt(i);
+		for ( int i = start; i<end; i++ ) s+=string.charAt(i);
 		return new MyStringImm(s);
 	}
 	
 	public MyStringImm myReverse() {
 		String s = "";
-		for (int i=string.length()-1; i>=0; i--) s+=string.charAt(i);
+		for ( int i=string.length()-1; i>=0; i-- ) s+=string.charAt(i);
 		return new MyStringImm(s);
 	}
 }
