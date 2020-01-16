@@ -13,11 +13,7 @@ public class TestString {
 	System.out.println(provina);
 	buona = ms.Reverse(prova);
 	System.out.println(buona);
-	
-		
-		
-		
-		
+			
 	}
 	
 	public boolean Mycontains(String s,String s1) {
