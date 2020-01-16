@@ -56,7 +56,9 @@ public class MyStringImm {
 		return true;
 	}
 	
-	public MyStringImm mySubstring(int start) { return mySubstring(start, string.length()-1); }
+	public MyStringImm mySubstring(int start) { 
+		return mySubstring(start, string.length());
+	}
 	public MyStringImm mySubstring(int start, int end) {
 		String s="";
 		if ( start > end || end > string.length() ) return null;
