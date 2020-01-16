@@ -58,7 +58,9 @@ public class MyStringMut {
 		return true;
 	}
 	
-	public MyStringMut mySubstring(int start) { return mySubstring(start, string.length()); }
+	public MyStringMut mySubstring(int start) { 
+		return mySubstring(start, string.length()); 
+	}
 	public MyStringMut mySubstring(int start, int end) {
 		String s="";
 		if ( start > end || end > string.length() ) return null;
