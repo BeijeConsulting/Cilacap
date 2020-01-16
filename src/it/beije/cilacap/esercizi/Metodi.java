@@ -1,6 +1,8 @@
 package it.beije.cilacap.esercizi;
 
 public class Metodi{
+	
+	StringBuilder sb=new StringBuilder();
 
 	
 		public boolean myContains(String sequence, String s){ 
@@ -22,21 +24,27 @@ public class Metodi{
 			}
 		
 		public String myTrim(String s) {
-			String sub1,sub2= new String();
+			String sub1= new String();
+			String sub2=new String();
 			int i,j;
 			
 			for(i=0;i<s.length();i++) {
-				if(s.charAt(i)==' ') 
-					continue;
-				else 
-					sub1= s.substring(i,s.length());
+				if(s.charAt(i)!=' ') {  
+					sub1= s.substring(i);
+				break;
+				
+				}
+				
 			}
-			for (j=s.length()-1;j==0;j--) {
-				if(s.charAt(j)==' ')
-					continue;
+			for (j=sub1.length()-1;j>=0;j--) {
+				if(sub1.charAt(j)!=' ') {
+					sub2=sub1.substring(0,j+1);
+				break;
+				}
 				else 
-					sub2=s.substring(0,j+1);
+					continue;
 			}
+			
 			return sub2;
 		}
 		
@@ -54,15 +62,45 @@ public class Metodi{
 				
 			}
 		
-//		public boolean myEquals(String s){
-//			
-//		}
-//	
+		public boolean myEquals(String s,String t) {
+			boolean z=false;
+			for (int i=0; i<s.length();i++) {
+				if(s.charAt(i)!=t.charAt(i)) {
+					z= false;
+					break;
+					}
+				else
+					z=true;
+				}
+			return z;
+			}
+			
+		public String myReverse(String s) {
+			for (int i=s.length()-1;i>=0;i--) {
+				sb.append(s.charAt(i));
+			}
+				return sb.toString();
+			
+				
+				
+				
+			}
+				
+		public String mySubstring(String s, int beginIndex, int endIndex){
+			StringBuilder sub=new StringBuilder();
+			for (int i=beginIndex; i<endIndex; i++)
+				sub.append(s.charAt(i));
+			return sub.toString();
+			
+			}
+		}
+		
+	
 	
 	
 	
 
-}
+
 
 
 
