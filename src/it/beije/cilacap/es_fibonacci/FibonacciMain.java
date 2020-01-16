@@ -1,8 +1,9 @@
 package it.beije.cilacap.es_fibonacci;
 
 public class FibonacciMain {
+	
 	public static void main(String... args) {
-		int a = Integer.parseInt(args[0]);
+		int a = Integer.parseInt(args[0])+1;
 		stampaFibo(a);
 		System.out.println();
 		stampaFiboTab(a);
@@ -21,11 +22,11 @@ public class FibonacciMain {
 	public static void stampaFiboTab(int a) {
 		for(int i=1; i<a; i++) {
 			for(int j=0; j<i; j++) {
-			System.out.format("%3d", fibonacci(j));
+			System.out.format("%4d", fibonacci(j));
 			}
-			System.out.format("     ");
+			System.out.format("      ");
 			for(int j=a-i-1; j>=0; j--) {
-				System.out.format("%3d", fibonacci(j));
+				System.out.format("%4d", fibonacci(j));
 			}
 			System.out.println();
 		}
