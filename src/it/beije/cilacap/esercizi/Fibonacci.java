@@ -13,7 +13,7 @@ public class Fibonacci
 		
 	}
 	
-	public static int[] calcolo(int dimensione)
+	public static int[] calcolo (int dimensione)
 	{
 		int array[] = new int[dimensione];
 		array[0] = 1;
