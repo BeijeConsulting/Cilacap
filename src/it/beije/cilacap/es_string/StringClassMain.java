@@ -3,8 +3,8 @@ package it.beije.cilacap.es_string;
 public class StringClassMain {
 
 	public static void main(String[] args) {
-		MyStringImm s = new MyStringImm(" \n  abcdeffk \r   \t   l");
-		MyStringMut t = new MyStringMut("   abcdeffk  ");
+		MyStringImm s = new MyStringImm(" \n  abcdeffk \r   \t \n");
+		MyStringMut t = new MyStringMut(s.myTrim().toString());
 		System.out.println(s);
 		System.out.println("contiene la stringa?  "+s.myContains("t"));
 		System.out.println("comincia con ?   "+s.myTrim().myStartsWith("a"));
