@@ -8,7 +8,7 @@ import java.util.Random;
 
 
 public class MyArrayList {
-
+	
 	public static void main(String[] args) {
 		
 		List<Integer> list = new ArrayList<Integer>();
@@ -66,9 +66,7 @@ public class MyArrayList {
 		Collections.sort(listInteger);
 		System.out.println(listInteger);
 		
-		
-		
-		List<String> listStr = new ArrayList<String>(3);
+		ArrayList<String> listStr = new ArrayList<String>();
 		List<String> listStr2 = new ArrayList<String>();
 		
 		listStr.add("pippo");
@@ -87,6 +85,8 @@ public class MyArrayList {
 		System.out.println(listStr.contains("pippo"));
 		System.out.println(listStr.set(0, "ciccio"));
 		System.out.println(listStr);
+		
+	
 	}
 	
 }
