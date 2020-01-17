@@ -24,19 +24,24 @@ public class RockPaperScissors {
 		if(sceltaPlayer1 > sceltaPlayer2) {
 			
 				if(sceltaPlayer1 == 2 && sceltaPlayer2 == 0) {
+					System.out.println("Hai Perso...");
 					System.out.println(opzioni[sceltaPlayer1] + " Perde su " + opzioni[sceltaPlayer2]);
 				} else {
+					System.out.println("Hai Vinto!");
 					System.out.println(opzioni[sceltaPlayer1] + " Vince su " + opzioni[sceltaPlayer2]);
 				}
 				
 		} else if (sceltaPlayer1 == sceltaPlayer2) {
+			System.out.println("Pareggio:");
 			System.out.println(opzioni[sceltaPlayer1] + " Pareggia con " + opzioni[sceltaPlayer2]);
 			
 		} else if(sceltaPlayer1 < sceltaPlayer2) {
 
 				if(sceltaPlayer1 == 0 && sceltaPlayer2 == 2) {
+					System.out.println("Hai Vinto!");
 					System.out.println(opzioni[sceltaPlayer1] + " Vince su " + opzioni[sceltaPlayer2]);
 				} else {
+					System.out.println("Hai Perso...");
 					System.out.println(opzioni[sceltaPlayer1] + " Perde su " + opzioni[sceltaPlayer2]);
 				}
 		} 
