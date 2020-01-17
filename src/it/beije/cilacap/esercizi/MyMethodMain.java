@@ -1,5 +1,4 @@
 package it.beije.cilacap.esercizi;
-import it.beije.cilacap.esercizi.Metodi;
 import java.util.Scanner;
 public class MyMethodMain {
 
