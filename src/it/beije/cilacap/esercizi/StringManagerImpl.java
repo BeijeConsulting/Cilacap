@@ -2,14 +2,10 @@ package it.beije.cilacap.esercizi;
 
 public class StringManagerImpl implements StringManager {
 
-	private  String string;
+	private String string;
 
-	public String getString() {
-		return string;
-	}
-
-	public StringManagerImpl(String str) {
-		string = str;
+	public StringManagerImpl(String string) {
+		this.string = string;
 	}
 
 	@Override
@@ -23,54 +19,43 @@ public class StringManagerImpl implements StringManager {
 
 	@Override
 	public StringManagerImpl myTrim() {
-//		int begin = 0;
-//		int end = string.length();
-//		while (begin < end && string.charAt(begin) == ' ') {
-//			begin++;
-//		}
-//		while (end > begin && string.charAt(end - 1) == ' ') {
-//			end--;
-//		}
-//		String subStringed = mySubString(begin, end);
-//		return new StringManagerImpl(subStringed);
-		
+
 		int begin = 0;
 		int end = 0;
-		
-		for(int i = 0; i< string.length(); i++) {
-			if((string.charAt(i) != ' ') && (string.charAt(i) != '\t') && (string.charAt(i) != '\n') && (string.charAt(i) != '\r')) {
-				begin = i;
+
+		for (int i = 0; i < string.length(); i++) {
+			if ((string.charAt(i) != ' ') && (string.charAt(i) != '\t') && (string.charAt(i) != '\n')
+					&& (string.charAt(i) != '\r')) {
+				begin = i; // trovato indice del primo carattere posso uscire
 				break;
 			}
 		}
-		for(int i = string.length()-1; i>= 0; i--) {
-			if((string.charAt(i) != ' ') && (string.charAt(i) != '\t') && (string.charAt(i) != '\n') && (string.charAt(i) != '\r')) {
+		for (int i = string.length() - 1; i >= 0; i--) {
+			if ((string.charAt(i) != ' ') && (string.charAt(i) != '\t') && (string.charAt(i) != '\n')
+					&& (string.charAt(i) != '\r')) {
 				end = i;
 				break;
 			}
 		}
-		return this.mySubString(begin + 1, end + 1 );
+		return this.mySubString(begin, ++end);
 	}
 
 	@Override
 	public StringManagerImpl mySubString(int beginIndex, int endIndex) {
 
-		int begin = string.indexOf(string.charAt(beginIndex));
-		int end = beginIndex != endIndex ? string.indexOf(string.charAt(endIndex - 1)) : -1;
-		String s = "";
-		if (end == -1)
-			return this;
-		while (begin <= end) {
-			s += string.charAt(begin);
-			begin++;
+		String subbed = "";
+		while (beginIndex < endIndex) {
+			subbed += string.charAt(beginIndex);
+			beginIndex++;
 		}
-		return new StringManagerImpl(s);
+		return new StringManagerImpl(subbed);
 	}
 
 	@Override
 	public boolean MyStartWith(String prefixStr) {
-		if (string.indexOf(prefixStr, 0) != -1) {
-			return true;
+		if (string.indexOf(prefixStr, 0) != -1) { // se trova che l'indice
+			return true; // con la stringa desiderata parte dalla pos
+							// 0 allora ritorna true
 		} else {
 			return false;
 		}
@@ -78,14 +63,29 @@ public class StringManagerImpl implements StringManager {
 
 	@Override
 	public boolean MyEndWith(String suffixStr) {
-		// TODO Auto-generated method stub
-		return false;
+		if (string.indexOf(suffixStr, string.length() - 1) != -1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean myEquals(String strToMatch) {
-		// TODO Auto-generated method stub
-		return false;
+//		boolean equals(String str)
+//      boolean equalsIgnoreCase(String str)
+//		if (string.indexOf(strToMatch, posizione) != -1) 
+		boolean response = false;
+		for(int i = 0; i < string.length(); i++) {
+			if((string.indexOf(strToMatch.charAt(i)) != -1)) {
+				if(i==string.length()-1) {
+					response = true;
+				}else {
+					break;
+				}
+			}
+		}
+		return response;
 	}
 
 	@Override
@@ -102,7 +102,6 @@ public class StringManagerImpl implements StringManager {
 	@Override
 	public void String() {
 		// TODO Auto-generated method stub
-
 	}
 
 }

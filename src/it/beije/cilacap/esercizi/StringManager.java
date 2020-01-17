@@ -14,7 +14,13 @@ public interface StringManager {
 	void String();
 	
 	
-	/*sezione StringBuilder*/
+	/*sezione StringBuilder - metodi*/
+	
+	
+	/*sezione esercizi ArrayList */
+	//occorrenze fibonacci dal main
+	//righe fibonacci do il numero di righe
+ 
 	
 	
 	
