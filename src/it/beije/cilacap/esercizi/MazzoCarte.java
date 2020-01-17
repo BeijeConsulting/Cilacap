@@ -12,7 +12,6 @@ public class MazzoCarte
 		result = gioco(deck, player1, player2);
 		System.out.println("Il giocatore 1 vince: " + result);
 		
-		
 	}
 	
 	public static String inizializzazione ()
