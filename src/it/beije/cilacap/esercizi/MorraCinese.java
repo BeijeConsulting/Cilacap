@@ -25,9 +25,9 @@ public class MorraCinese {
 		String result = g1 + g2;
 		result = result.toLowerCase();
 		if(vittorie.contains(result)) {
-			System.out.println("Giocatore 1 vince contro Giocatore 2\n(" + g1.toLowerCase() + " vince " + g2.toLowerCase() +")");
+			System.out.println("Giocatore 1 vince contro Giocatore 2\n(" + g1.toLowerCase() + " vince contro " + g2.toLowerCase() +")");
 		} else if(sconfitte.contains(result)) {
-			System.out.println("Giocatore 1 perde contro Giocatore 2\n(" + g1.toLowerCase() + " perde " + g2.toLowerCase() +")");
+			System.out.println("Giocatore 1 perde contro Giocatore 2\n(" + g1.toLowerCase() + " perde contro " + g2.toLowerCase() +")");
 		} else {
 			System.out.println("Pareggio!");
 		}
@@ -54,10 +54,11 @@ public class MorraCinese {
 			
 			mc.morraCinese(g1, g2);
 			
-			System.out.println("\n\nDigita \"exit\" per terminare o premi \"invio\" per continuare");
+			System.out.println("\n\nDigita \"exit\" per terminare o premi \"invio\" per continuare a giocare");
 			s = scan.nextLine();
 			
 		}
+		System.out.println("Grazie per aver giocato alla Morra Cinese!");
 	}
 	
 }
