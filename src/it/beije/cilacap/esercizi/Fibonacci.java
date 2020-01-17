@@ -5,11 +5,12 @@ public class Fibonacci
 	public static void main(String[] args)
 	{
 		int dim = 100; //dimensione array
-		int nocc = 10; //numero occorrenze
-		int righe = 20;
+		int nocc = 1; //numero occorrenze
+		int riga = 1; //indica la riga di cui voglio l'occorrenza
 		int[] fibonacci = new int[dim];
 		fibonacci = calcolo(dim);
 		occorrenze(fibonacci, nocc);
+		righe(fibonacci, riga);
 		
 	}
 	
@@ -37,6 +38,15 @@ public class Fibonacci
 				}
 			System.out.println();
 		}
+	}
+	
+	public static void righe (int[] array, int numriga)
+	{
+		for(int i=0; i<numriga+1; i++)
+		{
+			System.out.print(array[i] + " ");
+		}
+		
 	}
 	
 }
