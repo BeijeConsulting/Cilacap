@@ -14,12 +14,12 @@ public class Fibonacci {
 		Integer intero = Integer.parseInt(args[0]);
  		System.out.println(Fibo.metodoOccorrenze(intero));
  		Fibo.metodoRighe(intero);
-		
+		Fibo.reverse(intero);
 	}
 
 	
 	
-	public List metodoOccorrenze(int occorrenze)
+	public List<Integer> metodoOccorrenze(int occorrenze)
 	{
 		int i,nminore=0,nminore2=0;
 		StringBuilder stringa= new StringBuilder();
@@ -66,9 +66,27 @@ public class Fibonacci {
 				
 		}
 				
-			return lista;	
-		
-		
-		
+			return lista;		
 	}
+	
+	public void reverse(int r) {
+		  List<Integer> lista=this.metodoOccorrenze(r);
+		  
+		  for(int i=0;i<=r;i++) {
+		   for(int f=0;f<=i;f++) {
+			   if(f==lista.size())
+				   System.out.print(lista.get(f-1)+" ");
+			   else
+				   System.out.print(lista.get(f)+" ");
+		  }
+		  System.out.print("    ");
+		  for(int a=r-i;a>=0;a--) {
+			  if(a==lista.size())
+				  System.out.print(lista.get(a-1)+" ");
+			  else
+				  System.out.print(lista.get(a)+" ");
+		  }
+		  System.out.println();
+		  }
+		 }
 }
