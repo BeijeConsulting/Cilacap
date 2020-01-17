@@ -11,7 +11,7 @@ public class Fibonacci {
 		Fibonacci prova = new Fibonacci();
 		List<Integer> Fibo = new ArrayList<>();
 		
-		prova.Robafinale(30);
+		prova.Robafinale(10);
 		
 	}
 	public void Robafinale(int arg) {
