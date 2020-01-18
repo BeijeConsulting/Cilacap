@@ -33,6 +33,7 @@ public class MorraCinese {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		String s = new String();
@@ -58,7 +59,7 @@ public class MorraCinese {
 			s = scan.nextLine();
 			
 		}
-		System.out.println("Grazie per aver giocato alla Morra Cinese!");
+		System.out.println("Grazie per aver giocato!");
 	}
 	
 }

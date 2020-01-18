@@ -19,8 +19,9 @@ public class MyDateTime {
 		// periodo
 		Period everyThreeWeeks = Period.ofYears(2);
 		everyThreeWeeks = Period.ofMonths(5);
-		System.out.println(ldt.plus(everyThreeWeeks));
+		System.out.println("Periodo: " + ldt.plus(everyThreeWeeks));
 		
+		// formatter
 		DateTimeFormatter shortDateTime =
 		DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
 		System.out.println(shortDateTime.format(ldt));

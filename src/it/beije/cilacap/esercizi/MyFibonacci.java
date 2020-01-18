@@ -50,7 +50,7 @@ public class MyFibonacci {
 			
 			System.out.print("   ");
 			
-			for(int c = n - i; c >= 0; c--) {
+			for(int c = n - i -1; c >= 0; c--) {
 				System.out.print(lista.get(c)+ " ");
 			}
 			

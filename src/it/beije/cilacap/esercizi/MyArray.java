@@ -1,7 +1,5 @@
 package it.beije.cilacap.esercizi;
 
-import java.util.Arrays;
-
 public class MyArray {
 	
 	public void mySortIntVoid(int[] array, String order) {

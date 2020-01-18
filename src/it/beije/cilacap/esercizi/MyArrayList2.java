@@ -5,12 +5,13 @@ import java.util.List;
 
 public class MyArrayList2 {
 		
-		public void myClear(List listStr) { // OK
+		public void myClear(@SuppressWarnings("rawtypes") List listStr) { // OK
 			while(!listStr.isEmpty()) {
 				listStr.remove(0);
 			}
 		}
 		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		public List myReverse(List list) { // OK
 			List lista = new ArrayList();
 			for(int i = list.size() - 1; i >= 0; i--) {
@@ -19,6 +20,7 @@ public class MyArrayList2 {
 			return lista;
 		}
 		
+		@SuppressWarnings("rawtypes")
 		public boolean myEquals(List list1, List list2) {
 			if(list1.size() == list2.size()) {
 				for(int i = 0; i < list1.size(); i++) {

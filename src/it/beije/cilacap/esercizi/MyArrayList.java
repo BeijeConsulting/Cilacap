@@ -46,7 +46,6 @@ public class MyArrayList {
 		System.out.println(str);
 		// END myClear()
 		
-		Integer integ = new Integer(2);
 		List<String> sl = new ArrayList<String>();
 		String[] sa = {"10", "9", "100"};
 		sl = Arrays.asList(sa);
