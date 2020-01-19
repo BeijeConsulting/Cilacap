@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.strings;
 
 public class StringManagerImpl implements StringManager {
 

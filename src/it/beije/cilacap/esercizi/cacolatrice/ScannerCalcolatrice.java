@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.cacolatrice;
 
 import java.util.Arrays;
 import java.util.Scanner;

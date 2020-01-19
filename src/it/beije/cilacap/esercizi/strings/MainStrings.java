@@ -1,6 +1,6 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.strings;
 
-public class Main {
+public class MainStrings {
 
 	public static void main(String[] args) {
 		StringManagerImpl sin = new StringManagerImpl("\n\t\t   ciaoSo no  \t\n\r "); 		

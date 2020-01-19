@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.fibonacci;
 
 
 public class FibonacciMain {
