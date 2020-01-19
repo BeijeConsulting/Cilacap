@@ -2,9 +2,11 @@ package it.beije.cilacap.esercizi;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Calendar;
 
 
 public class MyDateTime {
@@ -29,14 +31,8 @@ public class MyDateTime {
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm");
 		System.out.println(ldt.format(f));
 		
-		/*LocalDateTime ldtn = LocalDateTime.now();
-		int c = 0;
-		while(c < 10) {
-			System.out.println(LocalDateTime.now().format(f));
-			c++;
-			TimeUnit.SECONDS.sleep(1);
-		}*/
 		
+				
 	}
 	
 }

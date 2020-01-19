@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MorraCineseGenerica {
+public class GiocoCarte {
 	
 	List<String> carte;
 	
-	public MorraCineseGenerica() {
+	public GiocoCarte() {
 		carte = new ArrayList<String>();
 		for(int i = 0; i <= 13; i++) {
 			if(i == 11) {
@@ -55,32 +55,29 @@ public class MorraCineseGenerica {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {		
 		Scanner scan = new Scanner(System.in);
-		String s = "";
-		MorraCineseGenerica mcg = new MorraCineseGenerica();
+		String s = "gioca";
+		GiocoCarte mcg = new GiocoCarte();
 		
-		while(!s.equals("exit")) {
-			System.out.println("Per giocare inserire un il numero della carta\nPer le carte con le figure inserisi uno dei seguenti simboli: J, Q o K\n");
+		while(s.equals("gioca") && !s.equals("exit")) {
+			System.out.println("\nPer giocare inserire un il numero della carta\nPer le carte con le figure inserisi uno dei seguenti simboli: J, Q o K\n");
 			
-			String s1 = new String();;
+			String s1 = "";
 			while(!mcg.carte.contains(s1)) {
-				System.out.println("Giocatore 1:");
+				System.out.print("Giocatore 1: ");
 				s1 = scan.next().toUpperCase();
 			}
 			
-			String s2 = new String();
+			String s2 = "c";
 			while(!mcg.carte.contains(s2)) {
-				System.out.println("Giocatore 2:");
-				s2 = scan.nextLine().toUpperCase();
+				System.out.print("Giocatore 2: ");
+				s2 = scan.next().toUpperCase();
 			}
 			
 			mcg.morraCinese(mcg.carte.indexOf(s1) , mcg.carte.indexOf(s2), mcg.carte);
 			
-			System.out.println("\nDigita \"exit\" per terminare o premi \"invio\" per continuare a giocare");
-			s = scan.nextLine();
-			if(s.equalsIgnoreCase("exit")) {
-				break;
-			}
-			
+			System.out.println("\nDigita \"exit\" per terminare o \"gioca\" per continuare a giocare");
+			s = scan.next();
+						
 		}
 		System.out.println("Grazie per aver giocato!");
 	}
