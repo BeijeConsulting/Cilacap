@@ -22,26 +22,27 @@ public class MorraCinese1 {
 			p2 = new String("forbice");
 		}
 
-		p1 = s.next();
+		p1 = s.nextLine();
+		
+		while(!p1.equals("carta") && !p1.equals("sasso") && !p1.equals("forbici"))
+		{
+			System.out.println("valore errata, ripetere inserimento");
+			p1=s.nextLine();
+		}
+
+
 		System.out.println("scelta Player1 :" + p1);
 
-		if (p1.equals("sasso") && p2.equals("carta")) {
-			System.out.println("\nPC vince");
-		} else if (p1.equals("carta") && p2.equals("sasso"))
-			System.out.println("\nPlayer vince");
-
-		if (p1.equals("forbice") && p2.equals("sasso")) {
-			System.out.println("\nPC vince");
-		} else if (p1.equals("sasso") && p2.equals("forbice"))
-			System.out.println("\nPlayer 1 vince");
-
-		if (p1.equals("forbice") && p2.equals("carta")) {
-			System.out.println("\nPlayer 1 vince");
-		} else if (p1.equals("carta") && p2.equals("forbice"))
-			System.out.println("\nPC vince");
-
 		if (p1.equals(p2))
-			System.out.println("\npareggio");
+			System.out.println("pareggio");
+		else if (p1.equals("carta") && p2.equals("sasso"))
+			System.out.println("player 1 vince!");
+		else if (p1.equals("forbice") && p2.equals("carta"))
+			System.out.println("player 1 vince");
+		else if (p1.equals("sasso") && p2.equals("forbice"))
+			System.out.println("player 1 vince");
+		else
+			System.out.println("pc vince");
 
 	}
 
