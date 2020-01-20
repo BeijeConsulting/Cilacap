@@ -18,35 +18,37 @@ public class GiocoCarte {
 			} else if(i == 13) {
 				carte.add(i, "K");
 			} else {
-				carte.add(new String(""+i));
+				carte.add(new String("" + i));
 			}
 		}		
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public void morraCinese(int index1, int index2, List lista) {
+	public void morraCinese(int index1, int index2, List<String> lista) {
 		if( (index1 == 1 && index2 == lista.size()-1) || 
 		    (index2 == 1 && index1 == lista.size()-1) ) {
 			rePerdeConAsso(index1, index2, lista);
 		} else {
-			regolaBase(index1, index2);
+			regolaBase(index1, index2, lista);
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
-	private void rePerdeConAsso(int i1, int i2, List lista) {
+	private void rePerdeConAsso(int i1, int i2, List<String> lista) {
 		if(i1 == 1) {
 			System.out.println("Giocatore 1 vince contro Giocatore 2");
+			System.out.println("[ carta " + lista.get(i1) + " vince contro carta " + lista.get(i2) + " ]");
 		} else if(i2 == 1) {
 			System.out.println("Giocatore 1 perde contro Giocatore 2");
+			System.out.println("[ carta " + lista.get(i1) + " perde contro carta " + lista.get(i2) + " ]");
 		}
 	}
 	
-	private void regolaBase(int i1, int i2) {
+	private void regolaBase(int i1, int i2, List<String> lista) {
 		if(i1 > i2) {
 			System.out.println("Giocatore 1 vince contro Giocatore 2");
+			System.out.println("[ carta " + lista.get(i1) + " vince contro carta " + lista.get(i2) + " ]");
 		} else if(i1 < i2) {
 			System.out.println("Giocatore 1 perde contro Giocatore 2");
+			System.out.println("[ carta " + lista.get(i1) + " perde contro carta " + lista.get(i2) + " ]");
 		} else {
 			System.out.println("Pareggio");
 		}
