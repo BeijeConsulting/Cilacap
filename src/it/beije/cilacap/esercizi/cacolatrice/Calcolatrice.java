@@ -19,4 +19,8 @@ public class Calcolatrice {
 			return value1/value2;
 		}
 	}
+	
+	public void chooseOperation() {
+		
+	}
 }
