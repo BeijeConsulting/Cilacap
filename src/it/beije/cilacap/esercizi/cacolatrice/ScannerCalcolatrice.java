@@ -1,29 +1,30 @@
 package it.beije.cilacap.esercizi.cacolatrice;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class ScannerCalcolatrice {
-	
-	public static char[] ammessi = {'0','1','2','3','4','5','6','7','8','9','.','+','-','*','/','%','(',')','Q','q'};
 
-	@SuppressWarnings("unused")
+	public static char[] ammessi = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/', '%',
+			'(', ')', 'Q', 'q' };
+
 	public static void main(String[] args) {
-		System.out.println("Caratteri ammessi : " + Arrays.toString(ammessi));
-		
-		Scanner s = new Scanner(System.in);
-		String st = s.nextLine();
-		Calcolatrice calc = new Calcolatrice();
-		while (!st.equalsIgnoreCase("Q")) {
 
-			//System.out.println(st);
+		System.out.println("Ricordati che i Caratteri ammessi sono i seguenti: " + Arrays.toString(ammessi));
+		Calcolatrice calcolatore = new Calcolatrice();
+
+//		chooseOperation(operation.charAt(0));
+		char operazione;
+		String operazioneFromChar = "";
+		while (!operazioneFromChar.equalsIgnoreCase("Q")) {
 			//// CALCOLATRICE
-			st = s.nextLine();
+			operazione = calcolatore.onMainMenu();
+			operazioneFromChar = Character.toString(operazione);
+			calcolatore.doOperation(operazioneFromChar);
+
 		}
-		
+
 		System.gc();
 		System.out.println("BYE!!");
-		s.close();
 
 	}
 
