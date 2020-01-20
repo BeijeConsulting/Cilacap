@@ -150,7 +150,7 @@ public class MorraCinese{
 		}
 	}
 
-	@SuppressWarnings("resource")	
+	@SuppressWarnings({ "resource", "unused" })	
 	public void choiceTwoFlow() {
 		String nomePlayer2 ="";
 		Scanner scan = new Scanner(System.in);
