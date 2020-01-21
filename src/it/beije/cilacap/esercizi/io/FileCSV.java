@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 public class FileCSV {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
 		
 		File f = new File("C:/temp/prova.txt");
