@@ -43,7 +43,6 @@ public class ScannerCalcolatrice {
 	}
 
 	public void doOperation(String operation) {
-		System.out.println("prima dello switch");
 		switch (operation.charAt(0)) {
 		case '+':
 			eseguiSomma();
@@ -71,7 +70,7 @@ public class ScannerCalcolatrice {
 		double result = modulo(value1, value2);
 		System.out.println("##################################################################");
 		System.out.println("modulo:" + value1 + " % " + value2 + " = " + result);
-
+		System.out.println("##################################################################");
 	}
 
 	private void eseguiDivisione() {
@@ -83,7 +82,7 @@ public class ScannerCalcolatrice {
 		double result = divisione(value1, value2);
 		System.out.println("##################################################################");
 		System.out.println("divisione: " + value1 + " / " + value2 + " = " + result);
-
+		System.out.println("##################################################################");
 	}
 
 	private void eseguiMoltiplicazion() {

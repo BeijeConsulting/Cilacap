@@ -20,7 +20,6 @@ public class ScannerCalcolatriceMain {
 			operazione = calcolatore.onMainMenu();
 			operazioneFromChar = Character.toString(operazione);
 			calcolatore.doOperation(operazioneFromChar);
-
 		}
 
 		System.gc();
