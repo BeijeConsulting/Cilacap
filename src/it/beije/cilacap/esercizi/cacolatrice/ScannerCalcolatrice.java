@@ -42,7 +42,7 @@ public class ScannerCalcolatrice {
 		return operation;
 	}
 
-	public void doOperation(String operation) {
+	public void doOperation(String operation) {  //parte il metodo corrispetivo all'operazione selezionata
 		switch (operation.charAt(0)) {
 		case '+':
 			eseguiSomma();
@@ -106,7 +106,7 @@ public class ScannerCalcolatrice {
 		double value2 = inputValues.nextDouble();
 		double result = somma(value1, value2);
 		System.out.println("##################################################################");
-		System.out.println("somma: " + value1 + "+" + value2 + " = " + result);
+		System.out.println("somma: " + value1 + " + " + value2 + " = " + result);
 		System.out.println("##################################################################");
 		
 	}
