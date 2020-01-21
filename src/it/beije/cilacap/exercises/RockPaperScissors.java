@@ -10,7 +10,7 @@ public class RockPaperScissors {
 		double challenger = Math.floor((Math.random() * 3));
 		int player = 0;
 		String choice = "";
-		String yourchoice = "Rock";
+		String yourchoice = "Paper";
 		System.out.println(challenger);
 		
 		if (challenger == 0) {

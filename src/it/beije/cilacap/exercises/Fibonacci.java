@@ -27,18 +27,19 @@ public class Fibonacci {
 		System.out.println(numbers[0]);
 		System.out.println(numbers[0] + " " + numbers[1]);
 		
+		
 		for (int k = 2; k <= n ; k++) {
-			//for (int m = 2; m <= k ; m++) {
 			int m = 2;
+			int r = n;
 			System.out.print(numbers[0] + " " + numbers[1] + " ");
 			while (m<=k) {
-			System.out.print(numbers[m] + " ");
-			m++;
+				System.out.print(numbers[m] + " ");
+				m++;
 			}
 			System.out.println(" ");
-			
 		}
-	
+		
+			System.out.println(" ");
 	} 
 
 }
