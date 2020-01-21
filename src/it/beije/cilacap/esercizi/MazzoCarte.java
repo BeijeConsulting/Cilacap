@@ -4,8 +4,8 @@ public class MazzoCarte
 {
 	public static void main(String[] args)
 	{
-		String player1 = ("A");
-		String player2 = ("K");
+		String player1 = ("7");
+		String player2 = ("A");
 		boolean result;
 		String deck = new String();
 		deck = inizializzazione();
@@ -24,8 +24,8 @@ public class MazzoCarte
 	{
 		boolean risultato = false;
 		if (mazzo.indexOf(carta1)>mazzo.indexOf(carta2)) risultato = true;
-		if (mazzo.indexOf(carta1) == 0) risultato = true;
-		if (mazzo.indexOf(carta2) == 0) risultato = false;
+		if (mazzo.indexOf(carta1) == 0 && mazzo.indexOf(carta2) == 13) risultato = true;
+		if (mazzo.indexOf(carta2) == 0 && mazzo.indexOf(carta1) == 13) risultato = false;
 		return risultato;
 	}
 }
