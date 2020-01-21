@@ -29,7 +29,7 @@ public class ScannerCalcolatrice {
 
 	public char onMainMenu() { // menu di scelta principale.
 
-		System.out.println();
+		System.out.println("##################################################################");
 		System.out.println("Calcolatrice v0.0.1");
 		System.out.println("Decidi L'operazione da svolgere (digitare il carattere corrispondente all'operazione):");
 		System.out.println("--           Somma: '+'");
@@ -37,6 +37,7 @@ public class ScannerCalcolatrice {
 		System.out.println("--       Divisione: '/'");
 		System.out.println("--          Modulo: '%'");
 		System.out.println("--            Exit: 'q/Q'");
+		System.out.println("##################################################################");
 		Scanner in = new Scanner(System.in);
 		char operation = in.next().charAt(0);
 		return operation;
