@@ -11,7 +11,7 @@ public class ScannerCalcolatrice {
 		System.out.println("Caratteri ammessi : " + Arrays.toString(ammessi));
 		
 		Scanner s = new Scanner(System.in);
-		String st = s.nextLine();
+		String st = s.next();
 		while (!st.equalsIgnoreCase("Q")) {
 
 			//System.out.println(st);
