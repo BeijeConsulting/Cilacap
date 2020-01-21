@@ -6,7 +6,7 @@ public class MyArrayList {
 	
 	private ArrayList list = new ArrayList();
 	
-	public void setList(ArrayList list) {
+	public MyArrayList(ArrayList list) {
 		this.list=list;
 	}
 	
