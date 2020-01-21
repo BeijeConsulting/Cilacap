@@ -31,7 +31,6 @@ public class EsercizioRubricaCSV {
 			for(int j = 0; j < intestazioneSplit.length; j++) {
 				if(correctOrder[i].equalsIgnoreCase(intestazioneSplit[j])) {
 					fileOrder[i] = j;
-					
 				}
 			}
 			intestazioneCorretta += correctOrder[i];
