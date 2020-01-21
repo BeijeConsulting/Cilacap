@@ -1,5 +1,17 @@
 package it.beije.cilacap;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
 public class MetodiStringhe {
 	public static String reverse(String s) {
 		char[]parole=s.toCharArray();
@@ -11,9 +23,11 @@ public class MetodiStringhe {
 	}
 	
 	public static void main(String[] args) {
-		
-		System.out.println(reverse("ciao"));
-		
+		LocalDateTime d = LocalDateTime.of(2015, 5, 10, 11, 22, 33);
+		Period p = Period.ofDays(1).ofYears(2);
+		d = d.minus(p);
+		DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+		System.out.println(f.format(d));
 		
 	}
 
