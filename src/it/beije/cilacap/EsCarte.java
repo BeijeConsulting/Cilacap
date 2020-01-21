@@ -16,11 +16,11 @@ public static void GiocoCarte(String sceltaGiocatore1, String sceltaGiocatore2){
 			 if(sceltaGiocatore1.contentEquals(controllo)) {
 				 indexSceltaGiocatore1 = i - 1;
 				 
-			 }  else if(sceltaGiocatore1.contentEquals("J"))
+			 }  else if(sceltaGiocatore1.equalsIgnoreCase("J"))
 					indexSceltaGiocatore1 = 10;
-				else if(sceltaGiocatore1.contentEquals("Q") || sceltaGiocatore1.contentEquals("D"))
+				else if(sceltaGiocatore1.equalsIgnoreCase("Q") || sceltaGiocatore1.equalsIgnoreCase("D"))
 					indexSceltaGiocatore1 = 11;
-				else if(sceltaGiocatore1.contentEquals("K") || sceltaGiocatore1.contentEquals("R"))
+				else if(sceltaGiocatore1.equalsIgnoreCase("K") || sceltaGiocatore1.equalsIgnoreCase("R"))
 					indexSceltaGiocatore1 = 12;
 		 }
 		 
@@ -30,11 +30,11 @@ public static void GiocoCarte(String sceltaGiocatore1, String sceltaGiocatore2){
 			 if(sceltaGiocatore2.contentEquals(controllo)) {
 				 indexSceltaGiocatore2 = i - 1;
 				 
-			 }  else if(sceltaGiocatore2.contentEquals("J"))
+			 }  else if(sceltaGiocatore2.equalsIgnoreCase("J"))
 					indexSceltaGiocatore2 = 10;
-				else if(sceltaGiocatore2.contentEquals("Q") || sceltaGiocatore2.contentEquals("D"))
+				else if(sceltaGiocatore2.equalsIgnoreCase("Q") || sceltaGiocatore2.equalsIgnoreCase("D"))
 					indexSceltaGiocatore2 = 11;
-				else if(sceltaGiocatore2.contentEquals("K") || sceltaGiocatore2.contentEquals("R"))
+				else if(sceltaGiocatore2.equalsIgnoreCase("K") || sceltaGiocatore2.equalsIgnoreCase("R"))
 					indexSceltaGiocatore2 = 12;
 		}
 
