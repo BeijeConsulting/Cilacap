@@ -55,8 +55,7 @@ public class EsercizioRubricaCSV {
 					if(i != correctOrder.length-1) {
 						System.out.print(";");
 					}
-				}
-				
+				}	
 			}
 			System.out.println();
 		}
