@@ -12,7 +12,7 @@ public class ArrayMain {
 		mySorting(arr, DECRESCENTE);
 	}
 	
-	private static int mySearching(Object[] array, Object e) {
+	public static int mySearching(Object[] array, Object e) {
 		for(int i=0; i<array.length; i++) {
 			if(array[i].equals(e)) return i;
 		}

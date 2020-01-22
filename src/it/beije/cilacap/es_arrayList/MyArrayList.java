@@ -2,15 +2,15 @@ package it.beije.cilacap.es_arrayList;
 
 import java.util.ArrayList;
 
-public class MyArrayList {
+public class MyArrayList<E> {
 	
-	private ArrayList list = new ArrayList();
+	private ArrayList<E> list = new ArrayList<>();
 	
-	public MyArrayList(ArrayList list) {
+	public MyArrayList(ArrayList<E> list) {
 		this.list=list;
 	}
 	
-	public ArrayList getList() {
+	public ArrayList<E> getList() {
 		return list;
 	}
 	
@@ -20,8 +20,8 @@ public class MyArrayList {
 		}
 	}
 	
-	public MyArrayList myReverse() {
-		ArrayList rev = new ArrayList();
+	public MyArrayList<E> myReverse() {
+		ArrayList<E> rev = new ArrayList<>();
 		for(int i=list.size()-1; i>=0; i--) {
 			rev.add(list.get(i));
 		}
@@ -29,7 +29,7 @@ public class MyArrayList {
 		return this;
 	}
 	
-	public boolean myEquals(MyArrayList comp) {
+	public boolean myEquals(MyArrayList<E> comp) {
 		if(list.size()!=comp.getList().size()) return false;
 		for(int i=0; i<list.size(); i++) {
 			if(!list.get(i).equals(comp.getList().get(i))) return false;
@@ -37,7 +37,7 @@ public class MyArrayList {
 		return true;
 	}
 
-	public boolean myEqualsToString(MyArrayList comp) {
+	public boolean myEqualsToString(MyArrayList<E> comp) {
 		if(list.size()!=comp.getList().size()) return false;
 		for(int i=0; i<list.size(); i++) {
 			if(!list.get(i).toString().equals(comp.getList().get(i).toString())) return false;
