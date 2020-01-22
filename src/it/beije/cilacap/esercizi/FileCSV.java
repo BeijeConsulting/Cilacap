@@ -10,10 +10,11 @@ import java.util.StringTokenizer;
 public class FileCSV {
 
 	public static void main(String[] args) throws IOException {
+
+		File f = new File("csv/rubrica1.csv");
+
 		
-		File f = new File("csv/rubrica3.csv");
-		
-//		System.out.println("f.exists() ? " + f.exists());
+		System.out.println("f.exists() ? " + f.exists());
 		System.out.println("f.getAbsolutePath() : " + f.getAbsolutePath());
 
 		FileReader fileReader = new FileReader(f);

@@ -66,9 +66,11 @@ public class ScannerCalcolatrice {
 			
 				
 			//System.out.println(st);
+			
 			//// CALCOLATRICE
 
 			st = s.next();
+
 		}
 		
 		System.gc();
