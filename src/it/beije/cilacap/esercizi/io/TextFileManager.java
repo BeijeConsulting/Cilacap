@@ -25,7 +25,7 @@ public class TextFileManager {
 
 		int c;
 		while ((c = fileReader.read()) > -1) {
-			//System.out.print((char)c);
+			System.out.print((char)c);
 			builder.append((char)c);
 		}
 		
@@ -54,7 +54,7 @@ public class TextFileManager {
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
 		while ((row = reader.readLine()) != null) {
-			//System.out.println(row);
+			System.out.println(row);
 			rows.add(row);
 		}
 		
