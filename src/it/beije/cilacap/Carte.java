@@ -20,13 +20,14 @@ public class Carte {
 	
 	void cartapiualta(int g1,int g2) {  //J=11 Q=12 K=13
 		int cg1=0,cg2=0;
-		int tmp1=g1,tmp2=g2;
+		int tmp1=g1,tmp2=g2,controllo=0;
 		while(true) {
 			if(tmp1==g2) {
 				break;
 			}else {
 				if(tmp1>13) {
 					tmp1=0;
+					controllo=1;
 				}else {
 					tmp1++;
 					cg1++;
@@ -39,13 +40,18 @@ public class Carte {
 			}else {
 				if(tmp2>13) {
 					tmp2=0;
+					controllo=1;
 				}else {
 					tmp2++;
 					cg2++;
 				}
 			}
 		}
-		if(cg1>cg2) {
+		if(controllo==1) {
+			if(cg1<cg2) {
+				System.out.println("Giocatore 2 vince");
+			}else {System.out.println("Giocatore 1 vince");}
+		}else if(cg1>cg2) {
 			System.out.println("Giocatore 1 vince");
 		}else {System.out.println("Giocatore 2 vince");}
 		

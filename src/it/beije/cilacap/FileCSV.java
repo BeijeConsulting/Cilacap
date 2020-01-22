@@ -11,7 +11,7 @@ public class FileCSV {
 
 	public static void main(String[] args) throws IOException {
 
-		File f = new File("csv/rubrica2.csv");
+		File f = new File("csv/rubrica4.csv");
 		//File f = new File("C:/User/Desktop/pippo.txt"); //Path linux
 		
 		FileReader filereader = new FileReader(f);
@@ -77,4 +77,5 @@ public class FileCSV {
 		}
 	}
 
+	
 }
