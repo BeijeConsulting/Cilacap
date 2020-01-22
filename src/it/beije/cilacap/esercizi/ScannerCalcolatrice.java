@@ -13,11 +13,10 @@ public class ScannerCalcolatrice {
 		Scanner s = new Scanner(System.in);
 		String st = s.next();
 		while (!st.equalsIgnoreCase("Q")) {
-
-			//System.out.println(st);
+			st = s.next();
+			System.out.println(st);
 			//// CALCOLATRICE
 
-			st = s.nextLine();
 		}
 		
 		System.gc();
