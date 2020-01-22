@@ -52,7 +52,7 @@ public class Contatto {
 
 	@Override
 	public String toString() {
-		return "Cognome: " + cognome + "\nNome: " + nome + "\nTelefono: " + telefono + "\nEmail: " + email;
+		return cognome + ";" + nome + ";" + telefono + ";" + email;
 	}
 	
 	

@@ -60,21 +60,23 @@ public class MyRubrica {
 		}
 		
 		
-		String path = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.txt";
+		String path = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.csv";
+		String intestazione = "COGNOME;NOME;TELEFONO;EMAIL\n";
 		StringBuilder newFileContent = new StringBuilder();
+		
 		for(Contatto c : contatti) {
-			newFileContent.append(c.toString() + "\n\n");
+			newFileContent.append(c.toString() + "\n");
 		}
 		
 		
 		// scrittura di un nuovo file o sovrascrittura
-		//TextFileManager.writeFileContent(newFileContent.toString(), path);
+		//TextFileManager.writeFileContent(intestazione + newFileContent.toString(), path);
 		
 		// Update file LaMiaRubrica.txt
 		String oldContent = TextFileManager.readFileContent(path);
 		String updateContent = oldContent + newFileContent.toString();
 		TextFileManager.writeFileContent(updateContent.toString(), path);
-
+		
 		System.gc();
 		System.out.println("BYE!!");
 		s.close();
