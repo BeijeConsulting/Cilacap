@@ -40,18 +40,13 @@ public class FileCSV {
 		String row;
 		while ((row = reader.readLine()) != null) {
 			//System.out.println(row);
-//			String[] array = row.split(";");
-//			System.out.println("nome : " + array[0]);
-//			System.out.println("cognome : " + array[1]);
-//			System.out.println("telefono : " + array[2]);
-//			System.out.println("email : " + array[3]);
-//			System.out.println('\n');
-			StringTokenizer tokenizer = new StringTokenizer(row, ";");
-			System.out.println("nome : " + tokenizer.nextToken());
-			System.out.println("cognome : " + tokenizer.nextToken());
-			System.out.println("telefono : " + tokenizer.nextToken());
-			System.out.println("email : " + tokenizer.nextToken());
-			System.out.println('\n');			
+			String[] array = row.split(";");
+		System.out.println("nome : " + array[0]);
+		System.out.println("cognome : " + array[1]);
+		System.out.println("telefono : " + array[2]);
+		System.out.println("email : " + array[3]);
+			System.out.println('\n');
+					
 		}
 	}
 

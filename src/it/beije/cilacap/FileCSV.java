@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 public class FileCSV {
+	//nome,cognome,telefono,email,indirizzo
+	
 
 	public static void main(String[] args) throws IOException {
 		File f = new File("C:\\work\\pippo.txt");
