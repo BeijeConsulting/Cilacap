@@ -12,7 +12,7 @@ public class EsercizioRubrica4 {
 		BufferedReader readerRubrica4 = new BufferedReader(new FileReader(new File("csv/rubrica4.csv")));
 		String rowRubrica4 = readerRubrica4.readLine(); // per ignorare l'intestazione dal parsing tiro fuori la prima
 														// riga
-
+		
 //		[EMAIL, COGNOME, NOME, TELEFONO, INDIRIZZO]
 		while ((rowRubrica4 = readerRubrica4.readLine()) != null) {
 

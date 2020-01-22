@@ -8,7 +8,7 @@ public class MainStrings {
 //		StringManagerImpl  strafare= sin.myTrim();
 //		System.out.println(sin.mySubString(2, 5));	
 //		System.out.println(strafare.MyEndWith("no"));
-		System.out.println(sin.myEquals("ciao"));		
+		System.out.println(sin.myEquals("ciao"));
 	}
 
 }
