@@ -10,9 +10,9 @@ public class FileCSV {
 
 	public static void main(String[] args) throws IOException {
 		
-		File f = new File("C:/temp/prova.txt");
+		File f = new File("csv/rubrica1.csv");
 		
-//		System.out.println("f.exists() ? " + f.exists());
+		System.out.println("f.exists() ? " + f.exists());
 		System.out.println("f.getAbsolutePath() : " + f.getAbsolutePath());
 
 		FileReader fileReader = new FileReader(f);
