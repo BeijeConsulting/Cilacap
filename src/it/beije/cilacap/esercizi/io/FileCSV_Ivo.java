@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class FileCSV {
+public class FileCSV_Ivo {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
@@ -52,6 +52,7 @@ public class FileCSV {
 			System.out.println("cognome : " + tokenizer.nextToken());
 			System.out.println("telefono : " + tokenizer.nextToken());
 			System.out.println("email : " + tokenizer.nextToken());
+			
 			System.out.println('\n');			
 		}
 	}
