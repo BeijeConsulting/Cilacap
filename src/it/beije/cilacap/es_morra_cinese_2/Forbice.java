@@ -1,4 +1,4 @@
-package it.beije.cilacap.morra_cinese_2;
+package it.beije.cilacap.es_morra_cinese_2;
 
 public class Forbice implements mossa{
 
