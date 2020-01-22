@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class TextFileManager {
@@ -102,11 +103,70 @@ public class TextFileManager {
 //		System.out.println(readFileContent(f));
 //		System.out.println(readFileRows(f));
 		
-		writeFileContent(readFileContent(f), "csv/copia1.txt");
+		
+		
+		
+		
+		
+		
+		//CE 20200122: Inizio soluzione esercizio mia rubrica
+		File f1=new File ("csv/miaRubrica.txt");
+		StringBuilder info= new StringBuilder();
+		Scanner s= new Scanner(System.in);
+		boolean finito=false;
+		
+		
+		
+		//CE 20200122: ciclo inserimento dati
+		do { 		
+			System.out.println("Cognome: ");
+			info.append(inserimentoDato()+";");
+			System.out.println("Nome: " );
+			info.append(inserimentoDato()+ ";");
+			System.out.println("Telefono: ");
+			info.append(inserimentoDato()+ ";");
+			System.out.println("Email: ");
+			info.append(inserimentoDato()+"\n");
+		
+			System.out.println("Hai altri contatti o vuoi inserire altri contatti?");
+				if(s.nextLine().equalsIgnoreCase("no")) {
+					finito=true;
+				}
+		}while (!finito);
+		
+		String contenuto = info.toString();
+		String intestazione ="COGNOME;NOME;TELEFONO;EMAIL\n";
+		
+		if(f1.exists()) {
+			String contenutoFile =readFileContent(f1);
+			System.out.println(contenutoFile);
+			String stringContenutoFile=intestazione.concat(contenutoFile.substring(contenutoFile.indexOf('\n')+1).concat(contenuto));
+			writeFileContent(stringContenutoFile, f1);
+		}else {
+			String contenuto2=intestazione.concat(contenuto);
+			writeFileContent(contenuto2, f1);
+			
+		}
 		writeFileContent(readFileRows(f), "csv/copia2.txt");
 		
+	
 		
 		System.out.println("the end");
 	}
+	public static String inserimentoDato() {
+		Scanner s = new Scanner(System.in);
+		String dato;
+		dato=s.nextLine();
+		boolean noChar= false;
+		while(dato.isEmpty() || dato == null || dato.trim().isEmpty()) {
+			System.out.println("Campo obbligatorio, non può essere vuoto"); 
+			dato=s.nextLine();
+			
+		}
+			
+		return dato;
+	}
+	
+	//fine esercizio
 
 }
