@@ -18,6 +18,10 @@ public class ScannerCalcolatrice {
 			st = s.nextLine();
 			String string = new String(st);
 			System.out.println(string);
+			st = s.next();
+			System.out.println(st);
+			//// CALCOLATRICE
+
 		}
 		
 		System.gc();
