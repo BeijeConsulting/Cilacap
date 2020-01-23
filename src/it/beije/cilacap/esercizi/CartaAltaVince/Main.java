@@ -3,7 +3,10 @@ package it.beije.cilacap.esercizi.CartaAltaVince;
 import java.util.Scanner;
 
 public class Main {
-
+	
+	public static final String[] strGame1 = {"A","2","3","4","5","6","7","J","Q","K",""};
+	public static final String[] strGame2 = {"carta","sasso","forbice",""};
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int p1,p2;
@@ -14,14 +17,14 @@ public class Main {
 		
 		if (gameMod != 1) {
 			System.out.println("Selezione player1:\n1- Asso\n2- Due\n3- Tre\n4- Quattro\n5- Cinque\n6- Sei\n7- Sette\n8- Jack\n9- Donna\n10- Re");
-			CartaAltaVince game = new CartaAltaVince(sc.nextInt());
+			CartaAltaVince game = new CartaAltaVince(sc.nextInt(),strGame1);
 		}else {
 			System.out.println("Selezione player1:\n1- Asso\n2- Due\n3- Tre\n4- Quattro\n5- Cinque\n6- Sei\n7- Sette\n8- Jack\n9- Donna\n10- Re");
 			p1 = sc.nextInt();
 			
 			System.out.println("Selezione player1:\n1- Asso\n2- Due\n3- Tre\n4- Quattro\n5- Cinque\n6- Sei\n7- Sette\n8- Jack\n9- Donna\n10- Re");
 			p2 = sc.nextInt();
-			CartaAltaVince game1vs1 = new CartaAltaVince(p1,p2);
+			CartaAltaVince game1vs1 = new CartaAltaVince(p1,p2,strGame1);
 		}
 	}
 

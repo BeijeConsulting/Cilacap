@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<utenti>
+    <utente>
+        <nome>Ema</nome>
+        <cognome>Princi</cognome>
+        
+        <telefono>3275833761</telefono>
+        <email>emaprinci@ciao.it</email>
+    </utente>
+    <utente>
+        <nome>Max</nome>
+        <cognome>Rossi</cognome>
+        <telefono>3258896213</telefono>
+        <email>maxrossi@ciaone.com</email>
+    </utente>
+</utenti>
