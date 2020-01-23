@@ -49,38 +49,39 @@ public class EsercizioRubrica {
 		fileWriter.close();
 	}
 	
+	public static String insertData() {
+		Scanner s = new Scanner(System.in);
+		String dato;
+		dato=s.nextLine();
+		boolean noChar= false;
+		while(dato.isEmpty() || dato == null || dato.trim().isEmpty()) {
+			System.out.println("Campo obbligatorio, non può essere vuoto"); 
+			dato=s.nextLine();
+			
+		}		
+		return dato;
+	}
 	
 	
-	public static void main(String[] args) throws IOException {
-
-		//CE 20200122: Inizio soluzione esercizio mia rubrica
-		File f1=new File ("csv/miaRubrica.txt");
-		StringBuilder info= new StringBuilder();
-		Scanner s= new Scanner(System.in);
-		boolean finito=false;
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
-		
-		
-		//CE 20200122: ciclo inserimento dati
-		do { 		
-			Contatto c=new Contatto();
-			System.out.println("Cognome: ");
-			c.setCognome(inserimentoDato());
-			System.out.println("Nome: " );
-			c.setNome(inserimentoDato());			
-			System.out.println("Telefono: ");
-			c.setTelefono(inserimentoDato());			
-			System.out.println("Email: ");
-			c.setEmail(inserimentoDato());
-			listaContatti.add(c);
-			System.out.println("Hai altri contatti o vuoi inserire altri contatti?");
-				if(s.nextLine().equalsIgnoreCase("n")) {
-					finito=true;
-				}
-		}while (!finito);
+	public static List<Contatto> loadContactList (File file) throws IOException{
+		List <Contatto>  contactList= new ArrayList<Contatto>();
+		FileReader fileReader = new FileReader(file);
+		BufferedReader reader = new BufferedReader(fileReader);
+		String row;
+		while ((row = reader.readLine()) != null) {
+			Contatto c1=new Contatto();
+			c1.setCognome(row);
+			while((row=reader.readLine())!="\n") {
+				
+			}
+		}
+		return contactList;	
+	}
+	
+	public static void writeInFile(List <Contatto> contatti, File f1 ) throws IOException {
 		
 		StringBuilder contenuto= new StringBuilder();
-		for(Contatto contatto: listaContatti) {
+		for(Contatto contatto: contatti) {
 			contenuto.append(contatto.getCognome()+";");
 			contenuto.append(contatto.getNome()+";");
 			contenuto.append(contatto.getTelefono()+";");
@@ -100,46 +101,47 @@ public class EsercizioRubrica {
 			writeFileContent(contenuto2, f1);
 			
 		}
-		
-		
+	}
 	
+	public static List<Contatto> createContacts() {
+		
+		Scanner s= new Scanner(System.in);
+		boolean finito=false;
+		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		
+		
+		//CE 20200122: ciclo inserimento dati
+		do { 		
+			Contatto c=new Contatto();
+			System.out.println("Cognome: ");
+			c.setCognome(insertData());
+			System.out.println("Nome: " );
+			c.setNome(insertData());			
+			System.out.println("Telefono: ");
+			c.setTelefono(insertData());			
+			System.out.println("Email: ");
+			c.setEmail(insertData());
+			listaContatti.add(c);
+			System.out.println("Hai altri contatti o vuoi inserire altri contatti?");
+				if(s.nextLine().equalsIgnoreCase("n")) {
+					finito=true;
+				}
+		}while (!finito);
+		return listaContatti;
+	}
+	
+	
+	public static void main(String[] args) throws IOException {
+
+		//CE 20200122: Inizio soluzione esercizio mia rubrica
+		File f1=new File ("csv/miaRubrica.txt");
+		StringBuilder info= new StringBuilder();
+		List<Contatto> listaContatti= createContacts();
+		writeInFile(listaContatti, f1);
 		
 		System.out.println("the end");
 	}
-	public static String inserimentoDato() {
-		Scanner s = new Scanner(System.in);
-		String dato;
-		dato=s.nextLine();
-		boolean noChar= false;
-		while(dato.isEmpty() || dato == null || dato.trim().isEmpty()) {
-			System.out.println("Campo obbligatorio, non può essere vuoto"); 
-			dato=s.nextLine();
-			
-		}
-			
-		return dato;
 
-	}
-	public static List<Contatto> loadContactList (File file) throws IOException{
-		List <Contatto>  contactList= new ArrayList<Contatto>();
-		FileReader fileReader = new FileReader(file);
-		BufferedReader reader = new BufferedReader(fileReader);
-		String row;
-		while ((row = reader.readLine()) != null) {
-			Contatto c1=new Contatto();
-			c1.setCognome(row);
-			while((row=reader.readLine())!="\n") {
-				
-			}
-		}
-		
-	
-		
-		return contactList;
-		
-		
-		
-	}
 	
 
 
