@@ -1,4 +1,4 @@
-package it.beije.cilacap.es_salva_rubrica;
+package it.beije.cilacap.es_rubrica;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class SalvaRubricaMain {
+public class RubricaMain {
 	
 	private static final String[] intestazioneDesiderata = {"cognome", "nome", "telefono", "email"};
 	private static Scanner scan = new Scanner(System.in);
