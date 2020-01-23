@@ -62,13 +62,23 @@ public class EsercizioCSV {
 			provafile.append("\n");
 			provafile.append("\n");
 		}
+		we.writeFileContent(provafile.toString(), file);	
 		
-		we.writeFileContent(provafile.toString(), file);
+		
 		
 	}
 	
-
+	public void CaricareContatti() {
+		
+		
+		
+		
+	}
+	
+	
 }
+
+
 class contatto{
 	private String nome;
 	private String cognome;
@@ -103,7 +113,6 @@ class contatto{
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
+	}	
 	
 }
