@@ -30,8 +30,6 @@ public class ParserXML {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        // Load the input XML document, parse it and return an instance of the
-        // Document class.
         Document document = builder.parse(file);
         Element element = document.getDocumentElement();       
         System.out.println(element.getTagName());
