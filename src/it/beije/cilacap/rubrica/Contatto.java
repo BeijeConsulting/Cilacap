@@ -7,6 +7,8 @@ public class Contatto {
 	private String telefono;
 	private String email;
 	
+	static final String[] INTESTAZIONE = {"cognome", "nome", "telefono", "email"};
+	
 	public String getNome() {
 		return nome;
 	}
@@ -33,6 +35,5 @@ public class Contatto {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
+	}	
 }

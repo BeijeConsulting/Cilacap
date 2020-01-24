@@ -20,7 +20,6 @@ public class ParserXML {
 
 	public static List<Contatto> getContattiFromFile(String pathfile) throws Exception {
 		File file = new File(pathfile);
-		
 		return getContattiFromFile(file);
 	}
 
@@ -68,14 +67,16 @@ public class ParserXML {
 	}
 	
 	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception {
-
+		File file = new File(pathfile);
+		if(file.exists()) {
+			contatti.addAll(0, getContattiFromFile(pathfile));
+		}
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         Document document = builder.newDocument();
         Element docElement = document.createElement("rubrica");
         document.appendChild(docElement);
-        
         for (Contatto c : contatti) {
         	Element contatto = document.createElement("contatto");
         	Element nome = document.createElement("nome");
@@ -109,10 +110,4 @@ public class ParserXML {
 
 		System.out.println("File saved!");
 	}
-	
-	public static void main(String[] args) throws Exception {
-		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
-		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
-	}
-
 }
