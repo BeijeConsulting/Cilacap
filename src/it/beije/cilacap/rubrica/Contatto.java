@@ -35,6 +35,7 @@ public class Contatto {
 		this.email = email;
 	}
 
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("cognome : ").append(cognome).append('\n');
