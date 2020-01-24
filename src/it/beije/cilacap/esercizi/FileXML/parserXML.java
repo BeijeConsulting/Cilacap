@@ -1,6 +1,7 @@
 package it.beije.cilacap.esercizi.FileXML;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +17,7 @@ import it.beije.cilacap.esercizi.FileManager.Contatto;
 
 public class parserXML {
 	
-	public static void writeContattiInFile(List<contatto> contatti, String pathFile) {
+	public static void writeContattiInFile(List<Contatto> contatti, String pathFile) {
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -47,7 +48,7 @@ public class parserXML {
 		}
 	}
 	
-	public static List<contatto> readContattiInFile(File pathFile){
+	public static ArrayList<Contatto> readContattiInFile(File pathFile){
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -79,7 +80,7 @@ public class parserXML {
 	public static void main(String[] args) throws Exception {
 		
 		File file = new File("xml//rubricaXML.xml");
-		readContattiInFile(file);
+		//readContattiInFile(file);
 		
 	}
 }
