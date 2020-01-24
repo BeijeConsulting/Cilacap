@@ -1,7 +1,12 @@
 package it.beije.cilacap.rubrica;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MyRubrica
@@ -9,12 +14,23 @@ public class MyRubrica
 
 	public static void main(String[] args) throws IOException
 	{
-		
+		boolean continua = true; //Scrivi un file da zero o continua?
+		boolean again = false; //ripetere inserimento?
 		StringBuilder s = new StringBuilder(); //creo la struttura iniziale
 		String append = new String(); //stringa di supporto per fare append
-		String stringa = primaRiga();//metodo per definire il contenuto della prima riga
-		boolean again = false; //ripetere inserimento?
-		setNewValue(s, stringa); //inserisco la prima riga
+		if (continua == true)
+		{
+			List<String> righe = new ArrayList<String>(); //struttura iniziale per lettura
+			File f = new File("csv\\MyRubrica.csv"); //importazione file
+			righe = readContent(f); //lettura e memorizzazione in ArrayList
+			setStringBuilder (s, righe);//metodo per fare append nello StringBuilder con i valori dell'ArrayList.
+			
+		}
+		else
+		{
+			String stringa = primaRiga();//metodo per definire il contenuto della prima riga
+			setNewValue(s, stringa); //inserisco la prima riga
+		}
 		do
 		{
 			append = insertNewValue(args); //Inserisco il contenuto delle righe
@@ -24,8 +40,8 @@ public class MyRubrica
 		while (again);
 		String content = convert(s);//metodo che mi converte il contenuto dello StringBuilder in stringa
 		printContent(content);//metodo che mi memorizza il contenuto della stringa su un file CSV
-		
-		
+
+
 	}
 	
 	public static String primaRiga()
@@ -57,12 +73,12 @@ public class MyRubrica
 		sbInput.append(";");
 		
 		System.out.println("Inserisci il telefono:");
-		myInput = input.next();
+		myInput = input.nextLine();
 		sbInput.append(myInput);
 		sbInput.append(";");
 		
 		System.out.println("Inserisci il email:");
-		myInput = input.next();
+		myInput = input.nextLine();
 		sbInput.append(myInput);
 		sbInput.append(";");
 		
@@ -119,5 +135,29 @@ public class MyRubrica
 
 		f.close();
 		
+	}
+	
+	public static List<String> readContent(File file) throws IOException
+	{
+		List<String> rows = new ArrayList<String>(); //ciascuna riga viene memorizzata in una stringa dell'ArrayList
+		FileReader fileReader = new FileReader(file);
+		BufferedReader reader = new BufferedReader(fileReader);
+		
+		String row = reader.readLine();
+		while (row != null)
+		{
+			rows.add(row);
+			row = reader.readLine();
+		}
+		
+		return rows;
+	}
+	
+	public static void setStringBuilder (StringBuilder sb, List<String> lista)
+	{
+		for(int i=0; i<lista.size(); i++)
+		{
+			setNewValue(sb, lista.get(i));
+		}
 	}
 }
