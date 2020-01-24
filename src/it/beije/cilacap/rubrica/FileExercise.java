@@ -53,7 +53,7 @@ public class FileExercise {
 		
 		while (row != null) {
 			
-			fields = row.split(";");
+			fields = row.split(";"); //Divide row 
 				
 				if (arrayIndex[0] < fields.length) {
 					System.out.println("Nome: " + fields[arrayIndex[0]]);
