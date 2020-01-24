@@ -1,0 +1,48 @@
+<CrystalDiskMark>
+	<test id_computer="01" version="7.0.0 x64" os="Windows 10" type="1 GiB" iterations="5" interval="5 sec" date="2020/01/02 13:19:48">
+		<read>
+			<Sequential_1MiB q="8" t="1">
+				<MBs>108.212</MBs>
+				<IOPS>103.2</IOPS>
+				<us>76786.24</us>
+			</Sequential_1MiB>
+			<Sequential_1MiB q="1" t="1">
+				<MBs>106.532</MBs>
+				<IOPS>101.6</IOPS>
+				<us>9822.73</us>
+			</Sequential_1MiB>
+			<Random_4KiB q="32" t="16">
+				<MBs>0.867</MBs>
+				<IOPS>211.7</IOPS>
+				<us>633277.09</us>
+			</Random_4KiB>
+			<Random_4KiB q="1" t="1">
+				<MBs>0.401</MBs>
+				<IOPS>97.9</IOPS>
+				<us>10184.86</us>
+			</Random_4KiB>
+		</read>
+		<write>
+			<Sequential_1MiB q="8" t="1">
+				<MBs>95.420</MBs>
+				<IOPS>91.0</IOPS>
+				<us>87077.42</us>
+			</Sequential_1MiB>
+			<Sequential_1MiB q="1" t="1">
+				<MBs>97.938</MBs>
+				<IOPS>93.4</IOPS>
+				<us>10687.89</us>
+			</Sequential_1MiB>
+			<Random_4KiB q="32" t="16">
+				<MBs>0.745</MBs>
+				<IOPS>181.9</IOPS>
+				<us>697347.89</us>
+			</Random_4KiB>
+			<Random_4KiB q="1" t="1">
+				<MBs>0.693</MBs>
+				<IOPS>169.2</IOPS>
+				<us>5741.27</us>
+			</Random_4KiB>
+		</write>
+	</test>
+</CrystalDiskMark>
