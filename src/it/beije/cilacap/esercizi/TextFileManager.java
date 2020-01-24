@@ -58,7 +58,6 @@ public class TextFileManager {
 			rows.add(row);
 		}
 		
-		System.out.println("rows size : " + rows.size());
 		return rows;
 	}
 
