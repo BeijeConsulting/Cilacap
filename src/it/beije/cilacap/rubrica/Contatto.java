@@ -35,5 +35,15 @@ public class Contatto {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+
 	}	
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("cognome : ").append(cognome).append('\n');
+		builder.append("nome : ").append(nome).append('\n');
+		builder.append("telefono : ").append(telefono).append('\n');
+		builder.append("email : ").append(email).append('\n');
+		return builder.toString();
+	}
 }
