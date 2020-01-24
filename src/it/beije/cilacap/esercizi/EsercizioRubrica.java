@@ -9,6 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import it.beije.cilacap.rubrica.Contatto;
 import jdk.nashorn.internal.runtime.ListAdapter;
 
@@ -63,22 +76,24 @@ public class EsercizioRubrica {
 	}
 	
 	
-	public static List<Contatto> loadContactList (File file) throws IOException{
+	public static List<Contatto> loadContactListFromCSV (File file) throws IOException{
 		List <Contatto>  contactList= new ArrayList<Contatto>();
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
-		String row;
+		String row=reader.readLine();
 		while ((row = reader.readLine()) != null) {
 			Contatto c1=new Contatto();
-			c1.setCognome(row);
-			while((row=reader.readLine())!="\n") {
-				
+			String [] info= row.split(";");
+			c1.setCognome(info[0]);
+			c1.setNome(info[1]);
+			c1.setTelefono(info[2]);
+			c1.setEmail(info[3]);
+			contactList.add(c1);
 			}
-		}
 		return contactList;	
 	}
 	
-	public static void writeInFile(List <Contatto> contatti, File f1 ) throws IOException {
+	public static void writeInFileCSV(List <Contatto> contatti, File f1 ) throws IOException {
 		
 		StringBuilder contenuto= new StringBuilder();
 		for(Contatto contatto: contatti) {
@@ -103,12 +118,12 @@ public class EsercizioRubrica {
 		}
 	}
 	
+
 	public static List<Contatto> createContacts() {
 		
 		Scanner s= new Scanner(System.in);
 		boolean finito=false;
 		List<Contatto> listaContatti = new ArrayList<Contatto>();
-		
 		
 		//CE 20200122: ciclo inserimento dati
 		do { 		
@@ -129,16 +144,126 @@ public class EsercizioRubrica {
 		}while (!finito);
 		return listaContatti;
 	}
+	//CE 20200124: Metodo per caricare i contatti da CSV in un file XML
+	public static void transferCSVToXML(File csvFile, File xmlFile) throws Exception {
+		List<Contatto> listaContatti= loadContactListFromCSV(csvFile);
+		writeInXML(listaContatti,xmlFile);
+		
+	}
 	
+	//CE 20200124: Metodo per scrivere in un file XML
+	public static void writeInXML(List<Contatto> contatti,File file) throws Exception {
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        Document document = builder.newDocument();
+        Element docElement = document.createElement("rubrica");
+        document.appendChild(docElement);
+        
+        for (Contatto c : contatti) {
+        	Element contatto = document.createElement("contatto");
+        	Element nome = document.createElement("nome");
+        	Element cognome = document.createElement("cognome");
+        	Element telefono = document.createElement("telefono");
+        	Element email = document.createElement("email");
+        	
+        	nome.setTextContent(c.getNome());
+        	cognome.setTextContent(c.getCognome());
+        	telefono.setTextContent(c.getTelefono());
+        	email.setTextContent(c.getEmail());
+        	
+        	contatto.appendChild(nome);
+        	contatto.appendChild(cognome);
+        	contatto.appendChild(telefono);
+        	contatto.appendChild(email);
+
+        	docElement.appendChild(contatto);
+        }
+
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		StreamResult result = new StreamResult(file);
+
+		// Output to console for testing
+		//StreamResult result = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+		
+	}
+	public static List<Contatto> getContattiFromFile(File file) throws Exception {
+		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        // Load the input XML document, parse it and return an instance of the
+        // Document class.
+        Document document = builder.parse(file);
+        Element element = document.getDocumentElement();       
+        System.out.println(element.getTagName());
+        
+        //System.out.println(element.getChildNodes().getLength());
+        NodeList contatti = element.getElementsByTagName("contatto");
+        System.out.println("contatti : " + contatti.getLength());
+
+        for (int i = 0; i < contatti.getLength(); i++) {
+        	Element utente = (Element)contatti.item(i);
+        	System.out.println(utente.getTagName() + " " + i);
+        	System.out.println("\tanni = " + utente.getAttribute("anni"));
+ 
+        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
+        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
+        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
+        	Element email = (Element)utente.getElementsByTagName("email").item(0);
+        	
+        	Contatto contatto = new Contatto();
+        	contatto.setNome(nome.getTextContent());
+        	contatto.setCognome(cognome.getTextContent());
+        	contatto.setTelefono(telefono.getTextContent());
+        	contatto.setEmail(email.getTextContent());
+       
+        	listaContatti.add(contatto);
+        }
+        
+        return listaContatti;
+	}
 	
-	public static void main(String[] args) throws IOException {
+	//CE 20200124: Metodo aggiungere a un file CVS i contatti di XML
+	public static void appendXMLIntoCSV(File fileXML, File fileCSV) throws Exception{
+		List <Contatto> listaContatti=getContattiFromFile(fileXML);
+		writeInFileCSV(listaContatti, fileCSV);	
+	}
+	public static void createCSVCopyOfXML(File fileXML) {
+		
+	}
+	
+	public static void main(String[] args) throws Exception {
 
 		//CE 20200122: Inizio soluzione esercizio mia rubrica
-		File f1=new File ("csv/miaRubrica.txt");
+		File f1=new File ("csv/miaRubrica.csv");
 		StringBuilder info= new StringBuilder();
-		List<Contatto> listaContatti= createContacts();
-		writeInFile(listaContatti, f1);
 		
+		//CE 20200123: creazione contatti
+		List<Contatto> listaContatti= createContacts();
+		
+		//CE 20200123:  caricamento lista di contatti nel file CSV 
+		writeInFileCSV(listaContatti, f1);
+		
+		//CE 20200124: trasferimento dei dati da un file CSV a un file XML
+		List<Contatto> contattiNelFile= loadContactListFromCSV(f1);
+		File f2=new File("xml/miaRubrica.xml");
+		transferCSVToXML(f1,f2);
+		
+		File f3=new File("xml/rubrica.xml");
+
+		//CE 20200124: aggiunta dei dati di in un XML in un file CSV
+		appendXMLIntoCSV(f3,f1);
+		
+		//CE 20200124: crea copia CSV di un file XML
+		createCSVCopyOfXML(f3);
 		System.out.println("the end");
 	}
 
