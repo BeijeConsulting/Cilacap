@@ -14,7 +14,7 @@ public class MyRubrica
 
 	public static void main(String[] args) throws IOException
 	{
-		boolean continua = true; //Scrivi un file da zero o continua?
+		boolean continua = false; //Scrivi un file da zero o continua?
 		boolean again = false; //ripetere inserimento?
 		StringBuilder s = new StringBuilder(); //creo la struttura iniziale
 		String append = new String(); //stringa di supporto per fare append
@@ -40,7 +40,6 @@ public class MyRubrica
 		while (again);
 		String content = convert(s);//metodo che mi converte il contenuto dello StringBuilder in stringa
 		printContent(content);//metodo che mi memorizza il contenuto della stringa su un file CSV
-
 
 	}
 	
@@ -88,6 +87,7 @@ public class MyRubrica
 		sbInput.append(";");
 		
 		String contenuto = sbInput.toString();
+		
 		return contenuto;
 	}
 	
@@ -116,8 +116,8 @@ public class MyRubrica
 				System.out.println("Scelta non valida. Riprova.");
 			}
 
-			
 		}
+		
 		return ancora;	
 	}
 	
@@ -149,6 +149,8 @@ public class MyRubrica
 			rows.add(row);
 			row = reader.readLine();
 		}
+		
+		reader.close();
 		
 		return rows;
 	}
