@@ -55,6 +55,7 @@ public class Metodi {
 		return stringa;
 	}
 	
+	
 	public static void writeFileContent(List<String> contentRows, File file) throws IOException {
 		FileWriter fileWriter = new FileWriter(file);
 				
@@ -97,5 +98,6 @@ public class Metodi {
 		fileWriter.flush();
 		fileWriter.close();
 	}
+	
 }
 
