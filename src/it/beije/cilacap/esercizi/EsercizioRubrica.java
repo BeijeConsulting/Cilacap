@@ -279,7 +279,7 @@ public class EsercizioRubrica {
 				break;
 			case 2: 
 				{
-					File f1=new File ("csv/miaRubrica.xml");
+					File f1=new File ("xml/miaRubrica.xml");
 					List<Contatto> listaContatti= createContacts();
 					writeInXML(listaContatti, f1);
 				}
@@ -300,14 +300,16 @@ public class EsercizioRubrica {
 					File f3=new File ("xml/miaRubrica.xml");
 					createCSVCopyOfXML(f3);
 				}
+				break;
 			case 5:
 				{
 					//CE 20200124: aggiunta dei dati di in un XML in un file CSV
-					File f1=new File ("csv/miaRubrica.xml");
-					File f3=new File ("xml/miaRubrica.csv");
-					appendXMLIntoCSV(f3,f1);
+					File f1=new File ("xml/miaRubrica.xml");
+					File f3=new File ("csv/miaRubrica.csv");
+					appendXMLIntoCSV(f1,f3);
 				}
-				
+				break;
+			default: break;
 			}
 			
 	System.out.println("Vuoi fare qualcos'altro?");
