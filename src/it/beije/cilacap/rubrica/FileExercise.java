@@ -1,4 +1,4 @@
-package it.beije.cilacap.exercises;
+package it.beije.cilacap.rubrica;
 
 import java.io.File;
 import java.io.FileReader;
@@ -6,10 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class FileExercise {
-
-	public static void main(String[] args) throws IOException {
+	
+	static void fileReader(String filePath) throws IOException {
 		
-		File sheet = new File("csv/rubrica4.csv"); // import the file
+		File sheet = new File(filePath); // import the file
 		
 		//System.out.println("sheet.exists() ? "+ sheet.exists());
 		//System.out.println("sheet.getAbsolutePath() : "+ sheet.getAbsolutePath());
@@ -18,7 +18,7 @@ public class FileExercise {
 		
 		BufferedReader reader = new BufferedReader(fileReader); // 	read the file line per line
 		
-		
+
 		String row = reader.readLine();
 		String[] fields = row.split(";");
 		final int[] arrayIndex = new int[5];
@@ -27,8 +27,6 @@ public class FileExercise {
 		
 		//Creating indexes for each column
 		
-		//row = reader.readLine();
-	
 		for(counterColumns = 0; counterColumns <= fields.length-1; counterColumns++) {
 			
 			if (fields[counterColumns].contentEquals("NOME")) {
@@ -48,6 +46,8 @@ public class FileExercise {
 			}
 			
 		}
+		
+		// Organization of the data according to the columns
 		
 		row = reader.readLine();
 		
@@ -76,6 +76,13 @@ public class FileExercise {
 		
 		reader.close();	
 	}
+
+	public static void main(String[] args) throws IOException {
+		
+		fileReader("csv/rubrica1.csv");
+		
+	}
+		
 		
 }
 				
