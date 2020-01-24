@@ -14,11 +14,17 @@ public class Main {
 		boolean menuOn = false;
 		
 		FileManager f = new FileManager();
-		ArrayList<Contatto> contatti = f.readRubricaCSV(PATH_CSV_FILE);
+		ArrayList<Contatto> contatti = f.getContattiFromFile(PATH_XML_FILE);
+//		ArrayList<Contatto> contattiXml = f.getContattiFromFile(PATH_XML_FILE);
 		
 		Scanner scn = new Scanner(System.in);
 		while (!menuOn) {
-			System.out.println("Rubrica dello zio 1.0\n\n1- Visualizzazione rubrica\n2- Inserimento nuovo numero");
+			System.out.println("Rubrica dello zio 1.0\n\n1- Visualizzazione rubrica"
+					+ "\n2- Inserimento nuovo numero"
+					+ "\n3- Copia file .csv esterno nella Rubrica"
+					+ "\n4- Copia file .xml esterno nella Rubrica"
+					+ "\n5- Esporta rubrica in un file .csv"
+					+ "\n6- Esporta rubrica in un file .xml");
 			String scelta1 = scn.nextLine();
 			
 			switch(scelta1) {
@@ -26,8 +32,46 @@ public class Main {
 				f.printRubrica(contatti);
 				break;
 			case "2":
-				f.writeRubrica(f.addContatti(contatti), PATH_CSV_FILE);
-				f.writeRubricaXML(contatti, PATH_XML_FILE);
+				f.writeRubrica(f.addContatti(contatti), PATH_CSV_FILE,PATH_XML_FILE);
+				break;
+			case "3":
+				String pathFileCopiaCsv = "";
+				System.out.println("Specificare il path del File .csv da copiare...");
+				
+				pathFileCopiaCsv = scn.nextLine();
+				
+				ArrayList<Contatto> contattiCopiaCsv = f.readRubricaCSV(pathFileCopiaCsv);
+				
+				f.writeRubrica(contattiCopiaCsv, PATH_CSV_FILE ,PATH_XML_FILE);
+				break;
+				
+			case "4":
+				String pathFileCopiaXml = "";
+				System.out.println("Specificare il path del File .csv da copiare...");
+				
+				pathFileCopiaXml = scn.nextLine();
+				
+				ArrayList<Contatto> contattiCopiaXml = f.readRubricaXML(pathFileCopiaXml);
+				
+				f.writeRubrica(contattiCopiaXml,PATH_CSV_FILE ,PATH_XML_FILE);
+				break;
+				
+			case "5":
+				String pathFileExportCsv = "";
+				System.out.println("Specificare il path del nuovo File .csv da creare...");
+				
+				pathFileExportCsv = scn.nextLine();
+				
+				f.writeRubricaCSV(contatti,pathFileExportCsv);
+				break;
+			
+			case "6":
+				String pathFileExportXml = "";
+				System.out.println("Specificare il path del nuovo File .xml da creare...");
+				
+				pathFileExportXml = scn.nextLine();
+				
+				f.writeRubricaXML(contatti,pathFileExportXml,true);
 				break;
 			}
 			System.out.println("Tornare al menu principale?\ts/n");

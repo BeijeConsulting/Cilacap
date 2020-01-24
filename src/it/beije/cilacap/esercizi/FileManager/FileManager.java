@@ -39,37 +39,48 @@ public class FileManager {
 
         // Load the input XML document, parse it and return an instance of the
         // Document class.
-        Document document = builder.parse(file);
-        Element element = document.getDocumentElement();       
-        System.out.println(element.getTagName());
-        
-        //System.out.println(element.getChildNodes().getLength());
-        NodeList contatti = element.getElementsByTagName("contatto");
-        System.out.println("contatti : " + contatti.getLength());
-
-        for (int i = 0; i < contatti.getLength(); i++) {
-        	Element utente = (Element)contatti.item(i);
-        	System.out.println(utente.getTagName() + " " + i);
-        	System.out.println("\tanni = " + utente.getAttribute("anni"));
- 
-        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
-        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
-        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
-        	Element email = (Element)utente.getElementsByTagName("email").item(0);
-        	
-        	Contatto contatto = new Contatto();
-        	contatto.setNome(nome.getTextContent());
-        	contatto.setCognome(cognome.getTextContent());
-        	contatto.setTelefono(telefono.getTextContent());
-        	contatto.setEmail(email.getTextContent());
-        	
-        	System.out.println("\tnome = " + contatto.getNome());
-        	System.out.println("\tcognome = " + contatto.getCognome());
-        	System.out.println("\ttelefono = " + contatto.getTelefono());
-        	System.out.println("\temail = " + contatto.getEmail());
-        	
-        	listaContatti.add(contatto);
-        }
+	    try { 
+        	Document document = builder.parse(file);
+        	Element element = document.getDocumentElement(); 
+	        
+	        if (!element.hasAttributes()) {
+		//      System.out.println(element.getTagName());
+		        
+		        //System.out.println(element.getChildNodes().getLength());
+		        NodeList contatti = element.getElementsByTagName("contatto");
+		//        System.out.println("contatti : " + contatti.getLength());
+		
+		        for (int i = 0; i < contatti.getLength(); i++) {
+		        	Element utente = (Element)contatti.item(i);
+		//        	System.out.println(utente.getTagName() + " " + i);
+		//        	System.out.println("\tanni = " + utente.getAttribute("anni"));
+		 
+		        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
+		        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
+		        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
+		        	Element email = (Element)utente.getElementsByTagName("email").item(0);
+		        	
+		        	Contatto contatto = new Contatto();
+		        	contatto.setNome(nome.getTextContent());
+		        	contatto.setCognome(cognome.getTextContent());
+		        	contatto.setTelefono(telefono.getTextContent());
+		        	contatto.setEmail(email.getTextContent());
+		        	
+		//        	System.out.println("\tnome = " + contatto.getNome());
+		//        	System.out.println("\tcognome = " + contatto.getCognome());
+		//        	System.out.println("\ttelefono = " + contatto.getTelefono());
+		//        	System.out.println("\temail = " + contatto.getEmail());
+		        	
+		        	listaContatti.add(contatto);
+		        }
+	        } else {
+	        	Element elementNull = document.createElement("rubrica");
+	        	document.appendChild(elementNull);
+	        }
+		       
+	    }catch (IllegalArgumentException exception) {
+	    	writeRubricaXML(listaContatti, file.getPath(), true);
+		}
         
         return listaContatti;
 	}
@@ -114,24 +125,24 @@ public class FileManager {
 		return contatti;
 	}
 	
-	public void writeRubrica(ArrayList<Contatto> contatti, String pathFile) throws IOException {
+	public void writeRubrica(ArrayList<Contatto> contatti, String pathFileCSV, String pathFileXML) throws IOException {
 		
-		String[] contattiCsv = writeRubricaCSV(contatti);
+		writeRubricaCSV(contatti, pathFileCSV);
 		
-		
-		FileWriter fileWriter = new FileWriter(pathFile);
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		
-		for (String row : contattiCsv) {
-			bufferedWriter.append(row).append('\n');
+		try {
+			writeRubricaXML(contatti, pathFileXML);
+		}catch(Exception e) {
+			System.out.println(e);
 		}
 		
-		bufferedWriter.flush();
-		bufferedWriter.close();
+		
 	}
 	
-	public String[] writeRubricaCSV(ArrayList<Contatto> contatti) throws IOException {
+	public void writeRubricaCSV(ArrayList<Contatto> contatti, String pathFileCSV) throws IOException {
+		
 		String [] contattiCsv = new String[contatti.size()];
+		FileWriter fileWriter = new FileWriter(pathFileCSV);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		
 		for (int i = 0; i < contattiCsv.length; i++) {
 			contattiCsv[i]= "";
@@ -141,7 +152,15 @@ public class FileManager {
 			contattiCsv[i] += contatti.get(i).getEmail() + ";";
 		}
 		
-		return contattiCsv;
+		for (String row : contattiCsv) {
+			bufferedWriter.append(row).append('\n');
+		}
+		
+		bufferedWriter.flush();
+		bufferedWriter.close();
+		
+		
+		System.out.println("CONTATTI SALVATI .CSV CON SUCCESSO");
 	}	
 	
 	public void writeRubricaXML(ArrayList<Contatto> contatti, String pathFile) throws Exception {
@@ -151,7 +170,9 @@ public class FileManager {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
 			Document document = builder.parse(pathFile);
+			Element element = document.getDocumentElement();
 			Element docElement = document.createElement("rubrica");
+			document.removeChild(element);
 			document.appendChild(docElement);
 			
 			for (Contatto c : contatti) {
@@ -194,8 +215,56 @@ public class FileManager {
 		
 	}
 	
+	public void writeRubricaXML(ArrayList<Contatto> contatti, String pathFile,boolean isNew) throws Exception {
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			
+			Document document = builder.newDocument();
+			Element docElement = document.createElement("rubrica");
+			document.appendChild(docElement);
+			
+			for (Contatto c : contatti) {
+				Element contatto = document.createElement("contatto");
+				
+				Element nome = (Element)document.createElement("nome");
+				Element cognome = (Element)document.createElement("cognome");
+				Element telefono = (Element)document.createElement("telefono");
+				Element email = (Element)document.createElement("email");
+				
+				nome.setTextContent(c.getNome());
+				cognome.setTextContent(c.getCognome());
+				telefono.setTextContent(c.getTelefono());
+				email.setTextContent(c.getEmail());
+				
+				contatto.appendChild(nome);
+				contatto.appendChild(cognome);
+				contatto.appendChild(telefono);
+				contatto.appendChild(email);
+				
+				docElement.appendChild(contatto);
+			}
+			
+			// write the content into xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(document);
+			StreamResult result = new StreamResult(new File(pathFile));
+
+			// Output to console for testing
+			//StreamResult result = new StreamResult(System.out);
+
+			transformer.transform(source, result);
+
+			System.out.println("CONTATTI ESPORTATI IN " + pathFile + "CON SUCCESSO");
+			
+		}catch (Exception exception) {
+			throw exception;
+		}
+	}
+	
 	public void printRubrica(ArrayList <Contatto> contatti) {
-		if (contatti.size() != 0) {
+		if (contatti.size() > 0) {
 			for (int i = 0; i < contatti.size(); i++) {
 				System.out.println("Contatto n°" + (i+1));
 				System.out.println("Nome: " + contatti.get(i).getNome());
@@ -232,7 +301,6 @@ public class FileManager {
 			}
 			
 		}
-		System.out.println("CONTATTI SALVATI .CSV CON SUCCESSO");
 		return contatti;
 	}
 	
