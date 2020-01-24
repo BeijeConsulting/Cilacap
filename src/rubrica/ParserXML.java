@@ -36,7 +36,7 @@ public class ParserXML {
         Element element = document.getDocumentElement();       
         System.out.println(element.getTagName());
         
-        //System.out.println(element.getChildNodes().getLength());
+        System.out.println(element.getChildNodes().getLength());
         NodeList contatti = element.getElementsByTagName("contatto");
         System.out.println("contatti : " + contatti.getLength());
 
@@ -110,9 +110,9 @@ public class ParserXML {
 		System.out.println("File saved!");
 	}
 	
-	public static void main(String[] args) throws Exception {
-		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
-		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
-	}
+//	public static void main(String[] args) throws Exception {
+//		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
+//		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
+//	}
 
 }

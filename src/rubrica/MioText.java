@@ -3,17 +3,21 @@ package rubrica;
 import static rubrica.Metodi.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import static rubrica.ParserXML.*;
 
 public class MioText {
 	
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		boolean s = true;
 		int controllo=0;
 		Scanner scanner = new Scanner(System.in);
 		File f = new File("c:/work/prova.csv");
+		List<Contatto> listaContatti= new ArrayList<>();
 		StringBuilder stringaB = new StringBuilder();
 		System.out.println("f.exists() ? " + f.exists());
 		Contatto contatto=new Contatto();
@@ -34,12 +38,14 @@ public class MioText {
 						stringaB.append(toCSV(contatto));
 						writeFileContent(stringaB.toString(), f);
 						controllo++;
+						listaContatti.add(contatto);
 					}
 					else
 					{
+						
 						contatto=impostaContatto();
-					
 						writeFileContent(stringaB.append(toCSV(contatto)).toString(),f);
+						listaContatti.add(contatto);
 					}
 				}
 				else
@@ -47,6 +53,8 @@ public class MioText {
 			}
 			
 		}
+		
+		toXML(listaContatti,f);
 		
 	}
 }
