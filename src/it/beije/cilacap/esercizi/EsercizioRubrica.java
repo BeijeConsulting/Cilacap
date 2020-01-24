@@ -236,35 +236,93 @@ public class EsercizioRubrica {
 		List <Contatto> listaContatti=getContattiFromFile(fileXML);
 		writeInFileCSV(listaContatti, fileCSV);	
 	}
-	public static void createCSVCopyOfXML(File fileXML) {
+	
+	public static void createCSVCopyOfXML(File fileXML) throws Exception{
+		List <Contatto> listaContatti=getContattiFromFile(fileXML);
+//		String [] nomeFileXML=fileXML.getAbsolutePath().split("\");
+//		String nomeFileCopiaCSV="csv/"+nomeFileXML[nomeFileXML.length-1];
+//		File fileCSV = new File (nomeFileCopiaCSV);
 		
+		Scanner scan= new Scanner(System.in);
+		System.out.println("Come vuoi chiamare il file di copia?");
+		String nomeFile= "csv/"+scan.next()+".csv";
+		File fileCSV = new File (nomeFile);
+		while(fileCSV.exists()) {
+			System.out.println("Esiste già un file con questo nome, inserisci un altro nome");
+			nomeFile= "csv/"+scan.next();
+			fileCSV=new File(nomeFile);
+		}	
+		
+		writeInFileCSV(listaContatti, fileCSV);	
 	}
 	
+
+	
 	public static void main(String[] args) throws Exception {
-
 		//CE 20200122: Inizio soluzione esercizio mia rubrica
-		File f1=new File ("csv/miaRubrica.csv");
-		StringBuilder info= new StringBuilder();
-		
-		//CE 20200123: creazione contatti
-		List<Contatto> listaContatti= createContacts();
-		
-		//CE 20200123:  caricamento lista di contatti nel file CSV 
-		writeInFileCSV(listaContatti, f1);
-		
-		//CE 20200124: trasferimento dei dati da un file CSV a un file XML
-		List<Contatto> contattiNelFile= loadContactListFromCSV(f1);
-		File f2=new File("xml/miaRubrica.xml");
-		transferCSVToXML(f1,f2);
-		
-		File f3=new File("xml/rubrica.xml");
 
-		//CE 20200124: aggiunta dei dati di in un XML in un file CSV
-		appendXMLIntoCSV(f3,f1);
+		Scanner s= new Scanner(System.in);
 		
-		//CE 20200124: crea copia CSV di un file XML
-		createCSVCopyOfXML(f3);
+		
+		boolean continua=false;
+		do {
+			System.out.println("Menu: \n 1-scrivere un file CSV \n 2-scrivere un file XML \n 3-Conversione CSV a XML \n 4-Conversione XML a CSV \n 5- Aggiungere al CSV i contatti XML ");
+			int selezione= s.nextInt();
+			switch(selezione) {
+			case 1: 
+				{//CE 20200123: creazione contatti
+					List<Contatto> listaContatti= createContacts();
+					File f1=new File ("csv/miaRubrica.csv");
+					//CE 20200123:  caricamento lista di contatti nel file CSV 
+					writeInFileCSV(listaContatti, f1);
+				}
+				break;
+			case 2: 
+				{
+					File f1=new File ("csv/miaRubrica.xml");
+					List<Contatto> listaContatti= createContacts();
+					writeInXML(listaContatti, f1);
+				}
+				break;
+			case 3:
+				{
+						//CE 20200124: trasferimento dei dati da un file CSV a un file XML
+						File f1=new File ("csv/miaRubrica.csv");
+						List<Contatto> contattiNelFile= loadContactListFromCSV(f1);
+						File f2=new File("xml/miaRubrica.xml");
+						transferCSVToXML(f1,f2);
+				}
+				break;
+				
+			case 4:
+				{
+					//CE 20200124: crea copia CSV di un file XML
+					File f3=new File ("xml/miaRubrica.xml");
+					createCSVCopyOfXML(f3);
+				}
+			case 5:
+				{
+					//CE 20200124: aggiunta dei dati di in un XML in un file CSV
+					File f1=new File ("csv/miaRubrica.xml");
+					File f3=new File ("xml/miaRubrica.csv");
+					appendXMLIntoCSV(f3,f1);
+				}
+				
+			}
+			
+	System.out.println("Vuoi fare qualcos'altro?");
+	Scanner risposta= new Scanner(System.in);
+	String ris=risposta.next();
+	if(ris.equalsIgnoreCase("s")) {
+		continua=true;
+	} else {
+		continua=false;
+	}
+		}while(continua==true);
+	
+	
 		System.out.println("the end");
+		
 	}
 
 	

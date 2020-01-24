@@ -30,5 +30,16 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+//	@Override
+//	public String toString() {
+//		StringBuilder builder=new StringBuilder();
+//		builder.append(cognome+";");
+//		builder.append(nome+";");
+//		builder.append(telefono+";");
+//		builder.append(email+"\n");
+//
+//		return builder.toString();
+//	}
+//	
+	
 }
