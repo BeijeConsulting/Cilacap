@@ -1,4 +1,4 @@
-package itBeije.Cilacap.Exercise;
+package rubrica;
 
 import java.io.BufferedReader;
 import java.io.File;

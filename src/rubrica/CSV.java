@@ -1,4 +1,4 @@
-package itBeije.Cilacap.Exercise;
+package rubrica;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,11 +25,7 @@ public class CSV {
 		row= reader.readLine();
 		String[] array = row.split(";");
 		int nome=0,cognome=0,indirizzo=0,telefono=0,email=0;
-//		for(i=0;(row = reader.readLine()) != null;i++)
-//		{
-//			
-//			System.out.println(row);
-//		}
+
 		
 		for(contatoreSwitch=0;contatoreSwitch<array.length;contatoreSwitch++)
 		{
@@ -65,7 +61,7 @@ public class CSV {
 			
 			System.out.println(row);
 			String[] array1 = row.split(";");
-			//List<String> list = Arrays.asList(array1);
+			
 			if((i+nome > array1.length-1) || (array1[i+nome].equals(null)))
 			{
 				System.out.println("nome : ");
@@ -104,14 +100,4 @@ public class CSV {
 
 	}
 
-	
-//	BufferedReader reader = new BufferedReader(fileReader);
-//	String row;
-//	System.out.println(row);
-//	String[] array = row.split(";");
-//	System.out.println("nome : " + array[0]);
-//	System.out.println("cognome : " + array[1]);
-//	System.out.println("telefono : " + array[2]);
-//	System.out.println("email : " + array[3]);
-//	System.out.println('\n');
 }

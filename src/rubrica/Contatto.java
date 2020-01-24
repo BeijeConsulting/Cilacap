@@ -1,4 +1,4 @@
-package it.beije.cilacap.rubrica;
+package rubrica;
 
 public class Contatto {
 
@@ -34,7 +34,6 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("cognome : ").append(cognome).append('\n');
@@ -43,4 +42,6 @@ public class Contatto {
 		builder.append("email : ").append(email).append('\n');
 		return builder.toString();
 	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package it.beije.cilacap.rubrica;
+package rubrica;
 
 import java.io.File;
 import java.util.ArrayList;
