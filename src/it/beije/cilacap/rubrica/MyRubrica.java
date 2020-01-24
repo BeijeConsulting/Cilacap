@@ -46,7 +46,7 @@ public class MyRubrica
 	
 	public static String primaRiga()
 	{
-		String prima = "COGNOME;NOME;TELEFONO;EMAIL";
+		String prima = "COGNOME;NOME;TELEFONO;EMAIL;INDIRIZZO";
 		return prima;
 	}
 	
