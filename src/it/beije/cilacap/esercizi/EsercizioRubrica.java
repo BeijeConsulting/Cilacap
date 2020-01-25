@@ -207,12 +207,12 @@ public class EsercizioRubrica {
         
         //System.out.println(element.getChildNodes().getLength());
         NodeList contatti = element.getElementsByTagName("contatto");
-        System.out.println("contatti : " + contatti.getLength());
+//        System.out.println("contatti : " + contatti.getLength());
 
         for (int i = 0; i < contatti.getLength(); i++) {
         	Element utente = (Element)contatti.item(i);
         	System.out.println(utente.getTagName() + " " + i);
-        	System.out.println("\tanni = " + utente.getAttribute("anni"));
+//        	System.out.println("\tanni = " + utente.getAttribute("anni"));
  
         	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
         	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);

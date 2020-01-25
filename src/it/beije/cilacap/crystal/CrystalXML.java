@@ -23,7 +23,7 @@ public class CrystalXML {
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
 		while ((row = reader.readLine()) != null) {
-			//System.out.println(row);
+			System.out.println(row);
 			rows.add(row);
 		}
 		
@@ -35,30 +35,52 @@ public class CrystalXML {
 
 	public static void  createListOfData(List <String> contenuto) {
 		TestData info= new TestData();
+		//CE 20200125: creazione array con il contenuto del file, separati dal \n
 		String[] dati= new String[contenuto.size()];
-		dati=contenuto.toArray(dati).sp;
-	
+		dati=contenuto.toArray(dati);
+
 		for(; i<dati.length;i++) {
 			System.out.println("nel for di createdListOfData");
-			String [] riga= dati[i].split("\n");
-			
+		//CE 20200125: creazione array con le parole di una riga.
+			String [] riga= dati[i].split(" ");
+		//CE 20200125: inizio analisi della riga
 			for(int j=0; j<riga.length; j++) {
 				System.out.println("nel for di createdList colonna");
 				System.out.println(riga[j]);
 				String colonna= riga[j].trim();
 				System.out.println(colonna);
-				switch(colonna) {
-				case "Profile:": 
+		//CE 20200125: prova costruzione parola senza spazi in mezzo (non funziona)
+//				char []caratteri =	colonna.toCharArray();
+//				System.out.println(caratteri.length);
+//				StringBuilder costruttoreParola= new StringBuilder();
+//				for(int a=0; a<caratteri.length; a++) {
+//					if(caratteri[a]!='\t' || caratteri[a]!= ' ' || caratteri[a]!='\n') {
+//						costruttoreParola.append(caratteri[a]);
+//						System.out.print(caratteri[a]);
+//					}
+//				}
+//				String parola=costruttoreParola.toString();
+//				System.out.println(parola);
+				System.out.println(colonna.equalsIgnoreCase("Profile:"));
+				if(colonna.equalsIgnoreCase("Profile:")) {
 					takeProfileFieldData(info,j, dati);
-					break;
-				case "[Read]":
-					takeReadFieldData(info,j, dati);
-					break;
-				case "[Write]":
-					takeWriteFieldData(info, j, dati);
-					break;	
-				default:break;
+				}else if(colonna.equalsIgnoreCase("[Read]:")){
+					takeProfileFieldData(info,j, dati);
+				}else if(colonna.equalsIgnoreCase("[Write]:")) {
+					takeProfileFieldData(info,j, dati);
 				}
+//				switch(colonna) {
+//				case "Profile:": 
+//					takeProfileFieldData(info,j, dati);
+//					break;
+//				case "[Read]":
+//					takeReadFieldData(info,j, dati);
+//					break;
+//				case "[Write]":
+//					takeWriteFieldData(info, j, dati);
+//					break;	
+//				default:break;
+//				}
 			}
 		}
 	}
