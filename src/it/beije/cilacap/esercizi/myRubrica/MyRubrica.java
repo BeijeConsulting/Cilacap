@@ -176,6 +176,7 @@ public class MyRubrica {
 
 	// inserimento nuovi contatti
 	public static List<Contatto> insertNewContatti() {
+		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		List<Contatto> listaContatti = new ArrayList<Contatto>();
 		String st = "";
@@ -318,8 +319,6 @@ public class MyRubrica {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException, SAXException {
 
-		MyRubrica rubrica = new MyRubrica();
-
 		String pathCSV = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.csv";
 		String pathXML = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.xml";
 
@@ -353,7 +352,6 @@ public class MyRubrica {
 
 		// leggo XML e scrivo in CSV
 		readXMLwriteCSV(pathCSV, pathXML);
-
 
 		System.gc();
 		System.out.println("Bye bye!!!");
