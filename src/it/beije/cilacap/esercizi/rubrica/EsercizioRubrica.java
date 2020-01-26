@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.rubrica;
 
 import java.io.BufferedReader;
 import java.io.File;

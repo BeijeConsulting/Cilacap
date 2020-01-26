@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.rubrica;
 
 public class Contatto {
 	private String nome;
