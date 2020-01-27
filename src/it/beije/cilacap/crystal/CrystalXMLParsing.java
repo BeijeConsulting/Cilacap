@@ -1,6 +1,9 @@
 package it.beije.cilacap.crystal;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,48 +16,63 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import it.beije.cilacap.rubrica.Contatto;
+
 
 public class CrystalXMLParsing {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
 
-		TestRow testRowSequential = new TestRow();
-		TestRow testRowRandom = new TestRow();
-		testRowSequential.setType("sequential");
-		testRowSequential.setMbs(2.6);
-		testRowSequential.setIops(2.6);
-		testRowSequential.setQ(3);
-		testRowSequential.setT(4);
-		testRowSequential.setUs(2.2);
-
-		testRowRandom.setType("random");
-		testRowRandom.setMbs(2.2);
-		testRowRandom.setIops(2.2);
-		testRowRandom.setQ(1);
-		testRowRandom.setT(9);
-		testRowRandom.setUs(2.2);
-
-		List<TestRow> listaRowsRead = new ArrayList<TestRow>();
-		List<TestRow> listaRowsWrite = new ArrayList<TestRow>();
-
-		listaRowsRead.add(testRowSequential);
-		listaRowsRead.add(testRowRandom);
-		TestData testData = new TestData();
-		testData.setIdComputer("1");
-		testData.setVersion("5");
-		testData.setOs("x86");
-		testData.setType("tipo36");
-		testData.setIterations(5);
-		testData.setInterval("4");
-		testData.setDate("oggi");
-		testData.setRead(listaRowsRead);
-		testData.setWrite(listaRowsWrite);
-		List<TestData> raccoltaDati = new ArrayList<TestData>();
-		raccoltaDati.add(testData);
-
-		esportaRubricaInXML(raccoltaDati, "xml/testParsing.xml");
+//		TestRow testRowSequential = new TestRow();
+//		TestRow testRowSequential2 = new TestRow();
+//		TestRow testRowRandom = new TestRow();
+//		testRowSequential.setType("sequential");
+//		testRowSequential.setMbs(2.6);
+//		testRowSequential.setIops(2.6);
+//		testRowSequential.setQ(3);
+//		testRowSequential.setT(4);
+//		testRowSequential.setUs(2.2);
+//		testRowSequential2.setType("sequential");
+//		testRowSequential2.setMbs(2.6);
+//		testRowSequential2.setIops(2.6);
+//		testRowSequential2.setQ(3);
+//		testRowSequential2.setT(4);
+//		testRowSequential2.setUs(2.2);
+//
+//		testRowRandom.setType("random");
+//		testRowRandom.setMbs(2.2);
+//		testRowRandom.setIops(2.2);
+//		testRowRandom.setQ(1);
+//		testRowRandom.setT(9);
+//		testRowRandom.setUs(2.2);
+//
+//		List<TestRow> listaRowsRead = new ArrayList<TestRow>();
+//		List<TestRow> listaRowsWrite = new ArrayList<TestRow>();
+//
+//		listaRowsRead.add(testRowSequential);
+//		listaRowsRead.add(testRowRandom);
+//		TestData testData = new TestData();
+//		testData.setIdComputer("1");
+//		testData.setVersion("5");
+//		testData.setOs("x86");
+//		testData.setType("tipo36");
+//		testData.setIterations(5);
+//		testData.setInterval("4");
+//		testData.setDate("oggi");
+//		testData.setRead(listaRowsRead);
+//		testData.setWrite(listaRowsWrite);
+//		List<TestData> raccoltaDati = new ArrayList<TestData>();
+//		raccoltaDati.add(testData);
+//		esportaRubricaInXML(raccoltaDati, "xml/testParsing.xml");
+		
+		File file = new File("crystal/01/CDM_20200102131948.txt");
+		List<TestData> raccoltaDati = importData(file);
 	}
 
+	@SuppressWarnings("unused")
 	private static void esportaRubricaInXML(List<TestData> raccoltaDati, String filePath) throws Exception {
 		File file = new File(filePath);
 		esportaRubricaInXML(raccoltaDati, file);
@@ -182,15 +200,47 @@ public class CrystalXMLParsing {
 	}
 
 	@SuppressWarnings("unused")
-	private static List<TestData> importData(String filePath) {
+	private static List<TestData> importData(String filePath) throws Exception {
 		File file = new File(filePath);
 		return importData(file);
 	}
 
-	private static List<TestData> importData(File file) {
+	private static List<TestData> importData(File file) throws Exception {
 		
+		List<TestData> raccoltaDati = new ArrayList<TestData>();
+	
+		TestRow testRowSequential = new TestRow();
+		FileReader fileReader = new FileReader(file);
+		BufferedReader reader = new BufferedReader(fileReader);
+		String row;
+		
+		while ((row = reader.readLine()) != null) {
+			
+			String array[] = row.split(" ");
+			
+		} // fine while
+		reader.close();
+		
+		
+		return raccoltaDati;
+	}
+	
+	private static TestRow matchSection(String readSection, File file) throws Exception {
+		
+		FileReader fileReader = new FileReader(file);
+		BufferedReader reader = new BufferedReader(fileReader);
+		String row;
+		while((row = reader.readLine()) != null) {
+			TestRow sequential1 = new TestRow();
+			TestRow sequential2 = new TestRow();
+			TestRow random1 = new TestRow();
+			TestRow random2 = new TestRow();
+			String[] array = row.split(" ");
+			
+			
+		}
+		reader.close();
 		return null;
-
 	}
 
 }

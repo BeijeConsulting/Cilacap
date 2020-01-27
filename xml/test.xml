@@ -1,17 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rubrica>
-	<contatto>
-			<nome>Gabriele</nome>
-			<cognome>Capobianco</cognome>
-			<telefono>3409864313</telefono>
-			<email>gabry19942009@gmail.com</email>
-	</contatto>
-	<contatto>
-			<nome>Giulia</nome>
-			<cognome>Gallo</cognome>
-			<telefono>3318234864313</telefono>
-			<email>giulia.gj@gmail.com</email>
-	</contatto>
-
-
-</rubrica>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CrystalDiskMark>
+	<test date="oggi" id_computer="1" interval="4" iterations="5"
+		os="x86" type="tipo36" version="5">
+		<read>
+			<Sequential_1MiB q="3" t="4">
+				<MBs>2.6</MBs>
+				<IOPS>2.6</IOPS>
+				<us>2.2</us>
+			</Sequential_1MiB>
+			<Random_4KiB q="1" t="9">
+				<Mbs>2.2</Mbs>
+				<IOPS>2.2</IOPS>
+				<us>2.2</us>
+			</Random_4KiB>
+		</read>
+		<write>
+			<Sequential_1MiB>
+				<MBs />
+				<IOPS />
+				<us />
+			</Sequential_1MiB>
+			<Random_4KiB>
+				<Mbs />
+				<IOPS />
+				<us />
+			</Random_4KiB>
+		</write>
+	</test>
+</CrystalDiskMark>
