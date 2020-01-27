@@ -43,74 +43,123 @@ public class CrystalXML {
 			System.out.println("nel for di createdListOfData");
 		//CE 20200125: creazione array con le parole di una riga.
 			String [] riga= dati[i].split(" ");
+			
 		//CE 20200125: inizio analisi della riga
 			for(int j=0; j<riga.length; j++) {
-				System.out.println("nel for di createdList colonna");
-				System.out.println(riga[j]);
+//				System.out.println("nel for di createdList colonna");
+//				System.out.println(riga[j]);
 				String colonna= riga[j].trim();
-				System.out.println(colonna);
-		//CE 20200125: prova costruzione parola senza spazi in mezzo (non funziona)
-//				char []caratteri =	colonna.toCharArray();
-//				System.out.println(caratteri.length);
-//				StringBuilder costruttoreParola= new StringBuilder();
-//				for(int a=0; a<caratteri.length; a++) {
-//					if(caratteri[a]!='\t' || caratteri[a]!= ' ' || caratteri[a]!='\n') {
-//						costruttoreParola.append(caratteri[a]);
-//						System.out.print(caratteri[a]);
-//					}
-//				}
-//				String parola=costruttoreParola.toString();
-//				System.out.println(parola);
-				System.out.println(colonna.equalsIgnoreCase("Profile:"));
-				if(colonna.equalsIgnoreCase("Profile:")) {
-					takeProfileFieldData(info,j, dati);
-				}else if(colonna.equalsIgnoreCase("[Read]:")){
-					takeProfileFieldData(info,j, dati);
-				}else if(colonna.equalsIgnoreCase("[Write]:")) {
-					takeProfileFieldData(info,j, dati);
+//				System.out.println(colonna);
+				String parola=createWord(colonna);		
+//				System.out.println(parola.equalsIgnoreCase("Profile:"));
+				if(parola.equalsIgnoreCase("Profile:")) {
+					takeProfileFieldData(info, dati);
+				}else if(parola.equalsIgnoreCase("[Read]:")){
+					takeProfileFieldData(info, dati);
+				}else if(parola.equalsIgnoreCase("[Write]:")) {
+					takeProfileFieldData(info, dati);
 				}
-//				switch(colonna) {
-//				case "Profile:": 
-//					takeProfileFieldData(info,j, dati);
-//					break;
-//				case "[Read]":
-//					takeReadFieldData(info,j, dati);
-//					break;
-//				case "[Write]":
-//					takeWriteFieldData(info, j, dati);
-//					break;	
-//				default:break;
-//				}
+				switch(parola) {
+				
+				case "Profile:": 
+					takeProfileFieldData(info, dati);
+					break;
+				case "[Read]":
+					takeReadFieldData(info, dati);
+					break;
+				case "[Write]":
+					takeWriteFieldData(info, j, dati);
+					break;	
+				default:break;
+				}
 			}
 		}
 	}
 	
+	
 	//CE 20200124: metodo per estrapolare i dati nel campo profile default
-	public static void takeProfileFieldData(TestData info, int col, String [] dati) {
+	public static void takeProfileFieldData(TestData info, String [] dati) {
+		
 		for (;i<dati.length;i++) {
-			System.out.println("nel for di takeprofile field");
 			String [] riga= dati[i].split(" ");
-			for(;col<riga.length;col++) {
+//			System.out.println("for i");
+			for(int col=0;col<riga.length;col++) {
+//				System.out.println("for j");
+				String parola= createWord(riga[col]);
+//				System.out.println(parola);
 				String colonna= riga[col].trim();
-				switch(colonna) {
-				case "Test:": 
-					info.setType(riga[col+1]+riga[col+2]);
-					System.out.println(info.getType());
-					break;
-				case "Date:": break;
-				case "OS:": break;
+				
+				switch(parola) {
+					case "Test:": 
+									info.setType(createWord(riga[col+1])+" " +createWord(riga[col+2]));
+//									System.out.println(info.getType());
+									info.setIterations(createWord(riga[col+3]).charAt(2)- '0');
+//									System.out.println(info.getIterations());
+									break;
+					case "[Interval:":  
+						                info.setInterval(createWord(riga[col+1])+ " "+ createWord(riga[col+2]).substring(0,3) );
+//										System.out.println(info.getInterval());
+										break;
+					case "Date:": 
+						          info.setDate(createWord(riga[col+1])+ " "+ createWord(riga[col+2])); 
+//								  System.out.println(info.getDate());break;
+					case "OS:": 
+						        info.setOs(createWord(riga[col+1])+ " " + riga[col+2]);
+//								System.out.println(info.getDate());
+								break;
 				}
 			}
 		}
 		
 	}
-	public static void takeReadFieldData(TestData info, int colonna, String[] data) {
+	
+	//CE 20200127: metodo per prendere i dati della sezione read
+	public static void takeReadFieldData(TestData info, String[] dati) {
+		List<TestRow> listaRead = new ArrayList<TestRow> ();
 		
+		System.out.println("dentro metodo takereadfielddata");
+		
+		CICLO_INIZIALE: for(; i<dati.length; i++) {
+			String [] riga= dati[i].split(" ");
+			for(int j =0; j<riga.length; j++) {
+				String parola= createWord(riga[j]);
+				TestRow raccoltaDatiRead= new TestRow();
+				System.out.println(parola);
+				String colonna= riga[j].trim();
+				switch(parola) {
+				case "Sequential":
+									raccoltaDatiRead.setType(parola + " "+ createWord(riga[j+1])); 
+									break;
+				}
+				if(parola.equalsIgnoreCase("[Write]")) {
+//					takeWriteFieldData(info, colonna, data);
+					break CICLO_INIZIALE;
+				}
+			}
+		}
+		info.setRead(listaRead);
 	}
 	
 	public static void takeWriteFieldData(TestData info,  int colonna, String[] data) {
 			
 		}
+	//CE 20200127: metodo per eliminare gli spazi null e creare la parola
+	public static String createWord(String colonna){
+		
+		//CE 20200125: prova costruzione parola senza spazi in mezzo
+				char []caratteri =	colonna.toCharArray();
+				StringBuilder costruttoreParola= new StringBuilder();
+					for(int a=0; a<caratteri.length; a++) {
+						if(caratteri[a]!=(char)0) {
+							costruttoreParola.append(caratteri[a]);
+						}
+					}
+					String parola = costruttoreParola.toString();
+	return parola;
+	}
+		
+	
+
 	public static void main (String [] args) throws Exception {
 			
 			File fileCrystal= new File("crystal/01/CDM_20200102131948.txt");
@@ -120,5 +169,5 @@ public class CrystalXML {
 			System.out.println(contenutoCrystal.toString());
 			createListOfData(contenutoCrystal);
 	}
-
 }
+
