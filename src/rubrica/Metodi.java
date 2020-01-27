@@ -55,34 +55,45 @@ public class Metodi {
 	{
 		
 		String stringa="";
-		stringa += contatto.getCognome()+";"+contatto.getNome()+";"+contatto.getTelefono()+";"+contatto.getEmail();
+		stringa += contatto.getCognome()+";"+contatto.getNome()+";"+contatto.getTelefono()+";"+contatto.getEmail()+'\n';
 		return stringa;
 	}
 	
+	
+	public static void xmlToCSV()
+	{
+		
+		
+		
+		
+		
+	}
+
+	
+	
 	public static void toXML(List<Contatto> listaContatti ,File f) throws Exception
 	{
-		int i;
+		int i=0;
+		int j=0;
 		String stringa="";
 		//stringa += readFileRows(f);
 		List<String> listStringa = new ArrayList<>();
 		listStringa.addAll(readFileRows(f));
-		String[] arrayStringa= listStringa.toString().split(";");
-		System.out.println(arrayStringa[3]);
-		List<Contatto> listaContatti2 = new ArrayList<>();
-		for(i=0;i<stringa.length();i=i+4)
+		
+	for(i=0;i<listStringa.size();i++)
 		{
 			Contatto contatto = new Contatto();
 			
 			
-			contatto.setCognome(stringa.split(";")[i]);
-			contatto.setNome(stringa.split(";")[i+1]);
-			contatto.setTelefono(stringa.split(";")[i+2]);
-			contatto.setEmail(stringa.split(",")[i+3]);
-			listaContatti2.add(contatto);
+			contatto.setCognome(listStringa.get(i).split(";")[0]);
+			contatto.setNome(listStringa.get(i).split(";")[1]);
+			contatto.setTelefono(listStringa.get(i).split(";")[2]);
+			contatto.setEmail(listStringa.get(i).split(";")[3]);
+			listaContatti.add(contatto);
 			
 		}
-		listaContatti2.addAll(listaContatti);
-		writeContattiInFile(listaContatti2, "c:/work/prova.xml");
+		
+		writeContattiInFile(listaContatti, "c:/work/prova.xml");
 	}
 	
 	public static void writeFileContent(List<String> contentRows, File file) throws IOException {
@@ -143,7 +154,7 @@ public class Metodi {
 		FileWriter fileWriter = new FileWriter(file);
 		
 		fileWriter.write(content );
-		fileWriter.write('\n');
+		
 		
 		fileWriter.flush();
 		fileWriter.close();

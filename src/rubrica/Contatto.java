@@ -39,7 +39,7 @@ public class Contatto {
 		builder.append("cognome : ").append(cognome).append('\n');
 		builder.append("nome : ").append(nome).append('\n');
 		builder.append("telefono : ").append(telefono).append('\n');
-		builder.append("email : ").append(email);
+		builder.append("email : ").append(email).append('\n');
 		return builder.toString();
 	}
 	
