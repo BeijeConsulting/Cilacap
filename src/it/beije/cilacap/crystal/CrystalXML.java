@@ -121,24 +121,52 @@ public class CrystalXML {
 		
 		CICLO_INIZIALE: for(; i<dati.length; i++) {
 			String [] riga= dati[i].split(" ");
+			List <String> listRiga= new ArrayList<String>();
+			
+			for(int k=0; k<riga.length;k++) {
+				String parola= createWord(riga[k]);
+				if(parola.length()!=0)
+					listRiga.add(parola);
+			}
+			riga=listRiga.toArray(new String[0]);
 			for(int j =0; j<riga.length; j++) {
-				String parola= createWord(riga[j]);
-				TestRow raccoltaDatiRead= new TestRow();
-				System.out.println(parola);
-				String colonna= riga[j].trim();
-				switch(parola) {
-				case "Sequential":
-									raccoltaDatiRead.setType(parola + " "+ createWord(riga[j+1])); 
-									break;
-				}
-				if(parola.equalsIgnoreCase("[Write]")) {
-//					takeWriteFieldData(info, colonna, data);
-					break CICLO_INIZIALE;
+				
+//            		String parola= createWord(riga[j]);
+//					System.out.println(parola.length());
+					
+					
+					TestRow raccoltaDatiRead= new TestRow();
+					System.out.println(riga[j]);
+					String colonna= riga[j].trim();
+					
+					switch(colonna) {
+					case "Sequential":
+										raccoltaDatiRead.setType(colonna+ " "+ createWord(riga[j+1]));
+										System.out.println(raccoltaDatiRead.getType());
+										break;
+					case "(Q=": 		
+										raccoltaDatiRead.setQ(createWord(riga[j+2]).charAt(0)-'0');
+										System.out.println(raccoltaDatiRead.getQ());
+										break;
+										
+					case "T=":       
+										//	System.out.println(createWord(riga[j+5]));
+										raccoltaDatiRead.setT(createWord(riga[j+1]).charAt(0)-'0');
+//										raccoltaDatiRead.setMbs(Double.parseDouble(createWord(riga[j+])));
+									
+										break;
+	
+					}
+					if(colonna.equalsIgnoreCase("[Write]")) {
+	//					takeWriteFieldData(info, colonna, data);
+						break CICLO_INIZIALE;
+					}
 				}
 			}
-		}
 		info.setRead(listaRead);
-	}
+		}
+		
+	
 	
 	public static void takeWriteFieldData(TestData info,  int colonna, String[] data) {
 			
