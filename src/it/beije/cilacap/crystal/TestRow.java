@@ -1,5 +1,8 @@
 package it.beije.cilacap.crystal;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class TestRow {
 
 	private String type;
@@ -8,6 +11,15 @@ public class TestRow {
 	private double mbs;
 	private double iops;
 	private double us;
+	
+	public TestRow(String s) {
+			this.type = s.split("\\(")[0].trim().replace(" ", "_");
+			this.q = Integer.parseInt(s.split("Q=")[1].split(",")[0].trim());
+			this.t = Integer.parseInt(s.split("T=")[1].split("\\)")[0].trim());
+			this.mbs = Double.parseDouble(s.split("\\):")[1].split("MB/s")[0].trim());
+			this.iops = Double.parseDouble(s.split("\\[")[1].split("IOPS")[0].trim());
+			this.us = Double.parseDouble(s.split("<")[1].split("us>")[0].trim());
+	}
 	
 	public String getType() {
 		return type;
@@ -49,6 +61,22 @@ public class TestRow {
 	}
 	public void setUs(double us) {
 		this.us = us;
+	}
+
+	public Element toXML(Document document) {
+		Element type = document.createElement(this.type);
+		type.setAttribute("t", t+"");
+		type.setAttribute("q", q+"");
+		Element mb = document.createElement("MBs");
+		Element io = document.createElement("IOPs");
+		Element us = document.createElement("us");
+		mb.setTextContent(mbs+"");
+		io.setTextContent(iops+"");
+		us.setTextContent(this.us+"");
+		type.appendChild(mb);
+		type.appendChild(io);
+		type.appendChild(us);
+		return type;
 	}
 	
 }
