@@ -2,7 +2,7 @@ package it.beije.cilacap.crystal;
 
 public class TestRow {
 
-	private String type;
+	private String type; //sequential/random
 	private int q;
 	private int t;
 	private double mbs;

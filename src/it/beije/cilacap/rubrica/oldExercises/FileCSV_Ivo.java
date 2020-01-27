@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.rubrica.oldExercises;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,13 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class FileCSV {
+public class FileCSV_Ivo {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
 		
-		File f = new File("csv/rubrica1.csv");
+		File f = new File("C:/temp/prova.txt");
 		
-		System.out.println("f.exists() ? " + f.exists());
+//		System.out.println("f.exists() ? " + f.exists());
 		System.out.println("f.getAbsolutePath() : " + f.getAbsolutePath());
 
 		FileReader fileReader = new FileReader(f);
@@ -51,6 +52,7 @@ public class FileCSV {
 			System.out.println("cognome : " + tokenizer.nextToken());
 			System.out.println("telefono : " + tokenizer.nextToken());
 			System.out.println("email : " + tokenizer.nextToken());
+			
 			System.out.println('\n');			
 		}
 	}
