@@ -7,12 +7,7 @@ import java.util.List;
 public class MainCrystal {
 	
 	public static final List<String> PATHS_TEST = new ArrayList<>();
-//	
-//	
-//	
-//	public static void main(String[] args) throws Exception{
-//		
-	
+
     static void RecursivePrint(File[] arr,int index,int level)  
      { 
          // terminate condition 
@@ -27,15 +22,11 @@ public class MainCrystal {
          if(arr[index].isFile()) {
              if (arr[index].getName().contains(".txt")) {
             	 PATHS_TEST.add(arr[index].getAbsolutePath()); 
-            	 
-            	 
              }
          }  
          // for sub-directories 
          else if(arr[index].isDirectory()) 
-         { 
-             System.out.println("[" + arr[index].getName() + "]"); 
-               
+         {   
              // recursion for sub-directories 
              RecursivePrint(arr[index].listFiles(), 0, level + 1); 
          } 
