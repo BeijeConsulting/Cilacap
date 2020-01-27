@@ -15,9 +15,10 @@ public class CrystalUtil {
 			test[1] = m.group(11);
 			test[2] = m.group(3);
 			test[3] = m.group(5);
-			test[4] = m.group(5);
+			test[4] = m.group(7);
 			test[5] = m.group(9);
 		}
+		
 		return test;
 	}
 

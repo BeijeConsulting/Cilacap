@@ -7,6 +7,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class MainCristal {
 	
 	private static String getCaratteriAmmessi() {
@@ -39,7 +51,7 @@ public class MainCristal {
 				stringOk.append(rows.charAt(i));
 			}
 		}
-
+		
 		return stringOk.toString();
 		
 	}
@@ -63,7 +75,7 @@ public class MainCristal {
 			
 			TestRow testRowRead = new TestRow();
 			
-			if(i <= 2) {
+			if(i < 2) {
 				testRowRead.setType("Sequential_1MiB");
 			} else {
 				testRowRead.setType("Random_4KiB");
@@ -82,7 +94,7 @@ public class MainCristal {
 			
 			TestRow testRowWrite = new TestRow();
 			
-			if(i <= 2) {
+			if(i < 2) {
 				testRowWrite.setType("Sequential_1MiB");
 			} else {
 				testRowWrite.setType("Random_4KiB");
@@ -103,7 +115,7 @@ public class MainCristal {
 		return testData;
 	}
 	
-	public static void getFiles(String rootPath) throws IOException {
+	public static void getFiles(String rootPath) throws IOException, ParserConfigurationException, TransformerException {
 		File folder = new File(rootPath);
 		for(File f : folder.listFiles()) {
 			
@@ -118,7 +130,9 @@ public class MainCristal {
 				List<TestData> testData = new ArrayList<TestData>();
 				
 				for(File file : ff.listFiles()) {
-					testData.add(addContentToList(fileContent(file.getPath()), f.getName()));
+					if(!file.isDirectory() && file.getName().contains("txt")) {
+						testData.add(addContentToList(fileContent(file.getPath()), f.getName().toString()));
+					}
 				}
 				
 				writeXML(pathXML, testData);
@@ -126,13 +140,66 @@ public class MainCristal {
 		}
 	}
 	
-	public static void writeXML(String pathXML, List<TestData> listTestData) {
+	public static void writeXML(String pathXML, List<TestData> listTestData) throws ParserConfigurationException, TransformerException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        Document document = builder.newDocument();
+        Element docElement = document.createElement("CrystalDiskMark");
+        document.appendChild(docElement);
+        
+        for(TestData testData : listTestData) {
+        	Element test = document.createElement("test");
+        	test.setAttribute("id_computer", testData.getIdComputer());
+        	test.setAttribute("version", testData.getVersion());
+        	test.setAttribute("os", testData.getOs());
+        	test.setAttribute("type", testData.getType());
+        	test.setAttribute("iterations", "" + testData.getIterations());
+        	test.setAttribute("interval", testData.getInterval());
+        	test.setAttribute("date", testData.getDate());
+        	
+        	// read
+        	Element read = document.createElement("read");
+        	test.appendChild(read);
+        	for(TestRow row : testData.getRead()) {
+        		Element readRows = document.createElement(row.getType());
+        		readRows.setAttribute("q", ""+row.getQ());
+        		readRows.setAttribute("t", ""+row.getT());
+        		
+        		Element mbs = document.createElement("MBs");
+        		mbs.setTextContent(Double.toString(row.getMbs()));
+        		readRows.appendChild(mbs);
+        		
+        		Element iops = document.createElement("IOPS");
+        		iops.setTextContent(Double.toString(row.getIops()));
+        		readRows.appendChild(iops);
+        		
+        		Element us = document.createElement("us");
+        		us.setTextContent(Double.toString(row.getUs()));
+        		readRows.appendChild(us);
+       		
+        		read.appendChild(readRows);
+        	}
+        	       	
+        	docElement.appendChild(test);
+        }
+        
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		StreamResult result = new StreamResult(new File(pathXML));
+
+		transformer.transform(source, result);
 		
 	}
 	
 
-	public static void main(String[] args) throws IOException {
-		getFiles("crystal/");
+	
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException {
+		String path = "crystal/";
+		getFiles(path);
+		System.out.println("Esecuzione terminata!");
 	}
 
 }
