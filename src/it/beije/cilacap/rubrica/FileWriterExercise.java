@@ -14,101 +14,67 @@ import java.util.List;
 
 public class FileWriterExercise {
 
-	public static void Reader() {
+	public static ArrayList<String> Reader() throws IOException {
 		
-		//StringBuilder data = new StringBuilder();
+		
 		String answer;
 		ArrayList<String> data = new ArrayList<String>();
 		
 		do {
 		
-		Scanner info0 = new Scanner(System.in);
-		System.out.println("Enter name");
-		data.add(info0.nextLine());
-		//String name = info0.nextLine();
-		
-		
-		Scanner info1 = new Scanner(System.in);
-		System.out.println("Enter surname");
-		data.add(info1.nextLine());
-		//String surname = info1.nextLine();
-		
-		
-		Scanner info2 = new Scanner(System.in);
-		System.out.println("Enter telephone");
-		data.add(info2.nextLine());
-		//String telephone = info2.nextLine();
-		
-		
-		Scanner info3 = new Scanner(System.in);
-		System.out.println("Enter email");
-		data.add(info3.nextLine());
-		//String email = info3.nextLine();
-		
-		
+			Scanner info0 = new Scanner(System.in);
+			System.out.println("Enter name");
+			data.add(info0.nextLine() + ";");
+			
+			
+			Scanner info1 = new Scanner(System.in);
+			System.out.println("Enter surname");
+			data.add(info1.nextLine() + ";");
 		
 			
-		Scanner further = new Scanner(System.in);
-		System.out.println("Do you wish to enter another name?");
-		answer = further.nextLine(); }
+			Scanner info2 = new Scanner(System.in);
+			System.out.println("Enter telephone");
+			data.add(info2.nextLine() + ";");
+		
+			
+			Scanner info3 = new Scanner(System.in);
+			System.out.println("Enter email");
+			data.add(info3.nextLine() + ";");
+			
+			data.add("\n");
+			
+			
+			Scanner further = new Scanner(System.in);
+			System.out.println("Do you wish to enter another name?");
+			answer = further.nextLine(); }
 		
 		while (answer.equalsIgnoreCase("yes")); 
-			
-		System.out.println(data);
-		
+				
+		//System.out.println(data);
+		return data;
 	}
 	
-	public static void writeFileContent(String content, String filePath) throws IOException {
-		
-		File file = new File(filePath);
-		writeFileContent(content, file);
-	}
 	
-	public static void writeFileContent(String content, File file) throws IOException {
+	public static void writerFile(ArrayList<String> data1) throws IOException {
+		File file = new File("csv/copia1.txt");
 		FileWriter fileWriter = new FileWriter(file);
-
-		fileWriter.write(content);
+		//BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		
+		fileWriter.write("NOME;COGNOME;TELEFONO;EMAIL;\n");
+		for (String dat : data1) {		
+			fileWriter.write(dat);
+		}
 
 		fileWriter.flush();
 		fileWriter.close();
+		
+		System.out.println("File Saved");
 	}
 	
-	public static void writeFileContent(List<String> data, String filePath) throws IOException {
-		File file = new File(filePath);
-		writeFileContent(data, file);
-	}
-
-	public static void writeFileContent(List<String> data, File file) throws IOException {
+	public static void main(String[] args) throws IOException {
 		
-		//contentRows = data;
+		writerFile(Reader());
 		
-		FileWriter fileWriter = new FileWriter(file);
-
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		for (String row : data) {
-			bufferedWriter.append(row).append('\n');
-		}
-
-		bufferedWriter.flush();
-		bufferedWriter.close();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		Reader();
-		
-		//File f = new File("csv/rubrica1.csv");
-		
-		//writeFileContent(readFileContent(f), "csv/copia1.txt");
-		//writeFileContent(readFileRows(f), "csv/copia2.txt");
-
 	}
 
 }
