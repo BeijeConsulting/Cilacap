@@ -1,7 +1,9 @@
 package it.beije.cilacap.rubrica;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,12 +18,31 @@ import org.w3c.dom.Element;
 public class MyRubricaXML
 {
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		File f = new File("xml\\MyRubricaXML.xml");//riferimento al pathfile
-		//creazione struttura principale
+		int scelta = 2;
+		boolean again = false; //variabile d'appoggio. Ripetere inserimento?
+		File f = new File("csv\\MyRubrica.csv");//riferimento al pathfile (CSV)
+		ArrayList<Contatto> listacontatti = new ArrayList<Contatto>();//creazione struttura principale
 		
+		switch(scelta)
+		{
+		case 1:
+			do 
+			{
+				setContatti(listacontatti);//metodo per inserimento contatti in listacontatti
+				again = MyRubrica.askNewValue();
+			}
+			while(again);
+			writeContattiInFile(listacontatti, "xml\\MyRubricaXML.xml");//scrittura file XML
+			break;
+			
+		case 2:
+			//estrapolare le righe utlizzando il readcontent. utilizzare un metodo simile a row split
+			//salvare ciascun valore nel setCorretto
+			break;
 		
+		}
 	}
 	
 	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception
@@ -65,6 +86,30 @@ public class MyRubricaXML
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
+	}
+	
+	public static void setContatti (List<Contatto> contatti)
+	{
+		Contatto valore = new Contatto();
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Inserisci il nome:");
+		String myInput = input.nextLine();
+		valore.setNome(myInput);
+		
+		System.out.println("Inserisci il cognome:");
+		myInput = input.nextLine();
+		valore.setCognome(myInput);
+		
+		System.out.println("Inserisci il telefono:");
+		myInput = input.nextLine();
+		valore.setTelefono(myInput);
+		
+		System.out.println("Inserisci il email:");
+		myInput = input.nextLine();
+		valore.setEmail(myInput);
+		
+		contatti.add(valore);
 	}
 
 }
