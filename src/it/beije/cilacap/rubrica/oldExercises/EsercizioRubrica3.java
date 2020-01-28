@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class EsercizioRubrica3 {
 
-	@SuppressWarnings({ "unused", "resource" })
+	@SuppressWarnings({"resource" })
 	public static void main(String[] args) throws IOException {
 		
 //		[INDIRIZZO, TELEFONO, EMAIL, COGNOME, NOME]

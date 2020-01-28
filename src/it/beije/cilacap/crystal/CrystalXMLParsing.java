@@ -3,8 +3,6 @@ package it.beije.cilacap.crystal;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,14 +14,11 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-import it.beije.cilacap.rubrica.Contatto;
 
 
 public class CrystalXMLParsing {
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
 
 //		TestRow testRowSequential = new TestRow();
@@ -68,8 +63,8 @@ public class CrystalXMLParsing {
 //		raccoltaDati.add(testData);
 //		esportaRubricaInXML(raccoltaDati, "xml/testParsing.xml");
 		
-		File file = new File("crystal/01/CDM_20200102131948.txt");
-		List<TestData> raccoltaDati = importData(file);
+//		File file = new File("crystal/01/CDM_20200102131948.txt");
+//		List<TestData> raccoltaDati = importData(file);
 	}
 
 	@SuppressWarnings("unused")
@@ -200,31 +195,6 @@ public class CrystalXMLParsing {
 	}
 
 	@SuppressWarnings("unused")
-	private static List<TestData> importData(String filePath) throws Exception {
-		File file = new File(filePath);
-		return importData(file);
-	}
-
-	private static List<TestData> importData(File file) throws Exception {
-		
-		List<TestData> raccoltaDati = new ArrayList<TestData>();
-	
-		TestRow testRowSequential = new TestRow();
-		FileReader fileReader = new FileReader(file);
-		BufferedReader reader = new BufferedReader(fileReader);
-		String row;
-		
-		while ((row = reader.readLine()) != null) {
-			
-			String array[] = row.split(" ");
-			
-		} // fine while
-		reader.close();
-		
-		
-		return raccoltaDati;
-	}
-	
 	private static TestRow matchSection(String readSection, File file) throws Exception {
 		
 		FileReader fileReader = new FileReader(file);
