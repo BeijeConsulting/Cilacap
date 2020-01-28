@@ -80,4 +80,68 @@ public class TestData {
 		this.write = write;
 	}
 
+	public TestData Popola(ArrayList<String> File) {
+		String app = new String();
+		TestData test = new TestData();
+		for(int i=0;i<File.size();i++) {
+			if(File.get(i).contains("Date:")) {
+				test.setDate(File.get(i).substring(9, 28));
+			}
+			if(File.get(i).contains("Interval:")) {
+				test.setInterval(app+=File.get(i).charAt(31));
+				app = "";
+				test.setIterations(Integer.parseInt(app+=File.get(i).charAt(17)));
+				test.setType(File.get(i).substring(9,14));
+			}
+			if(File.get(i).contains("(C)")) {
+				test.setVersion(File.get(i).substring(16, 21));
+			}
+			if(File.get(i).contains("Professional")) {
+				test.setOs(File.get(i).substring(9, 19));
+			}
+		}
+		test.setIdComputer("03");
+		test.read = test.CreaRead(File);
+		test.write = test.CreaWrite(File);
+		return test;
+	}
+	
+	public List<TestRow> CreaRead(ArrayList<String> File){
+		 List<TestRow> read = new ArrayList<TestRow>();
+		 TestRow test = new TestRow();
+		for(int i=0,z=0;i<File.size();i++) {
+			if(File.get(i).contains("Read")) {
+				i++;
+				z++;
+				while(File.get(i).contains("Q=")) {
+					read.add(test.Popolo(File,i));
+					i++;
+				}
+			}else if(z!=0) break;
+		}
+		return read;
+	}
+	public List<TestRow> CreaWrite(ArrayList<String> File){
+		 List<TestRow> read = new ArrayList<TestRow>();
+		 TestRow test = new TestRow();
+		for(int i=0,z=0;i<File.size();i++) {
+			if(File.get(i).contains("Write")) {
+				i++;
+				z++;
+				while(File.get(i).contains("Q=")) {
+					read.add(test.Popolo(File,i));
+					i++;
+				}
+			}else if(z!=0) break;
+		}
+		return read;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
