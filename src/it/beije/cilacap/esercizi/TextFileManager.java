@@ -54,11 +54,11 @@ public class TextFileManager {
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
 		while ((row = reader.readLine()) != null) {
-			//System.out.println(row);
+			System.out.println(row);
 			rows.add(row);
 		}
 		
-		System.out.println("rows size : " + rows.size());
+//		System.out.println("rows size : " + rows.size());
 		return rows;
 	}
 
@@ -89,12 +89,12 @@ public class TextFileManager {
 			bufferedWriter.append(row).append('\n');
 		}
 		
-		bufferedWriter.flush();
+//		bufferedWriter.flush();
 		bufferedWriter.close();
 	}
 
 	public static void main(String[] args) throws IOException {
-		File f = new File("csv/rubrica1.csv");
+		File f = new File("csv/rubrica3.csv");
 		
 //		System.out.println("f.exists() ? " + f.exists());
 //		System.out.println("f.getAbsolutePath() : " + f.getAbsolutePath());
