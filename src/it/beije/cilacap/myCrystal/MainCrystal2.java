@@ -94,9 +94,6 @@ public class MainCrystal2 {
 			root.appendChild(newTest);
 			
 		}
-		
-
-		System.out.println("Old: " + newTestData.size());
 
 		DOMSource source = new DOMSource(document);
 
@@ -117,7 +114,6 @@ public class MainCrystal2 {
 			if(f.isDirectory()) {
 
 				String newPath = rootPath + "\\" + f.getName();
-				System.out.println(newPath);
 
 				File ff = new File(newPath);
 
@@ -145,7 +141,6 @@ public class MainCrystal2 {
 			Element test = (Element) tests.item(i);
 			oldFileName.add(test.getAttribute("date").replace("/", "").replace(" ", "").replace(":", ""));
 		}
-		System.out.println(oldFileName);
 		return oldFileName;
 	}
 	
