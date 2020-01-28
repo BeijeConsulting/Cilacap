@@ -33,7 +33,7 @@ public class CrystalXML {
 	
 	static int i;
 
-	public static void  createListOfData(List <String> contenuto) {
+	public static TestData  createListOfData(List <String> contenuto) {
 		TestData info= new TestData();
 		//CE 20200125: creazione array con il contenuto del file, separati dal \n
 		String[] dati= new String[contenuto.size()];
@@ -45,35 +45,43 @@ public class CrystalXML {
 			String [] riga= dati[i].split(" ");
 			
 		//CE 20200125: inizio analisi della riga
-			for(int j=0; j<riga.length; j++) {
+			CICLO: for(int j=0; j<riga.length; j++) {
 //				System.out.println("nel for di createdList colonna");
 //				System.out.println(riga[j]);
 				String colonna= riga[j].trim();
 //				System.out.println(colonna);
 				String parola=createWord(colonna);		
-//				System.out.println(parola.equalsIgnoreCase("Profile:"));
-				if(parola.equalsIgnoreCase("Profile:")) {
-					takeProfileFieldData(info, dati);
-				}else if(parola.equalsIgnoreCase("[Read]:")){
-					takeProfileFieldData(info, dati);
-				}else if(parola.equalsIgnoreCase("[Write]:")) {
-					takeProfileFieldData(info, dati);
-				}
-				switch(parola) {
-				
-				case "Profile:": 
-					takeProfileFieldData(info, dati);
-					break;
-				case "[Read]":
+////				System.out.println(parola.equalsIgnoreCase("Profile:"));
+//				if(parola.equalsIgnoreCase("Profile:")) {
+//					takeProfileFieldData(info, dati);
+//				}else
+				System.out.println(parola);
+					if(parola.equalsIgnoreCase("CrystalDiskMark")) {
+						info.setVersion(createWord(riga[++j].trim())+ " "+ createWord(riga[++j].trim()));
+					}
+					if(parola.equalsIgnoreCase("[Read]")) {
 					takeReadFieldData(info, dati);
-					break;
-				case "[Write]":
-					takeWriteFieldData(info, j, dati);
-					break;	
-				default:break;
-				}
+					break CICLO;
+					}
+//				}else if(parola.equalsIgnoreCase("[Write]:")) {
+//					takeProfileFieldData(info, dati);
+//				}
+//				switch(parola) {
+//				
+//				case "Profile:": 
+//					takeProfileFieldData(info, dati);
+//					break;
+//				case "[Read]":
+//					takeReadFieldData(info, dati);
+//					break;
+//				case "[Write]":
+//					takeWriteFieldData(info, dati);
+//					break;	
+//				default:break;
+//				}
 			}
 		}
+		return info;
 	}
 	
 	
@@ -104,7 +112,7 @@ public class CrystalXML {
 						          info.setDate(createWord(riga[col+1])+ " "+ createWord(riga[col+2])); 
 //								  System.out.println(info.getDate());break;
 					case "OS:": 
-						        info.setOs(createWord(riga[col+1])+ " " + riga[col+2]);
+						        info.setOs(createWord(riga[col+1])+ " " + createWord(riga[col+2]));
 //								System.out.println(info.getDate());
 								break;
 				}
@@ -129,46 +137,126 @@ public class CrystalXML {
 					listRiga.add(parola);
 			}
 			riga=listRiga.toArray(new String[0]);
+			TestRow raccoltaDatiRead= new TestRow();
+			for(int j =0; j<riga.length; j++) {
+				
+//            		String parola= createWord(riga[j]);
+//					System.out.println(parola.length());
+					
+				
+//					System.out.println(riga[j]);
+					String colonna= riga[j].trim();
+					
+					if(colonna.equalsIgnoreCase("[Write]")) {
+						takeWriteFieldData(info, dati);
+						break CICLO_INIZIALE;
+					}
+					
+					
+					switch(colonna) {
+					case "Sequential":
+										raccoltaDatiRead.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+										System.out.println(raccoltaDatiRead.getType());
+										break;
+					case "(Q=": 		
+										raccoltaDatiRead.setQ(createWord(riga[++j]).charAt(0)-'0');
+										System.out.println(raccoltaDatiRead.getQ());
+										break;
+										
+					case "T=":       
+										//	System.out.println(createWord(riga[j+5]));
+										raccoltaDatiRead.setT(riga[++j].charAt(0)-'0');
+										raccoltaDatiRead.setMbs(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiRead.getT());
+										System.out.println(raccoltaDatiRead.getMbs());
+										break;
+					case"[": 			
+										raccoltaDatiRead.setIops(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiRead.getIops());
+										break;
+					case"<":
+										raccoltaDatiRead.setUs(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiRead.getUs());
+										break;
+	
+					}
+				
+				}
+				listaRead.add(raccoltaDatiRead);
+			}
+		info.setRead(listaRead);
+		}
+		
+	
+//CE 20200128: metodo per leggere i dati delle rige in write 	
+public static void takeWriteFieldData(TestData info, String[] data) {
+		
+List<TestRow> listaWrite = new ArrayList<TestRow> ();
+		
+		System.out.println("dentro metodo takeWritefielddata");
+		
+		CICLO_INIZIALE: for(; i<data.length; i++) {
+			String [] riga= data[i].split(" ");
+			List <String> listRiga= new ArrayList<String>();
+			
+			for(int k=0; k<riga.length;k++) {
+				String parola= createWord(riga[k]);
+				if(parola.length()!=0)
+					listRiga.add(parola);
+			}
+			riga=listRiga.toArray(new String[0]);
+			TestRow raccoltaDatiWrite= new TestRow();
 			for(int j =0; j<riga.length; j++) {
 				
 //            		String parola= createWord(riga[j]);
 //					System.out.println(parola.length());
 					
 					
-					TestRow raccoltaDatiRead= new TestRow();
-					System.out.println(riga[j]);
+				
+//					System.out.println(riga[j]);
 					String colonna= riga[j].trim();
+					
+					if(colonna.equalsIgnoreCase("Profile:")) {
+						System.out.println("è uguale");
+						takeProfileFieldData(info, data);
+						break CICLO_INIZIALE;
+					}
+					
 					
 					switch(colonna) {
 					case "Sequential":
-										raccoltaDatiRead.setType(colonna+ " "+ createWord(riga[j+1]));
-										System.out.println(raccoltaDatiRead.getType());
+										raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+//										System.out.println(raccoltaDatiWrite.getType());
 										break;
 					case "(Q=": 		
-										raccoltaDatiRead.setQ(createWord(riga[j+2]).charAt(0)-'0');
-										System.out.println(raccoltaDatiRead.getQ());
+										raccoltaDatiWrite.setQ(createWord(riga[++j]).charAt(0)-'0');
+//										System.out.println(raccoltaDatiWrite.getQ());
 										break;
 										
 					case "T=":       
 										//	System.out.println(createWord(riga[j+5]));
-										raccoltaDatiRead.setT(createWord(riga[j+1]).charAt(0)-'0');
-//										raccoltaDatiRead.setMbs(Double.parseDouble(createWord(riga[j+])));
-									
+										raccoltaDatiWrite.setT(riga[++j].charAt(0)-'0');
+										raccoltaDatiWrite.setMbs(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiWrite.getT());
+										System.out.println(raccoltaDatiWrite.getMbs());
+										break;
+					case"[": 			
+										raccoltaDatiWrite.setIops(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiWrite.getIops());
+										break;
+					case"<":
+										raccoltaDatiWrite.setUs(Double.parseDouble(riga[++j]));
+										System.out.println(raccoltaDatiWrite.getUs());
 										break;
 	
 					}
-					if(colonna.equalsIgnoreCase("[Write]")) {
-	//					takeWriteFieldData(info, colonna, data);
-						break CICLO_INIZIALE;
-					}
+				
 				}
+				listaWrite.add(raccoltaDatiWrite);
 			}
-		info.setRead(listaRead);
-		}
+		info.setWrite(listaWrite);
+		System.out.println("Finito");
 		
-	
-	
-	public static void takeWriteFieldData(TestData info,  int colonna, String[] data) {
 			
 		}
 	//CE 20200127: metodo per eliminare gli spazi null e creare la parola
@@ -195,7 +283,16 @@ public class CrystalXML {
 			List <String> contenutoCrystal = new ArrayList<String>();
 			contenutoCrystal=readFileRows(fileCrystal);
 			System.out.println(contenutoCrystal.toString());
-			createListOfData(contenutoCrystal);
+			TestData datiDiCrystal=createListOfData(contenutoCrystal);
+			datiDiCrystal.setIdComputer(fileCrystal.getPath().substring(9,10));
+			System.out.println(datiDiCrystal.getType());
+			System.out.println(datiDiCrystal.getDate());
+			System.out.println(datiDiCrystal.getVersion());
+			System.out.println(datiDiCrystal.getIdComputer());
+			System.out.println(datiDiCrystal.getInterval());
+			System.out.println(datiDiCrystal.getIterations());
+			System.out.println(datiDiCrystal.getOs());
+			
 	}
 }
 
