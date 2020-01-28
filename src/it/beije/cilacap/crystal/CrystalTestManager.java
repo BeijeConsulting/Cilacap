@@ -374,13 +374,13 @@ public class CrystalTestManager {
 			
 			for (TestData test : tests) {
 				
-				boolean equal = false;
-				
-				for (TestData oldTest : oldTests) {
-					if (oldTest.getIdComputer().contentEquals(test.getIdComputer())) {
-						equal=true;
-					}
-				}
+			boolean equal = false;
+//				
+//				for (TestData oldTest : oldTests) {
+//					if (oldTest.getIdComputer().contentEquals(test.getIdComputer())) {
+//						equal=true;
+//					}
+//				}
 				
 				if(!equal) { 
 					Element testChild = document.createElement("test");
@@ -448,6 +448,117 @@ public class CrystalTestManager {
 				}
 				i++;
 			}
+			
+			// write the content into xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(document);
+			StreamResult result = new StreamResult(new File(pathFile));
+
+			// Output to console for testing
+			//StreamResult result = new StreamResult(System.out);
+
+			transformer.transform(source, result);
+
+			System.out.println("CONTATTI SALVATI .XML CON SUCCESSO");
+			
+		}catch (Exception exception) {
+			throw exception;
+		}
+	}
+public void writeTestToXML(List<TestData> tests, List<TestData> oldTests, String pathFile, boolean isNew) throws Exception{
+		
+		
+		
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			
+			Document document = builder.newDocument();
+			Element docElement = document.createElement("CrystalDiskMark");
+			
+			int i = 0;
+			
+			for (TestData test : tests) {
+				
+				boolean equal = false;
+				
+//				for (TestData oldTest : oldTests) {
+//					if (oldTest.getIdComputer().contentEquals(test.getIdComputer())) {
+//						equal=true;
+//					}
+//				}
+				
+				if(!equal) { 
+					Element testChild = document.createElement("test");
+					
+					testChild.setAttribute("id_computer", test.getIdComputer());
+					testChild.setAttribute("version", test.getVersion());
+					testChild.setAttribute("os", test.getOs());
+					testChild.setAttribute("type", test.getType());
+					testChild.setAttribute("iterations", Integer.toString(test.getIterations()));
+					testChild.setAttribute("interval", test.getInterval());
+					testChild.setAttribute("date", test.getDate());
+					
+					Element read = (Element)document.createElement("read");
+					
+					for (TestRow rowRead : tests.get(i).getRead()) {
+						
+						Element rowReadItem = (Element)document.createElement(rowRead.getType().replace(" ", "_"));
+						
+						rowReadItem.setAttribute("q", Integer.toString(rowRead.getQ()));
+						rowReadItem.setAttribute("t", Integer.toString(rowRead.getT()));
+						
+						Element mbsReadItem = (Element)document.createElement("MBs");
+						Element iopsReadItem = (Element)document.createElement("IOPS");
+						Element usReadItem = (Element)document.createElement("us");
+						
+						mbsReadItem.setTextContent(Double.toString(rowRead.getMbs()));
+						iopsReadItem.setTextContent(Double.toString(rowRead.getIops()));
+						usReadItem.setTextContent(Double.toString(rowRead.getUs()));
+					
+						rowReadItem.appendChild(mbsReadItem);
+						rowReadItem.appendChild(iopsReadItem);
+						rowReadItem.appendChild(usReadItem);
+						read.appendChild(rowReadItem);
+					}
+					
+	
+					Element write = (Element)document.createElement("write");
+					
+					for (TestRow rowWrite : tests.get(i).getWrite()) {
+						
+						Element rowWriteItem = (Element)document.createElement(rowWrite.getType().replace(" ", "_"));
+						
+						rowWriteItem.setAttribute("q", Integer.toString(rowWrite.getQ()));
+						rowWriteItem.setAttribute("t", Integer.toString(rowWrite.getT()));
+						
+						Element mbsWriteItem = (Element)document.createElement("MBs");
+						Element iopsWriteItem = (Element)document.createElement("IOPS");
+						Element usWriteItem = (Element)document.createElement("us");
+						
+						mbsWriteItem.setTextContent(Double.toString(rowWrite.getMbs()));
+						iopsWriteItem.setTextContent(Double.toString(rowWrite.getIops()));
+						usWriteItem.setTextContent(Double.toString(rowWrite.getUs()));
+						
+						rowWriteItem.appendChild(mbsWriteItem);
+						rowWriteItem.appendChild(iopsWriteItem);
+						rowWriteItem.appendChild(usWriteItem);
+						
+						write.appendChild(rowWriteItem);
+					}
+	
+					testChild.appendChild(read);
+					testChild.appendChild(write);
+					
+					docElement.appendChild(testChild);
+					
+					
+					
+				}
+				i++;
+			}
+			document.appendChild(docElement);
 			
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();

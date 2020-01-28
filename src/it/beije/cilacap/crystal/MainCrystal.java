@@ -7,7 +7,9 @@ import java.util.List;
 public class MainCrystal {
 	
 	public static final List<String> PATHS_TEST = new ArrayList<>();
-
+	public static final List<String> DIR_TEST = new ArrayList<>();
+	public static final List<String> DIR_WRITE = new ArrayList<>();
+	
     static void RecursivePrint(File[] arr,int index,int level)  
      { 
          // terminate condition 
@@ -29,6 +31,9 @@ public class MainCrystal {
          {   
              // recursion for sub-directories 
              RecursivePrint(arr[index].listFiles(), 0, level + 1); 
+             if (!arr[index].getName().contains("output")) {  
+            	 DIR_TEST.add(arr[index].toString());
+             }
          } 
             
          // recursion for main directory 
@@ -60,21 +65,45 @@ public class MainCrystal {
        } 
        for (int i = 0; i < PATHS_TEST.size(); i++) {
         	System.out.println(PATHS_TEST.get(i));
+        	
        }
-       CrystalTestManager c = new CrystalTestManager();
-		
-		List<TestData> oldTests = c.readTestFromXML("crystal/crystaldata.xml");
-		List<TestData> newTests = new ArrayList<>();
-		
-		for (int i = 0; i < PATHS_TEST.size(); i++) {
-			System.out.println("\n");
-			System.out.println("-------------------------------------------------------------------");
-			System.out.println("Lettura file n_"+i+": directory |" + PATHS_TEST.get(i)+ "|\n");
-			newTests.add(c.readTestFile(PATHS_TEST.get(i)));
-			
-		}
-		
-		c.writeTestToXML(newTests, oldTests, "crystal/crystaldata.xml");
+       for (int x = 0; x < DIR_TEST.size(); x++) {
+    	   System.out.println(DIR_TEST.get(x));
+	       CrystalTestManager c = new CrystalTestManager();
+	        
+	       creaDir("crystal\\output\\");
+	       creaDir("crystal\\output\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1]);
+	        
+	       List<TestData> oldTests = new ArrayList<>();
+	       List<TestData> newTests = new ArrayList<>();
+	        
+	        
+	       for (int i = 0; i < PATHS_TEST.size(); i++) {
+	    	   if (PATHS_TEST.get(i).contains(DIR_TEST.get(x))) {
+		    	   System.out.println("\n");
+		    	   System.out.println("-------------------------------------------------------------------");
+		    	   System.out.println("Lettura file n_"+i+": directory |" + PATHS_TEST.get(i)+ "|\n");
+		    	   newTests.add(c.readTestFile(PATHS_TEST.get(i)));
+	    	   }
+	       }
+	       //List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
+	       c.writeTestToXML(newTests, oldTests, "crystal\\output\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1] + "\\crystalOutput.xml",true);
+       }
 	}
+    
+   
+	private static void creaDir(String Dir)
+    {
+      
+      boolean success = (new File(Dir)).mkdir();
+
+      if (success)
+      {
+        System.out.println("Ho creato: " + Dir);
+      }else{
+        System.out.println("Impossibile creare: " + Dir);
+      }
+   
+    }
 } 
 
