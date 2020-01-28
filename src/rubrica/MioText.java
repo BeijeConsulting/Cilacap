@@ -17,6 +17,8 @@ public class MioText {
 		int controllo=0;
 		Scanner scanner = new Scanner(System.in);
 		File f = new File("c:/work/prova.csv");
+		File fxml = new File("c:/work/prova.xml");
+		File fcsv = new File("c:/work/provaToCsv.csv");
 		List<Contatto> listaContatti= new ArrayList<>();
 		StringBuilder stringaB = new StringBuilder();
 		System.out.println("f.exists() ? " + f.exists());
@@ -54,7 +56,8 @@ public class MioText {
 			
 		}
 		
-		toXML(listaContatti,f);
+		toXML(f);
+		xmlToCSV(fxml,fcsv);
 		
 	}
 }

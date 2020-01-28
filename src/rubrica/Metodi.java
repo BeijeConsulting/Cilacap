@@ -1,7 +1,7 @@
 package rubrica;
 
 import static rubrica.ParserXML.writeContattiInFile;
-
+import static rubrica.ParserXML.getContattiFromFile;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -60,36 +60,54 @@ public class Metodi {
 	}
 	
 	
-	public static void xmlToCSV()
+	public static void xmlToCSV(File fxml , File f) throws Exception
 	{
 		
-		
-		
+		List<Contatto> listaContatti = new ArrayList<>();
+		List<Contatto> listaCSV = new ArrayList<>();
+		listaContatti.addAll(getContattiFromFile(fxml));
+		List<String> listaStringa = new ArrayList<>();
+		int i;
+//		for(i=0;i<listaContatti.size();i++)
+//		{
+//			Contatto c = new Contatto();
+//			c.setCognome(listaContatti.get(i).getCognome());
+//			c.setNome(listaContatti.get(i).getNome());
+//			c.setEmail(listaContatti.get(i).getEmail());
+//			c.setTelefono(listaContatti.get(i).getTelefono());
+//			
+//			listaCSV.add(c);
+//		}
+		for(i=0;i<listaContatti.size();i++)
+		{
+			listaStringa.add(listaContatti.get(i).getCognome()+";"+listaContatti.get(i).getNome()+";"+listaContatti.get(i).getTelefono()+";"+listaContatti.get(i).getEmail());
+		}
+			
+			
+		writeFileContent(listaStringa, f); 
 		
 		
 	}
 
 	
 	
-	public static void toXML(List<Contatto> listaContatti ,File f) throws Exception
+	public static void toXML(File f) throws Exception
 	{
 		int i=0;
-		int j=0;
-		String stringa="";
-		//stringa += readFileRows(f);
 		List<String> listStringa = new ArrayList<>();
+		List<Contatto> listaContatti = new ArrayList<>();
 		listStringa.addAll(readFileRows(f));
 		
-	for(i=0;i<listStringa.size();i++)
+		for(i=0;i<listStringa.size();i++)
 		{
 			Contatto contatto = new Contatto();
-			
 			
 			contatto.setCognome(listStringa.get(i).split(";")[0]);
 			contatto.setNome(listStringa.get(i).split(";")[1]);
 			contatto.setTelefono(listStringa.get(i).split(";")[2]);
 			contatto.setEmail(listStringa.get(i).split(";")[3]);
 			listaContatti.add(contatto);
+			
 			
 		}
 		
