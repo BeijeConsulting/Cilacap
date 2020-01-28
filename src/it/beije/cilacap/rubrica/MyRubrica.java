@@ -14,7 +14,7 @@ public class MyRubrica
 
 	public static void main(String[] args) throws IOException
 	{
-		boolean continua = true; //Scrivi un file da zero o continua?
+		boolean continua = false; //Scrivi un file da zero o continua?
 		boolean again = false; //ripetere inserimento?
 		StringBuilder s = new StringBuilder(); //creo la struttura iniziale
 		String append = new String(); //stringa di supporto per fare append

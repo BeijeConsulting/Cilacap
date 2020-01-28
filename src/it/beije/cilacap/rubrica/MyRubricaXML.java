@@ -24,6 +24,7 @@ public class MyRubricaXML
 		boolean again = false; //variabile d'appoggio. Ripetere inserimento?
 		File f = new File("csv\\MyRubrica.csv");//riferimento al pathfile (CSV)
 		ArrayList<Contatto> listacontatti = new ArrayList<Contatto>();//creazione struttura principale
+		List<String> righeCSV = new ArrayList<String>();//
 		
 		switch(scelta)
 		{
@@ -38,7 +39,8 @@ public class MyRubricaXML
 			break;
 			
 		case 2:
-			//estrapolare le righe utlizzando il readcontent. utilizzare un metodo simile a row split
+			righeCSV = MyRubrica.readContent(f);//estrapolare le righe utlizzando il readcontent
+			CSVToXML(righeCSV, listacontatti);//separare utilizzando un metodo simile a row split
 			//salvare ciascun valore nel setCorretto
 			break;
 		
@@ -110,6 +112,22 @@ public class MyRubricaXML
 		valore.setEmail(myInput);
 		
 		contatti.add(valore);
+	}
+	
+	public static void CSVToXML (List<String> listarighe, List<Contatto> contatti)
+	{
+		String riga; //estrapola ciascuna riga
+		String[] campo = new String[1]; //array di stringa per memorizzare ciascun campo della riga
+		Contatto valore = new Contatto();
+		
+		for(int i=0; i<listarighe.size(); i++)
+		{
+			riga = listarighe.get(i);
+			campo = riga.split(";");
+			if ("COGNOME".equalsIgnoreCase(campo[0])) //integrare un ciclo for per scorrere i campi della riga
+				//necessario ordinare prima di assegnare
+		}
+
 	}
 
 }
