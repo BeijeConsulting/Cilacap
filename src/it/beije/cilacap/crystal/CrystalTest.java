@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrystalTest {
-	
 
 	public static void main(String[] args) throws Exception {
 
-		File file = new File("crystal/01/CDM_20200102145818.txt");
-		List<TestData> raccoltaDati = importData(file);
-		System.out.println(raccoltaDati);
+//		File file = new File("crystal/01/CDM_20200102150612.txt");
+//		List<TestData> raccoltaDati = importData(file);
+		List<String> listaRighe = new ArrayList<String>();
+		String riga = "Sequential1MiB(Q=8,T=1):113.448MB/s[108.2IOPS]<73386.86us>";
+		listaRighe.add(riga);
+		datiFinitiDaPrelevare(listaRighe);
 
 	}
 
@@ -29,6 +31,7 @@ public class CrystalTest {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String row = "";
 		String[] rigaSplittata;
+		String[] temporanea;
 		// inizializzazione
 		TestData dato = new TestData();
 		TestRow testRowSequential1 = new TestRow();
@@ -42,41 +45,42 @@ public class CrystalTest {
 		testRowRandom2.setType("random");
 
 		// Parsing
-		reader.readLine(); // ignoro prima riga
-		row = reader.readLine();
-		row = reader.readLine();		
-		rigaSplittata = row.split(" ");
-		dato.setVersion(rigaSplittata[1].concat(rigaSplittata[2])); //preso version 7.0.0 x 64
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-		row = reader.readLine();
-//		System.out.println(row);
-		rigaSplittata = row.split(" ");
-//		System.out.println(rigaSplittata[4]);
-		rigaSplittata = rigaSplittata[4].split(",");
-		rigaSplittata[0] = rigaSplittata[0].trim();		
-		System.out.println(Integer.parseInt(rigaSplittata[0]));
-//		for(int i = 0; i<rigaSplittata.length; i++) {
-//			
-//			
-//			System.out.println(rigaSplittata[i] + " riga:"+i);
-//			
-//		}
-
+		List<String> righeDelFile = fileDivisoPerRighe(file);
+		for (int i = 0; i < righeDelFile.size(); i++) {
+			System.out.println(righeDelFile.get(i));
+		}
 		reader.close();
 
 		return raccoltaDati;
+	}
+
+	private static List<String> fileDivisoPerRighe(File file) throws Exception {
+
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		List<String> listaRighe = new ArrayList<String>();
+		String row = "";
+		while ((row = reader.readLine()) != null) {
+			row = row.replace((char) 0, " ".charAt(0));
+			row = row.replace(" ", "");
+			listaRighe.add(row);
+		}
+		reader.close();
+		return listaRighe;
+	}
+
+	public static void datiFinitiDaPrelevare(List<String> listaRighe) {
+
+
+			String a = listaRighe.get(0);
+			a = a.substring((a.indexOf("=")+1), (a.indexOf("=")+2));
+			List<String> datiDaPrendere = new ArrayList<String>();
+			datiDaPrendere.add("sequential1 Q:");
+			datiDaPrendere.add(a);
+//			System.out.println(a);
+			
+
+
+		
 	}
 
 }
