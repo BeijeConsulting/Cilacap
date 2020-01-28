@@ -79,7 +79,7 @@ public class CrystalXML {
 	
 	//CE 20200124: metodo per estrapolare i dati nel campo profile default
 	public static void takeProfileFieldData(TestData info, String [] dati) {
-		
+		System.out.println("dentro takeProfileFieldData");
 		for (;i<dati.length;i++) {
 			String [] riga= dati[i].split(" ");
 //			System.out.println("for i");
