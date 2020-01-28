@@ -30,7 +30,6 @@ public class CrystalTestManager {
 		File f = new File(pathFile);
 				
 		TestData tests = new TestData();
-		String[] arrayElementi = null;
 		
 		int inReadSeq=0, inWriteSeq=0;
 		int inReadRan=0, inWriteRan=0;
@@ -466,7 +465,7 @@ public class CrystalTestManager {
 			throw exception;
 		}
 	}
-public void writeTestToXML(List<TestData> tests, List<TestData> oldTests, String pathFile, boolean isNew) throws Exception{
+public void writeTestToXML(List<TestData> tests, String pathFile, boolean isNew) throws Exception{
 		
 		
 		
@@ -481,81 +480,69 @@ public void writeTestToXML(List<TestData> tests, List<TestData> oldTests, String
 			
 			for (TestData test : tests) {
 				
-				boolean equal = false;
+				Element testChild = document.createElement("test");
 				
-//				for (TestData oldTest : oldTests) {
-//					if (oldTest.getIdComputer().contentEquals(test.getIdComputer())) {
-//						equal=true;
-//					}
-//				}
+				testChild.setAttribute("id_computer", test.getIdComputer());
+				testChild.setAttribute("version", test.getVersion());
+				testChild.setAttribute("os", test.getOs());
+				testChild.setAttribute("type", test.getType());
+				testChild.setAttribute("iterations", Integer.toString(test.getIterations()));
+				testChild.setAttribute("interval", test.getInterval());
+				testChild.setAttribute("date", test.getDate());
 				
-				if(!equal) { 
-					Element testChild = document.createElement("test");
+				Element read = (Element)document.createElement("read");
+				
+				for (TestRow rowRead : tests.get(i).getRead()) {
 					
-					testChild.setAttribute("id_computer", test.getIdComputer());
-					testChild.setAttribute("version", test.getVersion());
-					testChild.setAttribute("os", test.getOs());
-					testChild.setAttribute("type", test.getType());
-					testChild.setAttribute("iterations", Integer.toString(test.getIterations()));
-					testChild.setAttribute("interval", test.getInterval());
-					testChild.setAttribute("date", test.getDate());
+					Element rowReadItem = (Element)document.createElement(rowRead.getType().replace(" ", "_"));
 					
-					Element read = (Element)document.createElement("read");
+					rowReadItem.setAttribute("q", Integer.toString(rowRead.getQ()));
+					rowReadItem.setAttribute("t", Integer.toString(rowRead.getT()));
 					
-					for (TestRow rowRead : tests.get(i).getRead()) {
-						
-						Element rowReadItem = (Element)document.createElement(rowRead.getType().replace(" ", "_"));
-						
-						rowReadItem.setAttribute("q", Integer.toString(rowRead.getQ()));
-						rowReadItem.setAttribute("t", Integer.toString(rowRead.getT()));
-						
-						Element mbsReadItem = (Element)document.createElement("MBs");
-						Element iopsReadItem = (Element)document.createElement("IOPS");
-						Element usReadItem = (Element)document.createElement("us");
-						
-						mbsReadItem.setTextContent(Double.toString(rowRead.getMbs()));
-						iopsReadItem.setTextContent(Double.toString(rowRead.getIops()));
-						usReadItem.setTextContent(Double.toString(rowRead.getUs()));
+					Element mbsReadItem = (Element)document.createElement("MBs");
+					Element iopsReadItem = (Element)document.createElement("IOPS");
+					Element usReadItem = (Element)document.createElement("us");
 					
-						rowReadItem.appendChild(mbsReadItem);
-						rowReadItem.appendChild(iopsReadItem);
-						rowReadItem.appendChild(usReadItem);
-						read.appendChild(rowReadItem);
-					}
-					
-	
-					Element write = (Element)document.createElement("write");
-					
-					for (TestRow rowWrite : tests.get(i).getWrite()) {
-						
-						Element rowWriteItem = (Element)document.createElement(rowWrite.getType().replace(" ", "_"));
-						
-						rowWriteItem.setAttribute("q", Integer.toString(rowWrite.getQ()));
-						rowWriteItem.setAttribute("t", Integer.toString(rowWrite.getT()));
-						
-						Element mbsWriteItem = (Element)document.createElement("MBs");
-						Element iopsWriteItem = (Element)document.createElement("IOPS");
-						Element usWriteItem = (Element)document.createElement("us");
-						
-						mbsWriteItem.setTextContent(Double.toString(rowWrite.getMbs()));
-						iopsWriteItem.setTextContent(Double.toString(rowWrite.getIops()));
-						usWriteItem.setTextContent(Double.toString(rowWrite.getUs()));
-						
-						rowWriteItem.appendChild(mbsWriteItem);
-						rowWriteItem.appendChild(iopsWriteItem);
-						rowWriteItem.appendChild(usWriteItem);
-						
-						write.appendChild(rowWriteItem);
-					}
-	
-					testChild.appendChild(read);
-					testChild.appendChild(write);
-					
-					docElement.appendChild(testChild);
-					
-					
-					
+					mbsReadItem.setTextContent(Double.toString(rowRead.getMbs()));
+					iopsReadItem.setTextContent(Double.toString(rowRead.getIops()));
+					usReadItem.setTextContent(Double.toString(rowRead.getUs()));
+				
+					rowReadItem.appendChild(mbsReadItem);
+					rowReadItem.appendChild(iopsReadItem);
+					rowReadItem.appendChild(usReadItem);
+					read.appendChild(rowReadItem);
 				}
+				
+
+				Element write = (Element)document.createElement("write");
+				
+				for (TestRow rowWrite : tests.get(i).getWrite()) {
+					
+					Element rowWriteItem = (Element)document.createElement(rowWrite.getType().replace(" ", "_"));
+					
+					rowWriteItem.setAttribute("q", Integer.toString(rowWrite.getQ()));
+					rowWriteItem.setAttribute("t", Integer.toString(rowWrite.getT()));
+					
+					Element mbsWriteItem = (Element)document.createElement("MBs");
+					Element iopsWriteItem = (Element)document.createElement("IOPS");
+					Element usWriteItem = (Element)document.createElement("us");
+					
+					mbsWriteItem.setTextContent(Double.toString(rowWrite.getMbs()));
+					iopsWriteItem.setTextContent(Double.toString(rowWrite.getIops()));
+					usWriteItem.setTextContent(Double.toString(rowWrite.getUs()));
+					
+					rowWriteItem.appendChild(mbsWriteItem);
+					rowWriteItem.appendChild(iopsWriteItem);
+					rowWriteItem.appendChild(usWriteItem);
+					
+					write.appendChild(rowWriteItem);
+				}
+
+				testChild.appendChild(read);
+				testChild.appendChild(write);
+				
+				docElement.appendChild(testChild);
+								
 				i++;
 			}
 			document.appendChild(docElement);

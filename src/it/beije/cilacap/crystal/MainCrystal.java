@@ -8,7 +8,6 @@ public class MainCrystal {
 	
 	public static final List<String> PATHS_TEST = new ArrayList<>();
 	public static final List<String> DIR_TEST = new ArrayList<>();
-	public static final List<String> DIR_WRITE = new ArrayList<>();
 	
     static void RecursivePrint(File[] arr,int index,int level)  
      { 
@@ -70,11 +69,11 @@ public class MainCrystal {
        for (int x = 0; x < DIR_TEST.size(); x++) {
     	   System.out.println(DIR_TEST.get(x));
 	       CrystalTestManager c = new CrystalTestManager();
+	       
+	       String pathFile="crystal\\outputsXML\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1] ;
+	       creaDir("crystal\\outputsXML\\");
+	       creaDir(pathFile);
 	        
-	       creaDir("crystal\\output\\");
-	       creaDir("crystal\\output\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1]);
-	        
-	       List<TestData> oldTests = new ArrayList<>();
 	       List<TestData> newTests = new ArrayList<>();
 	        
 	        
@@ -87,7 +86,7 @@ public class MainCrystal {
 	    	   }
 	       }
 	       //List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
-	       c.writeTestToXML(newTests, oldTests, "crystal\\output\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1] + "\\crystalOutput.xml",true);
+	       c.writeTestToXML(newTests, pathFile + "\\crystalOutput.xml",true);
        }
 	}
     
