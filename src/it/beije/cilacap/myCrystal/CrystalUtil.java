@@ -7,7 +7,7 @@ public class CrystalUtil {
 	
 	// Test
 	public static String[] getTest(String s) {
-		Pattern versione = Pattern.compile("CrystalDiskMark\\s(.*?)\\((.*)Test:\\s(.*?)\\s\\((.*?)x(.*?)\\)\\s\\[(.*?):\\s(.*?)\\](.*?)Date:\\s(.*?)O(.*?)\\:\\s(.*?)\\s\\[");
+		Pattern versione = Pattern.compile("CrystalDiskMark[\\s]+(.*?)\\s\\((.*)Test:\\s(.*?)\\s\\((.*?)x(.*?)\\)\\s\\[(.*?):\\s(.*?)\\](.*?)Date:\\s(.*?)O(.*?)\\:\\s(.*?)\\s\\[");
 		Matcher m = versione.matcher(s);
 		String [] test =  new String[6];
 		while(m.find()) {
@@ -47,7 +47,7 @@ public class CrystalUtil {
 	// MBs read
 	public static String [] getMBsRead(String s) {
 		String s2 = getStringForRead(s);
-		Pattern read = Pattern.compile("\\):[\\s]+(.*?)\\sMB/s\\s\\[");
+		Pattern read = Pattern.compile("\\):[\\s]+(.*?)\\sMB/s[\\s]+\\[");
 		Matcher m = read.matcher(s2);
 		String [] sequential = new String[4];
 		int i = 0;
@@ -61,7 +61,7 @@ public class CrystalUtil {
 	// MBs Write
 	public static String [] getMBsWrite(String s) {
 		String s2 = getStringForWrite(s);
-		Pattern write = Pattern.compile("\\):[\\s]+(.*?)\\sMB/s\\s\\[");
+		Pattern write = Pattern.compile("\\):[\\s]+(.*?)\\sMB/s[\\s]+\\[");
 		Matcher m = write.matcher(s2);
 		String [] sequential = new String[4];
 		int i = 0;
@@ -75,7 +75,7 @@ public class CrystalUtil {
 	// Q write
 	public static String [] getQWrite(String s) {
 		String s2 = getStringForWrite(s);
-		Pattern write = Pattern.compile("\\s\\(Q=[\\s]*(.*?),\\sT");
+		Pattern write = Pattern.compile("\\s\\(Q=[\\s]*(.*?),[\\s]+sT");
 		Matcher m = write.matcher(s2);
 		String [] attribute = new String[4];
 		int i = 0;
@@ -89,7 +89,7 @@ public class CrystalUtil {
 	// Q Read
 	public static String [] getQRead(String s) {
 		String s2 = getStringForRead(s);
-		Pattern read = Pattern.compile("\\s\\(Q=[\\s]*(.*?),\\sT");
+		Pattern read = Pattern.compile("\\s\\(Q=[\\s]*(.*?),[\\s]+T");
 		Matcher m = read.matcher(s2);
 		String [] attribute = new String[4];
 		int i = 0;
