@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rubrica>
+    <contatto anni="20">
+        <nome>Ema</nome>
+        <cognome>Princi</cognome>
+        <telefono/>
+        <email>ema@princi.it</email>
+    </contatto>
+    <contatto anni="54">
+        <nome>Max</nome>
+        <cognome>Rossi</cognome>
+        <telefono>4242354321</telefono>
+        <email>max@rossi.it</email>
+    </contatto>
+</rubrica>
