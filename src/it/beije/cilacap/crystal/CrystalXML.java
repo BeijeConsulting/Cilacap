@@ -31,6 +31,10 @@ public class CrystalXML {
 		return rows;
 	}
 	
+	
+	
+	
+	
 	static int i;
 
 	public static TestData  createListOfData(List <String> contenuto) {
@@ -178,7 +182,11 @@ public class CrystalXML {
 										raccoltaDatiRead.setUs(Double.parseDouble(riga[++j]));
 										System.out.println(raccoltaDatiRead.getUs());
 										break;
-	
+										
+					case "Random":
+										raccoltaDatiRead.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+										System.out.println(raccoltaDatiRead.getType());
+										break;
 					}
 				
 				}
@@ -226,11 +234,11 @@ List<TestRow> listaWrite = new ArrayList<TestRow> ();
 					switch(colonna) {
 					case "Sequential":
 										raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
-//										System.out.println(raccoltaDatiWrite.getType());
+										System.out.println(raccoltaDatiWrite.getType());
 										break;
 					case "(Q=": 		
 										raccoltaDatiWrite.setQ(createWord(riga[++j]).charAt(0)-'0');
-//										System.out.println(raccoltaDatiWrite.getQ());
+										System.out.println(raccoltaDatiWrite.getQ());
 										break;
 										
 					case "T=":       
@@ -248,6 +256,10 @@ List<TestRow> listaWrite = new ArrayList<TestRow> ();
 										raccoltaDatiWrite.setUs(Double.parseDouble(riga[++j]));
 										System.out.println(raccoltaDatiWrite.getUs());
 										break;
+					case "Random":
+						raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+						System.out.println(raccoltaDatiWrite.getType());
+						break;
 	
 					}
 				
