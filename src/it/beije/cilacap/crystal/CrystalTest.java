@@ -10,8 +10,8 @@ public class CrystalTest {
 
 	public static void main(String[] args) throws Exception {
 
-//		File file = new File("crystal/01/CDM_20200102150612.txt");
-//		List<TestData> raccoltaDati = importData(file);
+		// File file = new File("crystal/01/CDM_20200102150612.txt");
+		// List<TestData> raccoltaDati = importData(file);
 		List<String> listaRighe = new ArrayList<String>();
 		String riga = "Sequential1MiB(Q=8,T=1):113.448MB/s[108.2IOPS]<73386.86us>";
 		listaRighe.add(riga);
@@ -70,17 +70,42 @@ public class CrystalTest {
 
 	public static void datiFinitiDaPrelevare(List<String> listaRighe) {
 
-
-			String a = listaRighe.get(0);
-			a = a.substring((a.indexOf("=")+1), (a.indexOf("=")+2));
-			List<String> datiDaPrendere = new ArrayList<String>();
-			datiDaPrendere.add("sequential1 Q:");
-			datiDaPrendere.add(a);
-//			System.out.println(a);
-			
-
-
+		String row = "";
+		List<TestRow> testRowList = new ArrayList<TestRow>();
+		TestData testData = new TestData();
 		
+		// Sequential1MiB(Q=8,T=1):113.448MB/s[108.2IOPS]<73386.86us>
+		for (int i = 0; i < listaRighe.size(); i++) {
+			row = listaRighe.get(i);
+			if (row.contains("Sequential1")) {
+				TestRow testRow = new TestRow();
+				testRow.setType("sequential");
+				String temp = row;
+				temp = temp.substring((temp.indexOf("Q") + 2), (temp.indexOf("Q") + 3)); // Q=..., Sequential1MiB Q
+				testRow.setQ(Integer.parseInt(temp));
+//				System.out.println(testRow.getQ());
+				temp = row;
+				temp = temp.substring((temp.indexOf("T")+2), (temp.indexOf("T")+3)); // T=...) Sequential1MiB T
+				testRow.setT(Integer.parseInt(temp));
+//				System.out.println(testRow.getT());
+				temp = row;
+				temp = temp.substring((temp.indexOf(":")+1), (temp.indexOf("MB/s"))); // MB/s
+				testRow.setMbs(Double.parseDouble(temp));
+//				System.out.println(testRow.getMbs());
+				temp = row;
+				temp = temp.substring((temp.indexOf("[")+1), (temp.indexOf("IOPS"))); // IOPS
+				testRow.setIops(Double.parseDouble(temp));
+//				System.out.println(testRow.getIops());
+				temp = row;
+				temp = temp.substring((temp.indexOf("<")+1), (temp.indexOf("us"))); //us
+				testRow.setUs(Double.parseDouble(temp));
+//				System.out.println(testRow.getUs());
+			}
+		}//fine for
+		
+		
+		
+
 	}
 
 }
