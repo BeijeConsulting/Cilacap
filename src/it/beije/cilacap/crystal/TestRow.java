@@ -50,5 +50,12 @@ public class TestRow {
 	public void setUs(double us) {
 		this.us = us;
 	}
+	@Override
+	public String toString() {
+		return "TestRow [type=" + type + ", q=" + q + ", t=" + t + ", mbs=" + mbs + ", iops=" + iops + ", us=" + us
+				+ "]";
+	}
+	
+	
 	
 }
