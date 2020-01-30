@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DBManager {
 
 	public static final String DB_USER = "root";
-	public static final String DB_PASSWORD = "beije";
+	public static final String DB_PASSWORD = "aaaaa";
 	public static final String DB_URL = "jdbc:mysql://localhost:3306/cilacap?serverTimezone=CET";
 	
 	public static Connection getMySqlConnection(String url, String user, String password) throws SQLException, ClassNotFoundException {
