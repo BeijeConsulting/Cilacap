@@ -1,5 +1,6 @@
 package it.beije.cilacap.rubrica;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,9 +12,10 @@ import java.util.Scanner;
 
 public class DBtools {
 
-	public static Contatto inserisciContatto() { //riempie Bean da dare in pasto ai metodi
-		Scanner scan = new Scanner(System.in);;
-		String fieldContatto = "campiDiContatto";		
+	public static Contatto inserisciContatto() { // riempie Bean da dare in pasto ai metodi
+		Scanner scan = new Scanner(System.in);
+		;
+		String fieldContatto = "campiDiContatto";
 		Contatto c = new Contatto();
 		System.out.println("inserisci un contatto:");
 		System.out.println("............................");
@@ -34,6 +36,20 @@ public class DBtools {
 		return c;
 
 	}// fine metodo
+
+	public static void esportaDaDBAXML(String filePath) {
+		File file = new File(filePath);
+		esportaDaDBAXML(file);
+	}
+
+	public static void esportaDaDBAXML(File file) {
+		try {
+			ParserXML.writeContattiInFile(leggiContatti(), file);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
 
@@ -125,7 +141,7 @@ public class DBtools {
 	}
 
 	public static void main(String[] args) {
-			Contatto contatto = null;
+		Contatto contatto = null;
 		try {
 			contatto = inserisciContatto();
 			insertContatto(contatto);

@@ -67,8 +67,13 @@ public class ParserXML {
         return listaContatti;
 	}
 	
-	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception {
-
+	public static void writeContattiInFile(List<Contatto> contatti, String pathFile) throws Exception {
+		File file = new File(pathFile);
+		writeContattiInFile(contatti, file);
+	}
+	
+	public static void writeContattiInFile(List<Contatto> contatti, File file) throws Exception {
+		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -100,7 +105,7 @@ public class ParserXML {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(document);
-		StreamResult result = new StreamResult(new File(pathfile));
+		StreamResult result = new StreamResult(file);
 
 		// Output to console for testing
 		//StreamResult result = new StreamResult(System.out);
@@ -108,7 +113,10 @@ public class ParserXML {
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
+
 	}
+	
+	
 	
 	public static void main(String[] args) throws Exception {
 		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
