@@ -36,10 +36,12 @@ public class CrystalXML {
 	
 	
 	static int i;
+	static boolean campoRead=true;
 
 	public static TestData  createListOfData(List <String> contenuto) {
 		TestData info= new TestData();
 		//CE 20200125: creazione array con il contenuto del file, separati dal \n
+		//CE 20200130: metodo iniziale. Provare a creare un'alternativa con createArrayWord
 		String[] dati= new String[contenuto.size()];
 		dati=contenuto.toArray(dati);
 
@@ -52,21 +54,27 @@ public class CrystalXML {
 			CICLO: for(int j=0; j<riga.length; j++) {
 //				System.out.println("nel for di createdList colonna");
 //				System.out.println(riga[j]);
+				
 				String colonna= riga[j].trim();
+				
 //				System.out.println(colonna);
-				String parola=createWord(colonna);		
+				
+				String parola=createWord(colonna);	
+				
 ////				System.out.println(parola.equalsIgnoreCase("Profile:"));
 //				if(parola.equalsIgnoreCase("Profile:")) {
 //					takeProfileFieldData(info, dati);
 //				}else
+				
 				System.out.println(parola);
 					if(parola.equalsIgnoreCase("CrystalDiskMark")) {
 						info.setVersion(createWord(riga[++j].trim())+ " "+ createWord(riga[++j].trim()));
 					}
 					if(parola.equalsIgnoreCase("[Read]")) {
-					takeReadFieldData(info, dati);
+					takeData(info, dati);
 					break CICLO;
 					}
+					
 //				}else if(parola.equalsIgnoreCase("[Write]:")) {
 //					takeProfileFieldData(info, dati);
 //				}
@@ -76,7 +84,7 @@ public class CrystalXML {
 //					takeProfileFieldData(info, dati);
 //					break;
 //				case "[Read]":
-//					takeReadFieldData(info, dati);
+//					takeData(info, dati);
 //					break;
 //				case "[Write]":
 //					takeWriteFieldData(info, dati);
@@ -87,48 +95,11 @@ public class CrystalXML {
 		}
 		return info;
 	}
-	
-	
-	//CE 20200124: metodo per estrapolare i dati nel campo profile default
-	public static void takeProfileFieldData(TestData info, String [] dati) {
-		System.out.println("dentro takeProfileFieldData");
-		for (;i<dati.length;i++) {
-			String [] riga= dati[i].split(" ");
-//			System.out.println("for i");
-			for(int col=0;col<riga.length;col++) {
-//				System.out.println("for j");
-				String parola= createWord(riga[col]);
-//				System.out.println(parola);
-				String colonna= riga[col].trim();
-				
-				switch(parola) {
-					case "Test:": 
-									info.setType(createWord(riga[col+1])+" " +createWord(riga[col+2]));
-//									System.out.println(info.getType());
-									info.setIterations(createWord(riga[col+3]).charAt(2)- '0');
-//									System.out.println(info.getIterations());
-									break;
-					case "[Interval:":  
-						                info.setInterval(createWord(riga[col+1])+ " "+ createWord(riga[col+2]).substring(0,3) );
-//										System.out.println(info.getInterval());
-										break;
-					case "Date:": 
-						          info.setDate(createWord(riga[col+1])+ " "+ createWord(riga[col+2])); 
-//								  System.out.println(info.getDate());break;
-					case "OS:": 
-						        info.setOs(createWord(riga[col+1])+ " " + createWord(riga[col+2]));
-//								System.out.println(info.getDate());
-								break;
-				}
-			}
-		}
-		
-	}
-	
+
 	//CE 20200127: metodo per prendere i dati della sezione read
-	public static void takeReadFieldData(TestData info, String[] dati) {
-		List<TestRow> listaRead = new ArrayList<TestRow> ();
-		
+	//CE 20200130. metodo per prendere i dati nella sezione read e write tramite ricorsione
+	public static void takeData(TestData info, String[] dati) {
+		List<TestRow> listaDati = new ArrayList<TestRow> ();
 		System.out.println("dentro metodo takereadfielddata");
 		
 		CICLO_INIZIALE: for(; i<dati.length; i++) {
@@ -152,14 +123,22 @@ public class CrystalXML {
 					String colonna= riga[j].trim();
 					
 					if(colonna.equalsIgnoreCase("[Write]")) {
-						takeWriteFieldData(info, dati);
+//						i++;
+////						takeWriteFieldData(info, dati);
+//						campoRead=false;
+//						takeData(info,dati);
 						break CICLO_INIZIALE;
 					}
-					
+					if(colonna.equalsIgnoreCase("Profile:")) {
+						System.out.println("è uguale");
+						takeProfileFieldData(info, dati);
+						break CICLO_INIZIALE;
+					} 
 					
 					switch(colonna) {
 					case "Sequential":
-										raccoltaDatiRead.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+										if(campoRead)	
+										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
 										System.out.println(raccoltaDatiRead.getType());
 										break;
 					case "(Q=": 		
@@ -184,93 +163,82 @@ public class CrystalXML {
 										break;
 										
 					case "Random":
-										raccoltaDatiRead.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
 										System.out.println(raccoltaDatiRead.getType());
 										break;
 					}
 				
 				}
-				listaRead.add(raccoltaDatiRead);
+				if(campoRead) {
+				listaDati.add(raccoltaDatiRead);
+				}else {listaDati.add(raccoltaDatiRead);}
+				
+					
 			}
-		info.setRead(listaRead);
-		}
 		
+		if(campoRead) {
+			System.out.println("inserimento dati lista read");
+			info.setRead(listaDati);
+			i++;
+//			takeWriteFieldData(info, dati);
+			campoRead=false;
+			takeData(info,dati);
+			} else 	{
+				System.out.println("inserimento dati lista write");
+				info.setWrite(listaDati);
+				System.out.println("Finito");
+			}
+	}
+
 	
-//CE 20200128: metodo per leggere i dati delle rige in write 	
-public static void takeWriteFieldData(TestData info, String[] data) {
-		
-List<TestRow> listaWrite = new ArrayList<TestRow> ();
-		
-		System.out.println("dentro metodo takeWritefielddata");
-		
-		CICLO_INIZIALE: for(; i<data.length; i++) {
-			String [] riga= data[i].split(" ");
-			List <String> listRiga= new ArrayList<String>();
+	//CE 20200124: metodo per estrapolare i dati nel campo profile default
+	public static void takeProfileFieldData(TestData info, String [] dati) {
+		System.out.println("dentro takeProfileFieldData");
+		for (;i<dati.length;i++) {
+			String [] riga= dati[i].split(" ");
 			
-			for(int k=0; k<riga.length;k++) {
-				String parola= createWord(riga[k]);
-				if(parola.length()!=0)
-					listRiga.add(parola);
-			}
-			riga=listRiga.toArray(new String[0]);
-			TestRow raccoltaDatiWrite= new TestRow();
-			for(int j =0; j<riga.length; j++) {
+//			System.out.println("for i");
+			
+			for(int col=0;col<riga.length;col++) {
 				
-//            		String parola= createWord(riga[j]);
-//					System.out.println(parola.length());
-					
-					
+//				System.out.println("for j");
 				
-//					System.out.println(riga[j]);
-					String colonna= riga[j].trim();
-					
-					if(colonna.equalsIgnoreCase("Profile:")) {
-						System.out.println("è uguale");
-						takeProfileFieldData(info, data);
-						break CICLO_INIZIALE;
-					}
-					
-					
-					switch(colonna) {
-					case "Sequential":
-										raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
-										System.out.println(raccoltaDatiWrite.getType());
-										break;
-					case "(Q=": 		
-										raccoltaDatiWrite.setQ(createWord(riga[++j]).charAt(0)-'0');
-										System.out.println(raccoltaDatiWrite.getQ());
-										break;
-										
-					case "T=":       
-										//	System.out.println(createWord(riga[j+5]));
-										raccoltaDatiWrite.setT(riga[++j].charAt(0)-'0');
-										raccoltaDatiWrite.setMbs(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiWrite.getT());
-										System.out.println(raccoltaDatiWrite.getMbs());
-										break;
-					case"[": 			
-										raccoltaDatiWrite.setIops(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiWrite.getIops());
-										break;
-					case"<":
-										raccoltaDatiWrite.setUs(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiWrite.getUs());
-										break;
-					case "Random":
-						raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
-						System.out.println(raccoltaDatiWrite.getType());
-						break;
-	
-					}
+				String parola= createWord(riga[col]);
+//				System.out.println(parola);
 				
+				String colonna= riga[col].trim();
+				
+				switch(parola) {
+					case "Test:": 
+									info.setType(createWord(riga[col+1])+" " +createWord(riga[col+2]));
+									
+//									System.out.println(info.getType());
+									
+									info.setIterations(createWord(riga[col+3]).charAt(2)- '0');
+									
+//									System.out.println(info.getIterations());
+									break;
+					case "[Interval:":  
+						                info.setInterval(createWord(riga[col+1])+ " "+ createWord(riga[col+2]).substring(0,3) );
+						                
+//										System.out.println(info.getInterval());
+										break;
+					case "Date:": 
+						          info.setDate(createWord(riga[col+1])+ " "+ createWord(riga[col+2])); 
+						          
+//								  System.out.println(info.getDate());break;
+					case "OS:": 
+						        info.setOs(createWord(riga[col+1])+ " " + createWord(riga[col+2]));
+						        
+//								System.out.println(info.getDate());
+								break;
 				}
-				listaWrite.add(raccoltaDatiWrite);
 			}
-		info.setWrite(listaWrite);
-		System.out.println("Finito");
-		
-			
 		}
+		
+	}
+	
+	
 	//CE 20200127: metodo per eliminare gli spazi null e creare la parola
 	public static String createWord(String colonna){
 		
@@ -285,9 +253,7 @@ List<TestRow> listaWrite = new ArrayList<TestRow> ();
 					String parola = costruttoreParola.toString();
 	return parola;
 	}
-		
 	
-
 	public static void main (String [] args) throws Exception {
 			
 			File fileCrystal= new File("crystal/01/CDM_20200102131948.txt");
@@ -307,4 +273,82 @@ List<TestRow> listaWrite = new ArrayList<TestRow> ();
 			
 	}
 }
+
+
+//CE 20200130: commentato il metodo, creata alternativa con ricorsione
+//CE 20200128: metodo per leggere i dati delle rige in write 	
+//public static void takeWriteFieldData(TestData info, String[] data) {
+//		
+//List<TestRow> listaDati = new ArrayList<TestRow> ();
+//		
+//		System.out.println("dentro metodo takeWritefielddata");
+//		
+//		CICLO_INIZIALE: for(; i<data.length; i++) {
+//			String [] riga= data[i].split(" ");
+//			List <String> listRiga= new ArrayList<String>();
+//			
+//			for(int k=0; k<riga.length;k++) {
+//				String parola= createWord(riga[k]);
+//				if(parola.length()!=0)
+//					listRiga.add(parola);
+//			}
+//			riga=listRiga.toArray(new String[0]);
+//			TestRow raccoltaDatiWrite= new TestRow();
+//			for(int j =0; j<riga.length; j++) {
+//				
+////          		String parola= createWord(riga[j]);
+////					System.out.println(parola.length());
+//					
+//					
+//				
+////					System.out.println(riga[j]);
+//					String colonna= riga[j].trim();
+//					
+//					if(colonna.equalsIgnoreCase("Profile:")) {
+//						System.out.println("è uguale");
+//						takeProfileFieldData(info, data);
+//						break CICLO_INIZIALE;
+//					}
+//					
+//					
+//					switch(colonna) {
+//					case "Sequential":
+//										raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+//										System.out.println(raccoltaDatiWrite.getType());
+//										break;
+//					case "(Q=": 		
+//										raccoltaDatiWrite.setQ(createWord(riga[++j]).charAt(0)-'0');
+//										System.out.println(raccoltaDatiWrite.getQ());
+//										break;
+//										
+//					case "T=":       
+//										//	System.out.println(createWord(riga[j+5]));
+//										raccoltaDatiWrite.setT(riga[++j].charAt(0)-'0');
+//										raccoltaDatiWrite.setMbs(Double.parseDouble(riga[++j]));
+//										System.out.println(raccoltaDatiWrite.getT());
+//										System.out.println(raccoltaDatiWrite.getMbs());
+//										break;
+//					case"[": 			
+//										raccoltaDatiWrite.setIops(Double.parseDouble(riga[++j]));
+//										System.out.println(raccoltaDatiWrite.getIops());
+//										break;
+//					case"<":
+//										raccoltaDatiWrite.setUs(Double.parseDouble(riga[++j]));
+//										System.out.println(raccoltaDatiWrite.getUs());
+//										break;
+//					case "Random":
+//						raccoltaDatiWrite.setType(createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+//						System.out.println(raccoltaDatiWrite.getType());
+//						break;
+//	
+//					}
+//				
+//				}
+//				listaDati.add(raccoltaDatiWrite);
+//			}
+//		info.setWrite(listaDati);
+//		System.out.println("Finito");
+//		
+//			
+//		}
 
