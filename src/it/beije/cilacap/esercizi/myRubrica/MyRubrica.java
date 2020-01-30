@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -56,7 +55,7 @@ public class MyRubrica {
 		// scrittura di un nuovo file o sovrascrittura di uno esistente
 		TextFileManager.writeFileContent(intestazione + newFileContent.toString(), path);
 
-		TextFileManager.writeFileContent(newFileContent.toString(), path);
+		//TextFileManager.writeFileContent(newFileContent.toString(), path);
 
 	}
 	
@@ -163,14 +162,14 @@ public class MyRubrica {
 			String [] array = rows.get(r).split(";");
 			Contatto contatto = new Contatto();
 			for(int i = 0; i < array.length; i++) {
-				contatto.setCognome(array[i]);
-				contatto.setNome(array[i]);
-				contatto.setTelefono(array[i]);
-				contatto.setEmail(array[i]);
+				contatto.setCognome(array[0]);
+				contatto.setNome(array[1]);
+				contatto.setTelefono(array[2]);
+				contatto.setEmail(array[3]);
 			}
 			listaContatti.add(contatto);
 		}
-		System.out.println("Ho caricato nella lista tutti i contatti prelevati dal file .csv!!!");
+		//System.out.println("Ho caricato nella lista tutti i contatti prelevati dal file .csv!!!");
 		return listaContatti;
 	}
 

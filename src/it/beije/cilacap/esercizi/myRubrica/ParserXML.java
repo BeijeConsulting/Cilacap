@@ -42,6 +42,7 @@ public class ParserXML {
 
         for (int i = 0; i < contatti.getLength(); i++) {
         	Element utente = (Element)contatti.item(i);
+        	
         	System.out.println(utente.getTagName() + " " + i);
         	System.out.println("\tanni = " + utente.getAttribute("anni"));
  
