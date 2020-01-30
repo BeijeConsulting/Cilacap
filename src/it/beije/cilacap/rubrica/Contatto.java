@@ -2,6 +2,7 @@ package it.beije.cilacap.rubrica;
 
 public class Contatto {
 
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -9,6 +10,13 @@ public class Contatto {
 	
 	static final String[] INTESTAZIONE = {"cognome", "nome", "telefono", "email"};
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return nome;
 	}

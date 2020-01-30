@@ -15,6 +15,7 @@ public class RubricaMain {
 		try {
 			ParserCSV.writeContattiInCsv(rubrica, f);
 			Migrater.fromCSVtoXML(f);
+			Migrater.fromCSVtoDB(f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
