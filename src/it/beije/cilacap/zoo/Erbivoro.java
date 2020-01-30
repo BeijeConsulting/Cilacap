@@ -1,6 +1,6 @@
 package it.beije.cilacap.zoo;
 
-public interface Erbivoro {
+ interface Erbivoro {
 	
 	public abstract void mangioVegetali();
 
