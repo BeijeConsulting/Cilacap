@@ -10,7 +10,7 @@ public class CrystalTest {
 
 	public static void main(String[] args) throws Exception {
 
-		File file = new File("crystal/01/CDM_20200102150612.txt");
+		File file = new File("crystal/03/CDM_20200107153224.txt");
 
 		TestData test = importData(file);
 		System.out.println(test);
@@ -27,7 +27,6 @@ public class CrystalTest {
 
 	private static TestData importData(File file) throws Exception {
 
-		// List<TestData> raccoltaDati = new ArrayList<TestData>(); // raccolta Dei Test
 		List<String> listaRighe = fileDivisoPerRighe(file); // righe intero File
 		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read.
 		List<TestRow> testRowListWrite = new ArrayList<TestRow>(); // bean Row parte write
@@ -81,24 +80,34 @@ public class CrystalTest {
 			// Test:1GiB(x5)[Interval:5sec]<DefaultAffinity=DISABLED>
 			if (row.contains("Test")) {
 				temp = row;
-//				temp = temp.substring((temp.indexOf("t:")+2), (temp.indexOf("GiB")));
+				temp = temp.substring((temp.indexOf("t:")+2), (temp.indexOf("(x")));
+				testData.setType(temp);
+				temp = row;
 				temp = temp.substring((temp.indexOf("val:") + 4), (temp.indexOf("sec"))); // preso interval
 				testData.setInterval(temp);
 				temp = row;
 				temp = temp.substring((temp.indexOf("(x") + 2), (temp.indexOf(")"))); // preso Itertion
 				testData.setIterations(Integer.parseInt(temp));
-			}
-			// Date:2020/01/0213:19:48
+							}
+			// 20200102131948
 			if (row.contains("Date:")) {
 				temp = row;
-				temp = temp.substring((temp.indexOf("e:") + 2), (temp.indexOf(":") - 2)); // preso Date
+				temp = temp.substring((temp.indexOf("e:") + 2), (temp.indexOf("Date:")+15)); // preso Date
 				testData.setDate(temp);
+				temp = row;
+				temp = temp.substring(temp.indexOf("e:")+2);
+				temp = temp.replace("/", "").replace(":", "");
+				testData.setIdComputer(temp);
 			}
 			// OS:Windows10[10.0 Build18363](x64)
 			if (row.contains("OS:")) {
 				temp = row;
 				temp = temp.substring(temp.indexOf("OS:") + 3, temp.indexOf("["));
-				
+				String appoggio = temp;
+				temp = row;
+				temp = temp.substring(temp.indexOf("("), temp.indexOf(")")+1);
+				temp = appoggio.concat(temp);
+				testData.setOs(temp);
 			}
 
 		} // fine for

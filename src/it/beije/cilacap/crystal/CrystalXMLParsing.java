@@ -3,6 +3,7 @@ package it.beije.cilacap.crystal;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -15,65 +16,24 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-
 public class CrystalXMLParsing {
 
 	public static void main(String[] args) throws Exception {
 
-//		TestRow testRowSequential = new TestRow();
-//		TestRow testRowSequential2 = new TestRow();
-//		TestRow testRowRandom = new TestRow();
-//		testRowSequential.setType("sequential");
-//		testRowSequential.setMbs(2.6);
-//		testRowSequential.setIops(2.6);
-//		testRowSequential.setQ(3);
-//		testRowSequential.setT(4);
-//		testRowSequential.setUs(2.2);
-//		testRowSequential2.setType("sequential");
-//		testRowSequential2.setMbs(2.6);
-//		testRowSequential2.setIops(2.6);
-//		testRowSequential2.setQ(3);
-//		testRowSequential2.setT(4);
-//		testRowSequential2.setUs(2.2);
-//
-//		testRowRandom.setType("random");
-//		testRowRandom.setMbs(2.2);
-//		testRowRandom.setIops(2.2);
-//		testRowRandom.setQ(1);
-//		testRowRandom.setT(9);
-//		testRowRandom.setUs(2.2);
-//
-//		List<TestRow> listaRowsRead = new ArrayList<TestRow>();
-//		List<TestRow> listaRowsWrite = new ArrayList<TestRow>();
-//
-//		listaRowsRead.add(testRowSequential);
-//		listaRowsRead.add(testRowRandom);
-//		TestData testData = new TestData();
-//		testData.setIdComputer("1");
-//		testData.setVersion("5");
-//		testData.setOs("x86");
-//		testData.setType("tipo36");
-//		testData.setIterations(5);
-//		testData.setInterval("4");
-//		testData.setDate("oggi");
-//		testData.setRead(listaRowsRead);
-//		testData.setWrite(listaRowsWrite);
-//		List<TestData> raccoltaDati = new ArrayList<TestData>();
-//		raccoltaDati.add(testData);
-//		esportaRubricaInXML(raccoltaDati, "xml/testParsing.xml");
-		
-//		File file = new File("crystal/01/CDM_20200102131948.txt");
-//		List<TestData> raccoltaDati = importData(file);
+		File file = new File("crystal/01/CDM_20200102145818.txt");
+		TestData test = importData(file);
+		List<TestData> tests = new ArrayList<TestData>();
+		tests.add(test);
+		String filePathExport = "xml/test.xml";
+		esportaRubricaInXML(tests, filePathExport);
 	}
 
-	@SuppressWarnings("unused")
-	private static void esportaRubricaInXML(List<TestData> raccoltaDati, String filePath) throws Exception {
+	private static void esportaRubricaInXML(List<TestData> tests, String filePath) throws Exception {
 		File file = new File(filePath);
-		esportaRubricaInXML(raccoltaDati, file);
+		esportaRubricaInXML(tests, file);
 	}
 
-	private static void esportaRubricaInXML(List<TestData> raccoltaDati, File file) throws Exception {
+	private static void esportaRubricaInXML(List<TestData> tests, File file) throws Exception {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -82,101 +42,104 @@ public class CrystalXMLParsing {
 		Element docElement = document.createElement("CrystalDiskMark"); // root elem
 		document.appendChild(docElement);
 
-		for (int i = 0; i < raccoltaDati.size(); i++) {
-			//
+		for (int i = 0; i < tests.size(); i++) {
+
 			Element test = document.createElement("test");
-			test.setAttribute("id_computer", raccoltaDati.get(i).getIdComputer());
-			test.setAttribute("version", raccoltaDati.get(i).getVersion());
-			test.setAttribute("os", raccoltaDati.get(i).getOs());
-			test.setAttribute("type", raccoltaDati.get(i).getType());
-			test.setAttribute("iterations", Integer.toString(raccoltaDati.get(i).getIterations()));
-			test.setAttribute("interval", raccoltaDati.get(i).getInterval());
-			test.setAttribute("date", raccoltaDati.get(i).getDate());
+			test.setAttribute("id_computer", tests.get(i).getIdComputer());
+			test.setAttribute("version", tests.get(i).getVersion());
+			test.setAttribute("os", tests.get(i).getOs());
+			test.setAttribute("type", tests.get(i).getType());
+			test.setAttribute("iterations", Integer.toString(tests.get(i).getIterations()));
+			test.setAttribute("interval", tests.get(i).getInterval());
+			test.setAttribute("date", tests.get(i).getDate());
+
 			Element read = document.createElement("read");
-			Element sequential_1MiB_read = document.createElement("Sequential_1MiB");
-			Element random_4KiB_read = document.createElement("Random_4KiB");
-			Element mbsSeq_read = document.createElement("MBs");
-			Element iopsSeq_read = document.createElement("IOPS");
-			Element usSeq_read = document.createElement("us");
-			Element mbsRan_read = document.createElement("Mbs");
-			Element iopsRan_read = document.createElement("IOPS");
-			Element usRan_read = document.createElement("us");
-
 			Element write = document.createElement("write");
-			Element sequential_1MiB_write = document.createElement("Sequential_1MiB");
-			Element random_4KiB_write = document.createElement("Random_4KiB");
-			Element mbsSeq_write = document.createElement("MBs");
-			Element iopsSeq_write = document.createElement("IOPS");
-			Element usSeq_write = document.createElement("us");
-			Element mbsRan_write = document.createElement("Mbs");
-			Element iopsRan_write = document.createElement("IOPS");
-			Element usRan_write = document.createElement("us");
 
-			for (int j = 0; j < raccoltaDati.get(i).getRead().size(); j++) {
+			for (int j = 0; j < tests.get(i).getRead().size(); j++) {
 
-				if (raccoltaDati.get(i).getRead().get(j).getType().contentEquals("sequential")) {
-					sequential_1MiB_read.setAttribute("q",
-							Integer.toString(raccoltaDati.get(i).getRead().get(j).getQ()));
-					sequential_1MiB_read.setAttribute("t",
-							Integer.toString(raccoltaDati.get(i).getRead().get(j).getT()));
-					mbsSeq_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getMbs()));
-					iopsSeq_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getIops()));
-					usSeq_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getUs()));
+				if (tests.get(i).getRead().get(j).getType().contentEquals("Sequential 1MiB")) {
+
+					Element sequential_1MiB = document.createElement("Sequential_1MiB");
+					Element mbsSeq_read = document.createElement("MBs");
+					Element iopsSeq_read = document.createElement("IOPS");
+					Element usSeq_read = document.createElement("us");
+
+					sequential_1MiB.setAttribute("q", Integer.toString(tests.get(i).getRead().get(j).getQ()));
+					sequential_1MiB.setAttribute("t", Integer.toString(tests.get(i).getRead().get(j).getT()));
+					mbsSeq_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getMbs()));
+					iopsSeq_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getIops()));
+					usSeq_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getUs()));
+
+					read.appendChild(sequential_1MiB);
+					sequential_1MiB.appendChild(mbsSeq_read);
+					sequential_1MiB.appendChild(iopsSeq_read);
+					sequential_1MiB.appendChild(usSeq_read);
+
 				}
-				if (raccoltaDati.get(i).getRead().get(j).getType().contentEquals("random")) {
-					random_4KiB_read.setAttribute("q", Integer.toString(raccoltaDati.get(i).getRead().get(j).getQ()));
-					random_4KiB_read.setAttribute("t", Integer.toString(raccoltaDati.get(i).getRead().get(j).getT()));
-					mbsRan_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getMbs()));
-					iopsRan_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getIops()));
-					usRan_read.setTextContent(Double.toString(raccoltaDati.get(i).getRead().get(j).getUs()));
+				if (tests.get(i).getRead().get(j).getType().contentEquals("Random 4KiB")) {
+
+					Element random_4KiB = document.createElement("Random_4KiB");
+					Element mbsRan_read = document.createElement("Mbs");
+					Element iopsRan_read = document.createElement("IOPS");
+					Element usRan_read = document.createElement("us");
+
+					random_4KiB.setAttribute("q", Integer.toString(tests.get(i).getRead().get(j).getQ()));
+					random_4KiB.setAttribute("t", Integer.toString(tests.get(i).getRead().get(j).getT()));
+					mbsRan_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getMbs()));
+					iopsRan_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getIops()));
+					usRan_read.setTextContent(Double.toString(tests.get(i).getRead().get(j).getUs()));
+
+					read.appendChild(random_4KiB);
+					random_4KiB.appendChild(mbsRan_read);
+					random_4KiB.appendChild(iopsRan_read);
+					random_4KiB.appendChild(usRan_read);
 				}
 
 			}
-			for (int k = 0; k < raccoltaDati.get(i).getWrite().size(); k++) {
+			for (int k = 0; k < tests.get(i).getWrite().size(); k++) {
 
-				if (raccoltaDati.get(i).getWrite().get(k).getType().contentEquals("sequential")) {
-					sequential_1MiB_write.setAttribute("q",
-							Integer.toString(raccoltaDati.get(i).getWrite().get(k).getQ()));
-					sequential_1MiB_write.setAttribute("t",
-							Integer.toString(raccoltaDati.get(i).getWrite().get(k).getT()));
-					mbsSeq_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getMbs()));
-					iopsSeq_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getIops()));
-					usSeq_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getUs()));
+				if (tests.get(i).getWrite().get(k).getType().contentEquals("Sequential 1MiB")) {
+
+					Element sequential_1MiB = document.createElement("Sequential_1MiB");
+					Element mbsSeq_write = document.createElement("MBs");
+					Element iopsSeq_write = document.createElement("IOPS");
+					Element usSeq_write = document.createElement("us");
+
+					sequential_1MiB.setAttribute("q", Integer.toString(tests.get(i).getWrite().get(k).getQ()));
+					sequential_1MiB.setAttribute("t", Integer.toString(tests.get(i).getWrite().get(k).getT()));
+					mbsSeq_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getMbs()));
+					iopsSeq_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getIops()));
+					usSeq_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getUs()));
+
+					write.appendChild(sequential_1MiB);
+					sequential_1MiB.appendChild(mbsSeq_write);
+					sequential_1MiB.appendChild(iopsSeq_write);
+					sequential_1MiB.appendChild(usSeq_write);
 				}
-				if (raccoltaDati.get(i).getWrite().get(k).getType().contentEquals("random")) {
+				if (tests.get(i).getWrite().get(k).getType().contentEquals("Random 4KiB")) {
 
-					random_4KiB_write.setAttribute("q", Integer.toString(raccoltaDati.get(i).getWrite().get(k).getQ()));
-					random_4KiB_write.setAttribute("t", Integer.toString(raccoltaDati.get(i).getWrite().get(k).getT()));
-					mbsRan_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getMbs()));
-					iopsRan_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getIops()));
-					usRan_write.setTextContent(Double.toString(raccoltaDati.get(i).getWrite().get(k).getUs()));
+					Element random_4KiB_write = document.createElement("Random_4KiB");
+					Element mbsRan_write = document.createElement("Mbs");
+					Element iopsRan_write = document.createElement("IOPS");
+					Element usRan_write = document.createElement("us");
+
+					random_4KiB_write.setAttribute("q", Integer.toString(tests.get(i).getWrite().get(k).getQ()));
+					random_4KiB_write.setAttribute("t", Integer.toString(tests.get(i).getWrite().get(k).getT()));
+					mbsRan_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getMbs()));
+					iopsRan_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getIops()));
+					usRan_write.setTextContent(Double.toString(tests.get(i).getWrite().get(k).getUs()));
+
+					write.appendChild(random_4KiB_write);
+					random_4KiB_write.appendChild(mbsRan_write);
+					random_4KiB_write.appendChild(iopsRan_write);
+					random_4KiB_write.appendChild(usRan_write);
+
 				}
 
 			}
 			test.appendChild(read);
 			test.appendChild(write);
-			read.appendChild(sequential_1MiB_read);
-			write.appendChild(sequential_1MiB_write);
-
-			sequential_1MiB_read.appendChild(mbsSeq_read);
-			sequential_1MiB_read.appendChild(iopsSeq_read);
-			sequential_1MiB_read.appendChild(usSeq_read);
-
-			sequential_1MiB_write.appendChild(mbsSeq_write);
-			sequential_1MiB_write.appendChild(iopsSeq_write);
-			sequential_1MiB_write.appendChild(usSeq_write);
-
-			read.appendChild(random_4KiB_read);
-			write.appendChild(random_4KiB_write);
-
-			random_4KiB_read.appendChild(mbsRan_read);
-			random_4KiB_read.appendChild(iopsRan_read);
-			random_4KiB_read.appendChild(usRan_read);
-
-			random_4KiB_write.appendChild(mbsRan_write);
-			random_4KiB_write.appendChild(iopsRan_write);
-			random_4KiB_write.appendChild(usRan_write);
-
 			docElement.appendChild(test);
 		}
 		// write the content into xml file
@@ -196,21 +159,158 @@ public class CrystalXMLParsing {
 
 	@SuppressWarnings("unused")
 	private static TestRow matchSection(String readSection, File file) throws Exception {
-		
+
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
-		while((row = reader.readLine()) != null) {
+		while ((row = reader.readLine()) != null) {
 			TestRow sequential1 = new TestRow();
 			TestRow sequential2 = new TestRow();
 			TestRow random1 = new TestRow();
 			TestRow random2 = new TestRow();
 			String[] array = row.split(" ");
-			
-			
+
 		}
 		reader.close();
 		return null;
+	}
+
+	@SuppressWarnings("unused")
+	private static TestData importData(String filePath) throws Exception {
+		File file = new File(filePath);
+		return importData(file);
+	}
+
+	private static TestData importData(File file) throws Exception {
+
+		List<String> listaRighe = fileDivisoPerRighe(file); // righe intero File
+		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read.
+		List<TestRow> testRowListWrite = new ArrayList<TestRow>(); // bean Row parte write
+		TestData testData = new TestData(); // singolo test
+		String row = ""; // riga attuale
+
+		for (int i = 0; i < listaRighe.size(); i++) {
+			row = listaRighe.get(i);
+			// System.out.println(row);
+			String temp;
+			// CrystalDiskMark7.0.0x64(C)2007-2019hiyohiyo
+			if (row.contains("DiskMark")) {
+				temp = row;
+				temp = temp.substring((row.indexOf("Mark") + 4), row.indexOf("(C"));
+				testData.setVersion(temp);
+				// System.out.println(testData.getVersion());
+			}
+			if (row.contains("Sequential1")
+					&& (listaRighe.get(i - 1).contains("[Read]") || listaRighe.get(i - 2).contains("[Read]"))) {
+
+				TestRow testRowSeq = new TestRow();
+				testRowSeq.setType("Sequential 1MiB");
+				testRowSeq = riempiRow(testRowSeq, row);
+				testRowListRead.add(testRowSeq);
+				// System.out.println(testRow.getUs());
+			}
+			if (row.contains("Random") && (listaRighe.get(i - 1).contains("[Read]")
+					|| listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
+
+				TestRow testRowRan = new TestRow();
+				testRowRan.setType("Random 4KiB");
+				testRowRan = riempiRow(testRowRan, row);
+				testRowListRead.add(testRowRan);
+			}
+			if (row.contains("Sequential1")
+					&& (listaRighe.get(i - 1).contains("[Write]") || listaRighe.get(i - 2).contains("[Write]"))) {
+
+				TestRow testRow = new TestRow();
+				testRow.setType("Sequential 1MiB");
+				testRow = riempiRow(testRow, row);
+				testRowListWrite.add(testRow);
+			}			
+			if (row.contains("Random") && (listaRighe.get(i - 1).contains("[Write]")
+					|| listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
+
+				TestRow testRowRan = new TestRow();
+				testRowRan.setType("Random 4KiB");
+				testRowRan = riempiRow(testRowRan, row);
+				testRowListWrite.add(testRowRan);
+			}
+			// Test:1GiB(x5)[Interval:5sec]<DefaultAffinity=DISABLED>
+			if (row.contains("Test")) {
+				temp = row;
+				temp = temp.substring((temp.indexOf("t:") + 2), (temp.indexOf("(x")));
+				testData.setType(temp);
+				temp = row;
+				temp = temp.substring((temp.indexOf("val:") + 4), (temp.indexOf("sec"))); // preso interval
+				testData.setInterval(temp);
+				temp = row;
+				temp = temp.substring((temp.indexOf("(x") + 2), (temp.indexOf(")"))); // preso Itertion
+				testData.setIterations(Integer.parseInt(temp));
+			}
+			// 20200102131948
+			if (row.contains("Date:")) {
+				temp = row;
+				temp = temp.substring((temp.indexOf("e:") + 2), (temp.indexOf("Date:") + 15)); // preso Date
+				testData.setDate(temp);
+				temp = row;
+				temp = temp.substring(temp.indexOf("e:") + 2);
+				temp = temp.replace("/", "").replace(":", "");
+				testData.setIdComputer(temp);
+			}
+			// OS:Windows10[10.0 Build18363](x64)
+			if (row.contains("OS:")) {
+				temp = row;
+				temp = temp.substring(temp.indexOf("OS:") + 3, temp.indexOf("["));
+				String appoggio = temp;
+				temp = row;
+				temp = temp.substring(temp.indexOf("("), temp.indexOf(")") + 1);
+				temp = appoggio.concat(temp);
+				testData.setOs(temp);
+			}
+
+		} // fine for
+		testData.setRead(testRowListRead);
+		testData.setWrite(testRowListWrite);
+
+		return testData;
+	} // fine metodo
+
+	private static List<String> fileDivisoPerRighe(File file) throws Exception {
+
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		List<String> listaRighe = new ArrayList<String>();
+		String row = "";
+		while ((row = reader.readLine()) != null) {
+			if (row.length() != 1) {
+				row = row.replace((char) 0, " ".charAt(0));
+				row = row.replace(" ", "");
+				listaRighe.add(row);
+			}
+		}
+		reader.close();
+		return listaRighe;
+	}
+
+	private static TestRow riempiRow(TestRow testRow, String row) { // metodo che prende sia Sequential che Random nella
+		// parte Read and Write
+		String temp = row;
+		temp = temp.substring((temp.indexOf("Q") + 2), (temp.indexOf("Q") + 3)); // Q=..., Sequential1MiB Q
+		testRow.setQ(Integer.parseInt(temp));
+		// System.out.println(testRow.getQ());
+		temp = row;
+		temp = temp.substring((temp.indexOf("T") + 2), (temp.indexOf("T") + 3)); // T=...) Sequential1MiB T
+		testRow.setT(Integer.parseInt(temp));
+		// System.out.println(testRow.getT());
+		temp = row;
+		temp = temp.substring((temp.indexOf(":") + 1), (temp.indexOf("MB/s"))); // MB/s
+		testRow.setMbs(Double.parseDouble(temp));
+		// System.out.println(testRow.getMbs());
+		temp = row;
+		temp = temp.substring((temp.indexOf("[") + 1), (temp.indexOf("IOPS"))); // IOPS
+		testRow.setIops(Double.parseDouble(temp));
+		// System.out.println(testRow.getIops());
+		temp = row;
+		temp = temp.substring((temp.indexOf("<") + 1), (temp.indexOf("us"))); // us
+		testRow.setUs(Double.parseDouble(temp));
+		return testRow;
 	}
 
 }
