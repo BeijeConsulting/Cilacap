@@ -7,6 +7,7 @@ public abstract class Animale {
 //	public Animale(int age) {
 //		this.age = age;
 //	}
+	public abstract void getNome();
 	
 	public int getAge() {
 		return age;
