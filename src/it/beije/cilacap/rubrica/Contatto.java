@@ -2,10 +2,21 @@ package it.beije.cilacap.rubrica;
 
 public class Contatto {
 
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
+<<<<<<< HEAD
+=======
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+>>>>>>> refs/remotes/origin/master
 
 	public String getNome() {
 		return nome;

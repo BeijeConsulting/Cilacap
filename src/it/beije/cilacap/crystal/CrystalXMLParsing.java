@@ -190,8 +190,8 @@ public class CrystalXMLParsing {
 		String row = ""; // riga attuale
 
 		for (int i = 0; i < listaRighe.size(); i++) {
+			
 			row = listaRighe.get(i);
-			// System.out.println(row);
 			String temp;
 			// CrystalDiskMark7.0.0x64(C)2007-2019hiyohiyo
 			if (row.contains("DiskMark")) {
@@ -209,7 +209,7 @@ public class CrystalXMLParsing {
 				testRowListRead.add(testRowSeq);
 				// System.out.println(testRow.getUs());
 			}
-			if (row.contains("Random") && (listaRighe.get(i - 1).contains("[Read]")
+			if(row.contains("Random") && (listaRighe.get(i - 1).contains("[Read]")
 					|| listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
 
 				TestRow testRowRan = new TestRow();
