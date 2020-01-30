@@ -67,42 +67,7 @@ public class ParserXML {
         	listaContatti.add(contatto);
         }
 		}catch(Exception e) {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder builder = factory.newDocumentBuilder();
-
-	        // Load the input XML document, parse it and return an instance of the
-	        // Document class.
-	        Document document = builder.parse(file);
-	        Element element = document.getDocumentElement();       
-	        System.out.println(element.getTagName());
-	        
-	        //System.out.println(element.getChildNodes().getLength());
-	        NodeList contatti = element.getElementsByTagName("contatto");
-	        System.out.println("contatti : " + contatti.getLength());
-
-	        for (int i = 0; i < contatti.getLength(); i++) {
-	        	Element utente = (Element)contatti.item(i);
-	        	System.out.println(utente.getTagName() + " " + i);
-	        	System.out.println("\tanni = " + utente.getAttribute("anni"));
-	 
-	        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
-	        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
-	        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
-	        	Element email = (Element)utente.getElementsByTagName("email").item(0);
-	        	
-	        	Contatto contatto = new Contatto();
-	        	contatto.setNome(nome.getTextContent());
-	        	contatto.setCognome(cognome.getTextContent());
-	        	contatto.setTelefono(telefono.getTextContent());
-	        	contatto.setEmail(email.getTextContent());
-	        	
-	        	System.out.println("\tnome = " + contatto.getNome());
-	        	System.out.println("\tcognome = " + contatto.getCognome());
-	        	System.out.println("\ttelefono = " + contatto.getTelefono());
-	        	System.out.println("\temail = " + contatto.getEmail());
-	        	
-	        	listaContatti.add(contatto);
-		}
+			System.out.println("a");
 		}
         
 	

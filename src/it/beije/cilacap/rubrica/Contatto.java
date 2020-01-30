@@ -15,10 +15,12 @@ import it.beije.cilacap.esercizi.TextFileManager;
 
 public class Contatto {
 
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
+<<<<<<< HEAD
 
 	public Contatto() {
 
@@ -28,6 +30,14 @@ public class Contatto {
 		this.cognome=c;
 		this.telefono=t;
 		this.email=e;
+=======
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+>>>>>>> refs/remotes/origin/master
 	}
 
 	public String getNome() {
