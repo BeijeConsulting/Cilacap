@@ -1,6 +1,7 @@
 package it.beije.cilacap.rubrica;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,8 +14,10 @@ public class MyRubricaDB
 	public static void main(String[] args) throws Exception
 	{
 		List<Contatto> listacontatti = new ArrayList<Contatto>();
-		//getContattiFromDB(listacontatti); //metodo autoesplicativo
+		getContattiFromDB(listacontatti); //metodo autoesplicativo
 		//MyRubricaXML.writeContattiInFile(listacontatti, "xml\\DBtoXML.xml"); //stampa su XML
+		//MyRubricaXML.writeContattiInFileCSV(listacontatti, "csv\\DBtoCSV.csv"); //stampa su CSV
+		
 		
 
 	}
@@ -68,6 +71,46 @@ public class MyRubricaDB
 		}
 		
 		System.out.println("contatti letti : " + contatti.size());
+	}
+	
+	public static void setContattiFromXML(List<Contatto> contatti) throws ClassNotFoundException {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		boolean esito = false;
+		
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			
+//			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
+//					.append('\'').append(contatto.getNome()).append("\',")
+//					.append('\'').append(contatto.getCognome()).append("\',")
+//					.append('\'').append(contatto.getTelefono()).append("\',")
+//					.append('\'').append(contatto.getEmail()).append('t').append("\')");
+//			System.out.println(insert.toString());
+			
+			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
+			pstmt.setString(1, contatti.getNome());
+			pstmt.setString(2, contatti.getCognome());
+			pstmt.setString(3, contatti.getTelefono());
+			pstmt.setString(4, contatti.getEmail());
+			
+			esito = pstmt.execute();
+			System.out.println(pstmt.getUpdateCount());
+			
+			//pstmt.executeUpdate();
+			
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				pstmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		
+		return esito;
 	}
 
 }
