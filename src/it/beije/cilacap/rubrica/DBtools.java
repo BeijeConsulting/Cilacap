@@ -71,6 +71,7 @@ public class DBtools {
 //					.append('\'').append(contatto.getTelefono()).append("\',")
 //					.append('\'').append(contatto.getEmail()).append('t').append("\')");
 //			System.out.println(insert.toString());
+			
 			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
 			pstmt.setString(1, contatto.getNome());
 			pstmt.setString(2, contatto.getCognome());
@@ -99,7 +100,7 @@ public class DBtools {
 	public static void main(String[] args) {
 		
 		try {
-			//insertContatto(leggiContatti().get(0));
+			insertContatto(leggiContatti().get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

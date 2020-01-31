@@ -22,13 +22,13 @@ public class MyRubricaXML
 	{
 		int scelta = 2;
 		boolean again = false; //variabile d'appoggio. Ripetere inserimento?
-		File f = new File("csv\\MyRubrica.csv");//riferimento al pathfile (CSV)
+		File f = new File("csv\\rubrica1.csv");//riferimento al pathfile (CSV)
 		ArrayList<Contatto> listacontatti = new ArrayList<Contatto>();//creazione struttura principale
 		List<String> righeCSV = new ArrayList<String>();//
 		
 		switch(scelta)
 		{
-		case 1:
+		case 1: //inserimento da tastiera dei campi e salvataggio in file XML
 			do 
 			{
 				setContatti(listacontatti);//metodo per inserimento contatti in listacontatti
@@ -38,12 +38,15 @@ public class MyRubricaXML
 			writeContattiInFile(listacontatti, "xml\\MyRubricaXML.xml");//scrittura file XML
 			break;
 			
-		case 2:
+		case 2: //da file CSV a file XML
 			righeCSV = MyRubrica.readContent(f);//estrapolare le righe utlizzando il readcontent
-			CSVToXML(righeCSV, listacontatti);//separare utilizzando un metodo simile a row split
-			//salvare ciascun valore nel setCorretto
+			CSVToXML(righeCSV, listacontatti);//ordine + inserimento in listacontatti
+			writeContattiInFile(listacontatti, "xml\\CSVtoXML.xml");//scrittura file XML
 			break;
-		
+			
+		case 3: //da file XML a CSV
+			
+			
 		}
 	}
 	
@@ -112,20 +115,38 @@ public class MyRubricaXML
 		valore.setEmail(myInput);
 		
 		contatti.add(valore);
+		input.close();
 	}
 	
 	public static void CSVToXML (List<String> listarighe, List<Contatto> contatti)
 	{
 		String riga; //estrapola ciascuna riga
 		String[] campo = new String[1]; //array di stringa per memorizzare ciascun campo della riga
-		Contatto valore = new Contatto();
 		
-		for(int i=0; i<listarighe.size(); i++)
+		riga = listarighe.get(0);
+		campo = riga.split(";");
+		final int[] indice = new int[5];
+		for (int i=0; i<campo.length; i++)
 		{
+			if ("COGNOME".equalsIgnoreCase(campo[i])) indice[0] = i;
+			if ("NOME".equalsIgnoreCase(campo[i])) indice[1] = i;
+			if ("TELEFONO".equalsIgnoreCase(campo[i])) indice[2] = i;
+			if ("EMAIL".equalsIgnoreCase(campo[i])) indice[3] = i;
+			if ("INDIRIZZO".equalsIgnoreCase(campo[i])) indice[4] = i;
+		}
+		
+		for (int i=1; i<listarighe.size(); i++)
+		{
+			Contatto valore = new Contatto();
 			riga = listarighe.get(i);
 			campo = riga.split(";");
-			if ("COGNOME".equalsIgnoreCase(campo[0])) //integrare un ciclo for per scorrere i campi della riga
-				//necessario ordinare prima di assegnare
+			
+			valore.setNome(campo[indice[1]]);
+			valore.setCognome(campo[indice[0]]);
+			valore.setTelefono(campo[indice[2]]);
+			valore.setEmail(campo[indice[3]]);
+			
+			contatti.add(valore);
 		}
 
 	}
