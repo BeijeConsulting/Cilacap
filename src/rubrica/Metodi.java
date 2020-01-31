@@ -51,6 +51,12 @@ public class Metodi {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
 	public static String toCSV(Contatto contatto)
 	{
 		
@@ -86,9 +92,46 @@ public class Metodi {
 			
 		writeFileContent(listaStringa, f); 
 		
+	}
+	
+	
+	
+	public static List<String> generaLista(List<Contatto> listaContatti) throws IOException
+	{
+		int i=0;
+		List<String> listaStringa=new ArrayList<String>();
+		for(i=0;i<listaContatti.size();i++)
+		{
+			listaStringa.add(toCSV(listaContatti.get(i)));
+			
+		}
+		return listaStringa;
+		
 		
 	}
-
+	public static List<Contatto> generaLista(File f) throws IOException
+	{
+		int i;
+		List<String> listStringa = new ArrayList<>();
+		List<Contatto> listaContatti = new ArrayList<>();
+		listStringa.addAll(readFileRows(f));
+		
+		for(i=0;i<listStringa.size();i++)
+		{
+			Contatto contatto = new Contatto();
+			
+			contatto.setCognome(listStringa.get(i).split(";")[0]);
+			contatto.setNome(listStringa.get(i).split(";")[1]);
+			contatto.setTelefono(listStringa.get(i).split(";")[2]);
+			contatto.setEmail(listStringa.get(i).split(";")[3]);
+			listaContatti.add(contatto);
+		}
+		
+		
+		
+		return listaContatti;	
+	}
+	
 	
 	
 	public static void toXML(File f) throws Exception

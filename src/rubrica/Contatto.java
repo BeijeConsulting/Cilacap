@@ -6,7 +6,7 @@ public class Contatto {
 	private String cognome;
 	private String telefono;
 	private String email;
-	
+	private int id;
 	public String getNome() {
 		return nome;
 	}
@@ -34,6 +34,13 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getId() {
+		
+		return id;
+	}
+	public void setId(int id) {
+		this.id=id;
+	}
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("cognome : ").append(cognome).append('\n');
@@ -42,6 +49,8 @@ public class Contatto {
 		builder.append("email : ").append(email).append('\n');
 		return builder.toString();
 	}
+	
+	
 	
 	
 }
