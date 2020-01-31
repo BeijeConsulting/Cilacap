@@ -72,6 +72,7 @@ public class GestoreReadCrystal {
 						info.setVersion(createWord(riga[++j].trim())+ " "+ createWord(riga[++j].trim()));
 					}
 					if(parola.equalsIgnoreCase("[Read]")) {
+					
 					takeData(info, dati);
 					break CICLO;
 					}
@@ -92,22 +93,21 @@ public class GestoreReadCrystal {
 			String [] riga= dati[i].split(" ");
 			List <String> listRiga= new ArrayList<String>();
 			
-			for(int k=0; k<riga.length;k++) {
+		for(int k=0; k<riga.length;k++) {
 				String parola= createWord(riga[k]);
 				if(parola.length()!=0)
 					listRiga.add(parola);
 			}
 			riga=listRiga.toArray(new String[0]);
 			TestRow raccoltaDatiRead= new TestRow();
+			TestRow datiEffettivi=new TestRow();
 			for(int j =0; j<riga.length; j++) {
 				
 //            		String parola= createWord(riga[j]);
 //					System.out.println(parola.length());
-					
 				
 //					System.out.println(riga[j]);
 					String colonna= riga[j].trim();
-					
 					if(colonna.equalsIgnoreCase("[Write]")) {
 //						i++;
 ////						takeWriteFieldData(info, dati);
@@ -121,9 +121,11 @@ public class GestoreReadCrystal {
 						break CICLO_INIZIALE;
 					} 
 					
+//					if(colonna.isEmpty()) 
+//						break;
+					
 					switch(colonna) {
 					case "Sequential":
-										if(campoRead)	
 										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+createWord(riga[j]).substring(1));
 										System.out.println(raccoltaDatiRead.getType());
 										break;
@@ -149,12 +151,13 @@ public class GestoreReadCrystal {
 										break;
 										
 					case "Random":
-										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+" "+ createWord(riga[j]).substring(1));
+										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+ createWord(riga[j]).substring(1));
 										System.out.println(raccoltaDatiRead.getType());
 										break;
+					default: break;
 					}
-				
 				}
+			
 				if(campoRead) {
 				listaDati.add(raccoltaDatiRead);
 				}else {listaDati.add(raccoltaDatiRead);}
@@ -240,5 +243,7 @@ public class GestoreReadCrystal {
 					String parola = costruttoreParola.toString();
 	return parola;
 	}
+	
+ //CE 20200131
 
 }
