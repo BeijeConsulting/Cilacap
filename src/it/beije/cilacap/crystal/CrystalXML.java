@@ -66,11 +66,52 @@ public class CrystalXML extends GestoreReadCrystal {
         Element read= document.createElement("read");
         test.appendChild(read);
         
-        String[] datiRead=new String[datiDiCrystal.getRead().size()];
+        TestRow[] datiRead=new TestRow[datiDiCrystal.getRead().size()];
     	datiRead= datiDiCrystal.getRead().toArray(datiRead);
-        for (int i=0; i< datiRead.length; i++) {
-        	if(datiRead[i].equalsIgnoreCase("Sequential_1MIB")) {
+    	
+    	Element write= document.createElement("read");
+        test.appendChild(write);
+    	
+        TestRow[] datiWrite=new TestRow[datiDiCrystal.getWrite().size()];
+    	datiWrite= datiDiCrystal.getWrite().toArray(datiRead);
+    	
+        for (int i=0; i< datiRead.length-1; i++) {
+        	if(datiRead[i].getType().equalsIgnoreCase("Sequential_1MIB")) {
         		Element sequential= document.createElement("Sequential_1MiB");
+        		sequential.setAttribute("q",Integer.toString(datiRead[i].getQ()));
+        		sequential.setAttribute("t", Integer.toString(datiRead[i].getT()));
+        		Element mbs=document.createElement("MBs");
+        		Element iops=document.createElement("IOPS");
+        		Element us= document.createElement("us");
+        		mbs.setTextContent(	Double.toString(datiRead[i].getMbs()));
+        		iops.setTextContent(	Double.toString(datiRead[i].getIops()));
+        		us.setTextContent(	Double.toString(datiRead[i].getUs()));
+        		
+        		sequential.appendChild(mbs);
+        		sequential.appendChild(iops);
+        		sequential.appendChild(us);
+        		
+        		read.appendChild(sequential);
+        	}
+        		
+        }
+        for (int i=0; i< datiWrite.length-1; i++) {
+        	if(datiWrite[i].getType().equalsIgnoreCase("Sequential_1MIB")) {
+        		Element sequential= document.createElement("Sequential_1MiB");
+        		sequential.setAttribute("q",Integer.toString(datiWrite[i].getQ()));
+        		sequential.setAttribute("t", Integer.toString(datiWrite[i].getT()));
+        		Element mbs=document.createElement("MBs");
+        		Element iops=document.createElement("IOPS");
+        		Element us= document.createElement("us");
+        		mbs.setTextContent(	Double.toString(datiWrite[i].getMbs()));
+        		iops.setTextContent(	Double.toString(datiWrite[i].getIops()));
+        		us.setTextContent(	Double.toString(datiWrite[i].getUs()));
+        		
+        		sequential.appendChild(mbs);
+        		sequential.appendChild(iops);
+        		sequential.appendChild(us);
+        		
+        		write.appendChild(sequential);
         	}
         		
         }

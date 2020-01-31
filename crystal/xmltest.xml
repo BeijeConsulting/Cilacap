@@ -1,1 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><CrystalDiskMark><test date="2020/01/02 13:19:48" id_computer="01" interval="5 sec" iterations="5" os="Windows 10" type="1 GiB" version="7.0.0 x64"/></CrystalDiskMark>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><CrystalDiskMark><test
+	date="2020/01/02 13:19:48" id_computer="01" interval="5 sec"
+	iterations="5" os="Windows 10" type="1 GiB" version="7.0.0 x64" /></CrystalDiskMark>
