@@ -23,7 +23,6 @@ import org.w3c.dom.NodeList;
 
 import it.beije.cilacap.esercizi.TextFileManager;
 import it.beije.cilacap.rubrica.Contatto;
-import it.beije.cilacap.rubrica.DBManager;
 
 public class DBtools {	
 	public static void main(String[] args) throws Exception {
@@ -120,7 +119,7 @@ public class DBtools {
 		boolean esito = false;
 		
 		try {
-			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			connection = it.beije.cilacap.myrubrica.DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
 			pstmt.setString(1, contatto.getNome());
 			pstmt.setString(2, contatto.getCognome());
@@ -140,6 +139,7 @@ public class DBtools {
 				connection.close();
 			} catch (SQLException finEx) {
 				System.out.println("PROBLEMA : " + finEx);
+				finEx.printStackTrace();
 			}
 		}
 		return esito;
