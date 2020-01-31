@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -152,7 +153,7 @@ public class EsercizioRubrica {
 	}
 	
 	//CE 20200124: Metodo per scrivere in un file XML
-	public static void writeInXML(List<Contatto> contatti,File file) throws Exception {
+	public static void writeInXML(List<Contatto> contatti,File file) throws ParserConfigurationException, TransformerException  {
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
