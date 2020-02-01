@@ -16,8 +16,8 @@ import java.util.Scanner;
 public class DBtools {
 
 	private static int onMainMenu() throws ClassNotFoundException, SQLException, IOException {
-		
-		int uscita = 0; //-1 esco
+
+		int uscita = 0; // -1 esco
 		System.out.println(".................................");
 		System.out.println("1 -- Aggiungi Contatto ----------");
 		System.out.println("2 -- Modifica Campo Contatto ----");
@@ -31,8 +31,8 @@ public class DBtools {
 		int choose = scan.nextInt();
 		switch (choose) {
 		case 1:
-			Contatto contatto = inserisciContatto();
-			insertContatto(contatto);		
+			Contatto contatto = Utility.inserisciContatto();
+			insertContatto(contatto);
 			break;
 		case 2:
 			updateContatto();
@@ -40,11 +40,11 @@ public class DBtools {
 		case 3:
 			stampaContatti(leggiContatti());
 			break;
-		case 4:			
-			esportaDaDBaXML(insertExtPath(true));
+		case 4:
+			esportaDaDBaXML(Utility.choosePath(true));
 			break;
 		case 5:
-			esportaDaDBaCSV(insertExtPath(false), leggiContatti());
+			esportaDaDBaCSV(Utility.choosePath(false), leggiContatti());
 			break;
 		case 6:
 			uscita = -1;
@@ -53,17 +53,7 @@ public class DBtools {
 		return uscita;
 	}
 
-	public static String insertExtPath(boolean csv_xml_Path) {
-		String path = "";
-		if (csv_xml_Path) {
-			path = MyRubrica.choosePath(true); //// false:csvFile, true:xmlFile estensione
-			return path;
-		} else {
-			path = MyRubrica.choosePath(false);
-			return path;
-		}
-	}
-
+	
 	public static Contatto trovaContattoByID(List<Contatto> listaContatti, int ID) throws NullPointerException {
 
 		for (int i = 0; i < listaContatti.size(); i++) {
@@ -75,6 +65,7 @@ public class DBtools {
 
 	}
 
+	@SuppressWarnings("resource")
 	public static void updateContatto() {
 
 		List<Contatto> listaContatti = null;
@@ -94,10 +85,10 @@ public class DBtools {
 			String query = "";
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			query = "UPDATE cilacap.rubrica SET nome = ?, cognome = ?, telefono = ?, email = ? WHERE id= " + c.getId()
-			+ ";";
+					+ ";";
 
 			pstmt = connection.prepareStatement(query);
-			Contatto contatto = inserisciContatto();
+			Contatto contatto = Utility.inserisciContatto();
 			pstmt.setString(1, contatto.getNome());
 			pstmt.setString(2, contatto.getCognome());
 			pstmt.setString(3, contatto.getTelefono());
@@ -117,31 +108,7 @@ public class DBtools {
 		}
 
 	}
-
-	public static Contatto inserisciContatto() { // riempie Bean da dare in pasto ai metodi
-		Scanner scan = new Scanner(System.in);
-		String fieldContatto = "campiDiContatto";
-		Contatto c = new Contatto();
-		System.out.println("inserisci un contatto:");
-		System.out.println("............................");
-		System.out.print("digita il nome:");
-		fieldContatto = scan.nextLine();
-		c.setNome(fieldContatto);
-		System.out.print("\ndigita il cognome:");
-		fieldContatto = scan.nextLine();
-		c.setCognome(fieldContatto);
-		System.out.print("\ndigita il telefono:");
-		fieldContatto = scan.nextLine();
-		c.setTelefono(fieldContatto);
-		System.out.print("\ndigita la mail:");
-		fieldContatto = scan.nextLine();
-		c.setEmail(fieldContatto);
-		System.out.println("............................");
-		scan.close();
-		return c;
-
-	}// fine metodo
-
+	
 	public static void esportaDaDBaXML(String filePath) {
 		File file = new File(filePath);
 		esportaDaDBaXML(file);
@@ -166,7 +133,7 @@ public class DBtools {
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
 		for (Contatto c : listaContatti) {
 			bWriter.append(c.getNome()).append(";").append(c.getCognome()).append(";").append(c.getTelefono())
-			.append(";").append(c.getEmail()).append(";").append("\n");
+					.append(";").append(c.getEmail()).append(";").append("\n");
 		}
 		System.out.println("file esportato con successo ! ! !");
 		bWriter.flush();
@@ -222,12 +189,18 @@ public class DBtools {
 	}
 
 	public static void stampaContatti(List<Contatto> listaContatti) {
+		boolean primogiro = true;
 		for (Contatto contatto : listaContatti) {
+			if (primogiro) {
+				System.out.println(".....................................");
+			}
+			primogiro = false;
 			System.out.println("id = " + contatto.getId());
 			System.out.println("nome = " + contatto.getNome());
 			System.out.println("cognome = " + contatto.getCognome());
 			System.out.println("telefono = " + contatto.getTelefono());
 			System.out.println("email = " + contatto.getEmail());
+			System.out.println(".....................................");
 		}
 	}
 
@@ -275,9 +248,10 @@ public class DBtools {
 	public static void main(String[] args) {
 		try {
 			int uscita = 0;
-			while(uscita!=-1) {
-			int whyNotExit = onMainMenu();
-			uscita = whyNotExit;
+			while (uscita != -1) {
+
+				uscita = onMainMenu();
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
