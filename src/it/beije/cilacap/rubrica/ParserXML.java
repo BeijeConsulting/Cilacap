@@ -19,8 +19,7 @@ import org.w3c.dom.NodeList;
 public class ParserXML {
 
 	public static List<Contatto> getContattiFromFile(String pathfile) throws Exception {
-		File file = new File(pathfile);
-		
+		File file = new File(pathfile);		
 		return getContattiFromFile(file);
 	}
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rubrica>
+	<contatto>
+		<nome>gabriele</nome>
+		<cognome>capobianco</cognome>
+		<telefono>3409864313</telefono>
+		<email>gabry19942009@gmail.com</email>
+	</contatto>
+	<contatto>
+		<nome>giulia</nome>
+		<cognome>gallo</cognome>
+		<telefono>3318234864</telefono>
+		<email>giulia.gj@gmail.com</email>
+	</contatto>
+	<contatto>
+		<nome>niccolo</nome>
+		<cognome>quarto</cognome>
+		<telefono>3906754343</telefono>
+		<email>nicc.quarto@libero.it</email>
+	</contatto>
+	<contatto>
+		<nome>geltrude</nome>
+		<cognome>fenici</cognome>
+		<telefono>3491238111</telefono>
+		<email>gel.fen@gmail.com</email>
+	</contatto>
+</rubrica>

@@ -133,7 +133,7 @@ public class MyRubrica {
 	}// fine metodo
 
 	@SuppressWarnings("resource")
-	private static String choosePath(boolean csv_xml) { // false:csvFile, true:xmlFile estensione
+	public static String choosePath(boolean csv_xml) { // false:csvFile, true:xmlFile estensione
 		System.out.println();
 		System.out.println("scegli il nome del file  -- !!digita solo il nome del file!!");
 		Scanner infoPath = new Scanner(System.in);
@@ -202,12 +202,12 @@ public class MyRubrica {
 
 	}
 
-	private static void esportaRubricaInCSV(String filePath) throws Exception {
+	public static void esportaRubricaInCSV(String filePath) throws Exception {
 		File file = new File(filePath);
 		esportaRubricaInCSV(file);
 	}
 
-	private static void esportaRubricaInCSV(File file) throws Exception {
+	public static void esportaRubricaInCSV(File file) throws Exception {
 		FileWriter fileWriter = new FileWriter(file, true); // true nell'append
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
 		for (Contatto c : listaContatti) {
