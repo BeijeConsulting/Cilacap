@@ -118,8 +118,10 @@ public class ParserXML {
 	
 	
 	public static void main(String[] args) throws Exception {
+		
 		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
 		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
+		
 	}
 
 }

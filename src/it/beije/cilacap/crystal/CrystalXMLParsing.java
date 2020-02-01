@@ -24,7 +24,7 @@ public class CrystalXMLParsing {
 		TestData test = importData(file);
 		List<TestData> tests = new ArrayList<TestData>();
 		tests.add(test);
-		String filePathExport = "xml/test.xml";
+		String filePathExport = "xml/newTest_1220.xml";
 		esportaRubricaInXML(tests, filePathExport);
 	}
 
@@ -183,34 +183,36 @@ public class CrystalXMLParsing {
 
 	private static TestData importData(File file) throws Exception {
 
-		List<String> listaRighe = fileDivisoPerRighe(file); // righe intero File
-		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read.
-		List<TestRow> testRowListWrite = new ArrayList<TestRow>(); // bean Row parte write
+		List<String> listaRighe = fileDivisoPerRighe(file); // metodo che restituisce tutte le righe dell'intero File
+		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read -- lista di testRow
+		List<TestRow> testRowListWrite = new ArrayList<TestRow>(); // bean Row parte write -- lista di testRow
 		TestData testData = new TestData(); // singolo test
 		String row = ""; // riga attuale
 
 		for (int i = 0; i < listaRighe.size(); i++) {
-			
+
 			row = listaRighe.get(i);
 			String temp;
-			// CrystalDiskMark7.0.0x64(C)2007-2019hiyohiyo
+			// qui prendo Version dal File
 			if (row.contains("DiskMark")) {
 				temp = row;
 				temp = temp.substring((row.indexOf("Mark") + 4), row.indexOf("(C"));
 				testData.setVersion(temp);
 				// System.out.println(testData.getVersion());
 			}
+			// qui prendo Sequential dal file e i primi due del file sono Read Sequential
+			// perciò li aggiungo nella lista Read
 			if (row.contains("Sequential1")
 					&& (listaRighe.get(i - 1).contains("[Read]") || listaRighe.get(i - 2).contains("[Read]"))) {
 
-				TestRow testRowSeq = new TestRow();
-				testRowSeq.setType("Sequential 1MiB");
-				testRowSeq = riempiRow(testRowSeq, row);
-				testRowListRead.add(testRowSeq);
+				TestRow testRowSeq = new TestRow(); // testRow singolo
+				testRowSeq.setType("Sequential 1MiB"); // setto il tipo a Sequential
+				testRowSeq = riempiRow(testRowSeq, row); // setto q e t e tutto il bean del TestRow relativo.
+				testRowListRead.add(testRowSeq); // aggiungo alla lista il TestRow relativo
 				// System.out.println(testRow.getUs());
 			}
-			if(row.contains("Random") && (listaRighe.get(i - 1).contains("[Read]")
-					|| listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
+			if (row.contains("Random")
+					&& (listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
 
 				TestRow testRowRan = new TestRow();
 				testRowRan.setType("Random 4KiB");
@@ -224,9 +226,9 @@ public class CrystalXMLParsing {
 				testRow.setType("Sequential 1MiB");
 				testRow = riempiRow(testRow, row);
 				testRowListWrite.add(testRow);
-			}			
-			if (row.contains("Random") && (listaRighe.get(i - 1).contains("[Write]")
-					|| listaRighe.get(i - 3).contains("[Read]") || listaRighe.get(i - 4).contains("[Read]"))) {
+			}
+			if (row.contains("Random")
+					&& (listaRighe.get(i - 3).contains("[Write]") || listaRighe.get(i - 4).contains("[Write]"))) {
 
 				TestRow testRowRan = new TestRow();
 				testRowRan.setType("Random 4KiB");

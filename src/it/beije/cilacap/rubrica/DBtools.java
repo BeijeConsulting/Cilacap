@@ -26,6 +26,7 @@ public class DBtools {
 		System.out.println("5 -- Esporta contatti in CSV ----");
 		System.out.println("6 -- Esci Dall'Applicazione -----");
 		System.out.println(".................................");
+		
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		int choose = scan.nextInt();
