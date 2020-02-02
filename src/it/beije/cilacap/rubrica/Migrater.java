@@ -1,6 +1,7 @@
 package it.beije.cilacap.rubrica;
 
 import java.util.List;
+import java.util.Random;
 import java.io.File;
 
 public class Migrater {
@@ -19,20 +20,20 @@ public class Migrater {
 		ParserXML.writeContattiInFile(lista, newFile.getAbsolutePath());
 	}
 	
-	public static void fromCSVtoDB(File file) {
+	public static void fromCSVtoDB(File file) throws Exception  {
 		List<Contatto> lista = ParserCSV.getContattiFromCsv(file);
 		for(Contatto c : lista) {
 			DBtools.insertContatto(c);
 		}
 	}
 	
-	public static void fromDBtoCSV(File newfile) {
+	public static void fromDBtoCSV(File newfile) throws Exception {
 		List<Contatto> lista = DBtools.leggiContatti();
-		while(newFile.exists()) {
-			Random r = new Random(20)
-			newFile = new File("CSV"+r.getInt()+newFile.getName());
+		while(newfile.exists()) {
+			Random r = new Random(20);
+			newfile = new File("CSV"+r.nextInt()+newfile.getName());
 		}
-		ParserCSV.writeContattiInCsv(lista, newFile.getAbsolutePath());
+		ParserCSV.writeContattiInCsv(lista, newfile.getAbsolutePath());
 	}
 	
 	public static void fromXMLtoDB(File file) throws Exception {
@@ -45,8 +46,8 @@ public class Migrater {
 	public static void fromDBtoXML(File newFile) throws Exception {
 		List<Contatto> lista = DBtools.leggiContatti();
 		while(newFile.exists()) {
-			Random r = new Random(20)
-			newFile = new File("XML"+r.getInt()+newFile.getName());
+			Random r = new Random(20);
+			newFile = new File("XML"+r.nextInt()+newFile.getName());
 		}
 		ParserXML.writeContattiInFile(lista, newFile.getAbsolutePath());
 	}

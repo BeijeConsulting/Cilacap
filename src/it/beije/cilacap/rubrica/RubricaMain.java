@@ -10,12 +10,12 @@ public class RubricaMain {
 	private static Scanner scan = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		File f = new File("Rubrica.txt");
-		List<Contatto> rubrica = aggiungiElencoContatti();
+		File f = new File("C:\\Users\\Padawan09\\git\\Cilacap\\xml\\rubrica.xml");
+//		List<Contatto> rubrica = aggiungiElencoContatti();
 		try {
-			ParserCSV.writeContattiInCsv(rubrica, f);
-			Migrater.fromCSVtoXML(f);
-			Migrater.fromCSVtoDB(f);
+//			ParserCSV.writeContattiInCsv(rubrica, f);
+//			Migrater.fromCSVtoXML(f);
+			Migrater.fromXMLtoDB(f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
