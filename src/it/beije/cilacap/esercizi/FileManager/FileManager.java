@@ -25,14 +25,14 @@ import org.w3c.dom.NodeList;
 
 
 public class FileManager {
-	public ArrayList<Contatto> getContattiFromFile(String pathfile) throws Exception {
+	public ArrayList<Contatto1> getContattiFromFile(String pathfile) throws Exception {
 		File file = new File(pathfile);
 		
 		return getContattiFromFile(file);
 	}
 
-	public ArrayList<Contatto> getContattiFromFile(File file) throws Exception {
-		ArrayList<Contatto> listaContatti = new ArrayList<Contatto>();
+	public ArrayList<Contatto1> getContattiFromFile(File file) throws Exception {
+		ArrayList<Contatto1> listaContatti = new ArrayList<Contatto1>();
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -60,7 +60,7 @@ public class FileManager {
 		        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
 		        	Element email = (Element)utente.getElementsByTagName("email").item(0);
 		        	
-		        	Contatto contatto = new Contatto();
+		        	Contatto1 contatto = new Contatto1();
 		        	contatto.setNome(nome.getTextContent());
 		        	contatto.setCognome(cognome.getTextContent());
 		        	contatto.setTelefono(telefono.getTextContent());
@@ -87,10 +87,10 @@ public class FileManager {
 	
 	Scanner scn = new Scanner(System.in);
  
-	public ArrayList<Contatto> readRubricaCSV(String pathFile) throws Exception  {
+	public ArrayList<Contatto1> readRubricaCSV(String pathFile) throws Exception  {
 		File f = new File(pathFile);
 		
-		ArrayList<Contatto> contatti = new ArrayList<>();
+		ArrayList<Contatto1> contatti = new ArrayList<>();
 		String[] arrayElementi = null;
 		
 		try {
@@ -103,7 +103,7 @@ public class FileManager {
 			while ((row = reader.readLine()) != null) {
 				arrayElementi = row.split(";");
 				
-				contatti.add(new Contatto());
+				contatti.add(new Contatto1());
 				contatti.get(indexWhile).setNome(arrayElementi[0]);
 				contatti.get(indexWhile).setCognome(arrayElementi[1]);
 				contatti.get(indexWhile).setTelefono(arrayElementi[2]);
@@ -119,13 +119,13 @@ public class FileManager {
 		return contatti;
 	}
 	
-	public ArrayList<Contatto> readRubricaXML(String pathFile){
-		ArrayList<Contatto> contatti = new ArrayList<>();
+	public ArrayList<Contatto1> readRubricaXML(String pathFile){
+		ArrayList<Contatto1> contatti = new ArrayList<>();
 		
 		return contatti;
 	}
 	
-	public void writeRubrica(ArrayList<Contatto> contatti, String pathFileCSV, String pathFileXML) throws IOException {
+	public void writeRubrica(ArrayList<Contatto1> contatti, String pathFileCSV, String pathFileXML) throws IOException {
 		
 		writeRubricaCSV(contatti, pathFileCSV);
 		
@@ -138,7 +138,7 @@ public class FileManager {
 		
 	}
 	
-	public void writeRubricaCSV(ArrayList<Contatto> contatti, String pathFileCSV) throws IOException {
+	public void writeRubricaCSV(ArrayList<Contatto1> contatti, String pathFileCSV) throws IOException {
 		
 		String [] contattiCsv = new String[contatti.size()];
 		FileWriter fileWriter = new FileWriter(pathFileCSV);
@@ -163,7 +163,7 @@ public class FileManager {
 		System.out.println("CONTATTI SALVATI .CSV CON SUCCESSO");
 	}	
 	
-	public void writeRubricaXML(ArrayList<Contatto> contatti, String pathFile) throws Exception {
+	public void writeRubricaXML(ArrayList<Contatto1> contatti, String pathFile) throws Exception {
 		try {
 			
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -175,7 +175,7 @@ public class FileManager {
 			document.removeChild(element);
 			document.appendChild(docElement);
 			
-			for (Contatto c : contatti) {
+			for (Contatto1 c : contatti) {
 				Element contatto = document.createElement("contatto");
 				
 				Element nome = (Element)document.createElement("nome");
@@ -215,7 +215,7 @@ public class FileManager {
 		
 	}
 	
-	public void writeRubricaXML(ArrayList<Contatto> contatti, String pathFile,boolean isNew) throws Exception {
+	public void writeRubricaXML(ArrayList<Contatto1> contatti, String pathFile,boolean isNew) throws Exception {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -224,7 +224,7 @@ public class FileManager {
 			Element docElement = document.createElement("rubrica");
 			document.appendChild(docElement);
 			
-			for (Contatto c : contatti) {
+			for (Contatto1 c : contatti) {
 				Element contatto = document.createElement("contatto");
 				
 				Element nome = (Element)document.createElement("nome");
@@ -263,7 +263,7 @@ public class FileManager {
 		}
 	}
 	
-	public void printRubrica(ArrayList <Contatto> contatti) {
+	public void printRubrica(ArrayList <Contatto1> contatti) {
 		if (contatti.size() > 0) {
 			for (int i = 0; i < contatti.size(); i++) {
 				System.out.println("Contatto n°" + (i+1));
@@ -278,12 +278,12 @@ public class FileManager {
 		}
 	}
 	
-	public ArrayList <Contatto> addContatti(ArrayList <Contatto> contatti) {
+	public ArrayList <Contatto1> addContatti(ArrayList <Contatto1> contatti) {
 		boolean finish= false;
 		String finishString = "";
 	
 		while (!finish) {
-			contatti.add(new Contatto());
+			contatti.add(new Contatto1());
 			System.out.println("Inserire nome...\n");
 			contatti.get(contatti.size()-1).setNome(scn.nextLine());
 			System.out.println("Inserire cognome...\n");

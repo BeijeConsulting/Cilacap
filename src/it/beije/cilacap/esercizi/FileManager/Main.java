@@ -14,7 +14,7 @@ public class Main {
 		boolean menuOn = false;
 		
 		FileManager f = new FileManager();
-		ArrayList<Contatto> contatti = f.getContattiFromFile(PATH_XML_FILE);
+		ArrayList<Contatto1> contatti = f.getContattiFromFile(PATH_XML_FILE);
 //		ArrayList<Contatto> contattiXml = f.getContattiFromFile(PATH_XML_FILE);
 		
 		Scanner scn = new Scanner(System.in);
@@ -40,7 +40,7 @@ public class Main {
 				
 				pathFileCopiaCsv = scn.nextLine();
 				
-				ArrayList<Contatto> contattiCopiaCsv = f.readRubricaCSV(pathFileCopiaCsv);
+				ArrayList<Contatto1> contattiCopiaCsv = f.readRubricaCSV(pathFileCopiaCsv);
 				
 				f.writeRubrica(contattiCopiaCsv, PATH_CSV_FILE ,PATH_XML_FILE);
 				break;
@@ -51,7 +51,7 @@ public class Main {
 				
 				pathFileCopiaXml = scn.nextLine();
 				
-				ArrayList<Contatto> contattiCopiaXml = f.readRubricaXML(pathFileCopiaXml);
+				ArrayList<Contatto1> contattiCopiaXml = f.readRubricaXML(pathFileCopiaXml);
 				
 				f.writeRubrica(contattiCopiaXml,PATH_CSV_FILE ,PATH_XML_FILE);
 				break;

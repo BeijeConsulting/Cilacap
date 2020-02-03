@@ -1,6 +1,6 @@
 package it.beije.cilacap.esercizi.FileManager;
 
-public class Contatto {
+public class Contatto1 {
 
 	private String nome;
 	private String cognome;
