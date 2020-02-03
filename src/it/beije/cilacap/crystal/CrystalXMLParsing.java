@@ -167,8 +167,10 @@ public class CrystalXMLParsing {
 		File file = new File(filePath);
 		return importData(file);
 	}
+	
+	
 
-	private static TestData importData(File file) throws Exception {
+	public static TestData importData(File file) throws Exception {
 
 		List<String> listaRighe = fileDivisoPerRighe(file); // metodo che restituisce tutte le righe dell'intero File
 		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read -- lista di testRow

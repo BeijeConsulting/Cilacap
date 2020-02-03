@@ -24,6 +24,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import it.beije.cilacap.crystal.CrystalXMLParsing;
+import it.beije.cilacap.crystal.TestData;
+import it.beije.cilacap.crystal.TestRow;
+
 public class Utility {
 
 	@SuppressWarnings("resource")
@@ -243,6 +247,74 @@ public class Utility {
 		return esito;
 	}
 
+	public static boolean insertTest(File file) throws Exception {
+
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		boolean esito = false;
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			TestData testData = CrystalXMLParsing.importData(file);
+			List<TestRow> testRowRead = testData.getRead();
+			List<TestRow> testRowWrite = testData.getWrite();
+
+			pstmt = connection.prepareStatement(
+					"INSERT INTO cilacap.testdata (id_Computer, date, testdata.interval, iterations, os, type, version) VALUES (?,?,?,?,?,?,?)");
+			pstmt.setString(1, testData.getIdComputer());
+			pstmt.setString(2, testData.getDate());
+			pstmt.setInt(3, testData.getIntervalInSeconds());
+			pstmt.setInt(4, testData.getIterations());
+			pstmt.setString(5, testData.getOs());
+			pstmt.setString(6, testData.getType());
+			pstmt.setString(7, testData.getVersion());
+			esito = pstmt.execute();
+
+			for (int i = 0; i < testRowRead.size(); i++) { // FOR PER IL READ
+				pstmt = connection.prepareStatement(
+						"INSERT INTO cilacap.test_row (test_type, mode_type, q, t, mbs, iops, us, id_testData) VALUES (?,?,?,?,?,?,?,?)");
+
+				TestRow testRow = testRowRead.get(i);
+				pstmt.setString(1, "r");
+				pstmt.setString(2, testRow.getType());
+				pstmt.setInt(3, testRow.getQ());
+				pstmt.setInt(4, testRow.getT());
+				pstmt.setDouble(5, testRow.getMbs());
+				pstmt.setDouble(6, testRow.getIops());
+				pstmt.setDouble(7, testRow.getUs());
+				pstmt.setString(8, testData.getIdComputer());
+				esito = pstmt.execute();
+
+			}
+			for (int i = 0; i < testRowWrite.size(); i++) {
+				pstmt = connection.prepareStatement(
+						"INSERT INTO cilacap.test_row (test_type, mode_type, q, t, mbs, iops, us, id_testData) VALUES (?,?,?,?,?,?,?,?)");
+
+				TestRow testRow = testRowRead.get(i);
+				pstmt.setString(1, "w");
+				pstmt.setString(2, testRow.getType());
+				pstmt.setInt(3, testRow.getQ());
+				pstmt.setInt(4, testRow.getT());
+				pstmt.setDouble(5, testRow.getMbs());
+				pstmt.setDouble(6, testRow.getIops());
+				pstmt.setDouble(7, testRow.getUs());
+				pstmt.setString(8, testData.getIdComputer());
+				esito = pstmt.execute();
+			}
+
+			System.out.println(pstmt.getUpdateCount());
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				pstmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		return esito;
+	}
+
 	public static void importDaCSVaDB(String filePath) { // overload sotto.
 		File file = new File(filePath);
 		importDaCSVaDB(file);
@@ -262,5 +334,4 @@ public class Utility {
 		}
 	}
 
-	
 }

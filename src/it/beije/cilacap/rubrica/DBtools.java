@@ -206,15 +206,17 @@ public class DBtools {
 	}
 
 	
-	public static void main(String[] args) {
-		try {
-			int uscita = 0;
-			while (uscita != -1) {
-				uscita = onMainMenu();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws Exception {
+//		try {
+//			int uscita = 0;
+//			while (uscita != -1) {
+//				uscita = onMainMenu();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		File file = new File("crystal/01/CDM_20200102145818.txt");
+		Utility.insertTest(file);
 
 	}
 
