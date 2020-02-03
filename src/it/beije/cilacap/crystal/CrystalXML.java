@@ -36,13 +36,13 @@ public class CrystalXML extends GestoreReadCrystal {
 		System.out.println(contenutoCrystal.toString());
 		TestData datiDiCrystal=createListOfData(contenutoCrystal);
 		datiDiCrystal.setIdComputer(fileCrystal.getPath().substring(9,10));
-		System.out.println(datiDiCrystal.getType());
-		System.out.println(datiDiCrystal.getDate());
-		System.out.println(datiDiCrystal.getVersion());
-		System.out.println(datiDiCrystal.getIdComputer());
-		System.out.println(datiDiCrystal.getInterval());
-		System.out.println(datiDiCrystal.getIterations());
-		System.out.println(datiDiCrystal.getOs());
+//		System.out.println(datiDiCrystal.getType());
+//		System.out.println(datiDiCrystal.getDate());
+//		System.out.println(datiDiCrystal.getVersion());
+//		System.out.println(datiDiCrystal.getIdComputer());
+//		System.out.println(datiDiCrystal.getInterval());
+//		System.out.println(datiDiCrystal.getIterations());
+//		System.out.println(datiDiCrystal.getOs());
 		createXML(datiDiCrystal);
 		
 	}
@@ -132,15 +132,15 @@ public class CrystalXML extends GestoreReadCrystal {
 
     	}
     	
-CICLO: for (TestRow r: datiWrite) {
+    	CICLO: for (TestRow r: datiWrite) {
     		
 //    		System.out.println(r.getType());
 //    		System.out.println(r.getType()=="Sequential_1MIb");
     		
     		
-    		if(r.getType()==null){
-    			continue CICLO ;
-    		}
+//    		if(r.getType()==null){
+//    			continue CICLO ;
+//    		}
     		if ( r.getType().equalsIgnoreCase("Sequential_1MIB"))
     		{
         		Element sequential= document.createElement("Sequential_1MiB");

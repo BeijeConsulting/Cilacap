@@ -57,7 +57,7 @@ public class GestoreReadCrystal {
 		//CE 20200125: inizio analisi della riga
 			CICLO: for(int j=0; j<riga.length; j++) {
 //				System.out.println("nel for di createdList colonna");
-//				System.out.println(riga[j]);
+				System.out.println(riga[j]);
 				
 				String colonna= riga[j].trim();
 				
@@ -124,66 +124,71 @@ public class GestoreReadCrystal {
 					
 //					if(colonna.isEmpty()) 
 //						break;
+//					if(colonna==null || colonna.isEmpty())
+//						break CICLO_INIZIALE;
 					
 					switch(colonna) {
 					case "Sequential":
 										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+createWord(riga[j]).substring(1));
-										System.out.println(raccoltaDatiRead.getType());
+//										System.out.println(raccoltaDatiRead.getType());
 										break;
 					case "(Q=": 		
 										raccoltaDatiRead.setQ(createWord(riga[++j]).charAt(0)-'0');
-										System.out.println(raccoltaDatiRead.getQ());
+//										System.out.println(raccoltaDatiRead.getQ());
 										break;
 										
 					case "T=":       
 										//	System.out.println(createWord(riga[j+5]));
 										raccoltaDatiRead.setT(riga[++j].charAt(0)-'0');
 										raccoltaDatiRead.setMbs(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiRead.getT());
-										System.out.println(raccoltaDatiRead.getMbs());
+//										System.out.println(raccoltaDatiRead.getT());
+//										System.out.println(raccoltaDatiRead.getMbs());
 										break;
 					case"[": 			
 										raccoltaDatiRead.setIops(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiRead.getIops());
+//										System.out.println(raccoltaDatiRead.getIops());
 										break;
 					case"<":
 										raccoltaDatiRead.setUs(Double.parseDouble(riga[++j]));
-										System.out.println(raccoltaDatiRead.getUs());
+//										System.out.println(raccoltaDatiRead.getUs());
 										break;
 										
 					case "Random":
 										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+ createWord(riga[j]).substring(1));
-										System.out.println(raccoltaDatiRead.getType());
+//										System.out.println(raccoltaDatiRead.getType());
 										break;
 					default: break;
 					}
 				}
 			
-				if(campoRead) {
+				if(!(raccoltaDatiRead.getType()==null))
 				listaDati.add(raccoltaDatiRead);
-				}else {listaDati.add(raccoltaDatiRead);}
-				
+			
 					
 			}
 		
 		if(campoRead) {
-			System.out.println("inserimento dati lista read");
-			info.setRead(listaDati);
-			i++;
-//			takeWriteFieldData(info, dati);
-			campoRead=false;
-			takeData(info,dati);
+			
+	//			System.out.println("inserimento dati lista read");
+				info.setRead(listaDati);
+				i++;
+	//			takeWriteFieldData(info, dati);
+				campoRead=false;
+				takeData(info,dati);
+			
 			} else 	{
-				System.out.println("inserimento dati lista write");
+				
+//				System.out.println("inserimento dati lista write");
 				info.setWrite(listaDati);
-				System.out.println("Finito");
+//				System.out.println("Finito");
+				
 			}
 	}
 
 	
 	//CE 20200124: metodo per estrapolare i dati nel campo profile default
 	public static void takeProfileFieldData(TestData info, String [] dati) {
-		System.out.println("dentro takeProfileFieldData");
+//		System.out.println("dentro takeProfileFieldData");
 		for (;i<dati.length;i++) {
 			String [] riga= dati[i].split(" ");
 			
@@ -225,6 +230,7 @@ public class GestoreReadCrystal {
 				}
 			}
 		}
+		
 		
 	}
 	
