@@ -1,5 +1,9 @@
 package it.beije.cilacap.crystal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -77,6 +81,12 @@ public class TestRow {
 		type.appendChild(io);
 		type.appendChild(us);
 		return type;
+	}
+	
+	public void toDB(Connection conn, int idTestData, String s) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO test_row (test_type, mood_type, q, t, mbs, iops, us, testdata_id)"
+				+ " VALUES ('"+s+"', '"+type+"', "+q+", "+t+","+mbs+", "+iops+", "+us+", (SELECT id FROM testdata WHERE id="+idTestData+"))");
+		ps.execute();
 	}
 	
 }

@@ -2,6 +2,9 @@ package it.beije.cilacap.crystal;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,6 +19,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
+import it.beije.cilacap.rubrica.DBManager;
+
 public class CrystalMain {
 	
 	public static void main(String[] args) {
@@ -26,21 +31,27 @@ public class CrystalMain {
 		for(File file : files) {
 			try {
 				TestData test = new TestData(file);
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		        DocumentBuilder builder = factory.newDocumentBuilder();
-		        Document document = builder.newDocument();
-		        document.appendChild(test.toXML(document));
-		        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(document);
-				StreamResult result = new StreamResult(test.getPathFile());
-				transformer.transform(source, result);
+//				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//		        DocumentBuilder builder = factory.newDocumentBuilder();
+//		        Document document = builder.newDocument();
+//		        document.appendChild(test.toXML(document));
+//		        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//				Transformer transformer = transformerFactory.newTransformer();
+//				DOMSource source = new DOMSource(document);
+//				StreamResult result = new StreamResult(test.getPathFile());
+//				transformer.transform(source, result);
+				Connection conn = DBManager.getMySqlConnection("", "", "");
+				test.toDB(conn);
+				conn.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Errore nel file");
-			} catch (ParserConfigurationException | TransformerException e) {
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("Impossibile creare file XML");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} 
 		}
 		System.out.println("File convertito correttamente");

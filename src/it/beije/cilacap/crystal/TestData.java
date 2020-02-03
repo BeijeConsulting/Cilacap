@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,7 +29,7 @@ public class TestData {
 	private String os;    
 	private String type;    
 	private int iterations;  
-	private String interval;
+	private int intervalInSeconds;
 	private LocalDateTime date;
 
 	private static final String regexVersion = "CrystalDiskMark[ ][0-9]+[\\.][0-9]+[\\.][0-9][ ]+[x][0-9]+[ ]\\(C\\)"; 
@@ -53,10 +57,10 @@ public class TestData {
 				this.os=s.split("\\[")[0].split("S:")[1].trim();
 		// ricerca type, iteration e interval
 			else if(Pattern.compile(regexTypeIterInt).matcher(s).find()) {
-				String presplit = s.split("\\]")[0].split("Test:")[1].trim();
+				String presplit = s.split("sec\\]")[0].split("Test:")[1].trim();
 				this.type=presplit.split("\\(")[0].trim();
 				this.iterations=Integer.parseInt(presplit.split("\\)")[0].split("\\(x")[1]);
-				this.interval=presplit.split("Interval:")[1].trim();
+				this.intervalInSeconds=Integer.parseInt(presplit.split("Interval:")[1].trim());
 			}
 		//ricerca data ( elimina toString() per cambiare tipo)
 			else if(Pattern.compile(regexDate).matcher(s).find())
@@ -110,11 +114,11 @@ public class TestData {
 		this.iterations = iterations;
 	}
 	
-	public String getInterval() {
-		return interval;
+	public int getIntervalInSeconds() {
+		return intervalInSeconds;
 	}
-	public void setInterval(String interval) {
-		this.interval = interval;
+	public void setInterval(int intervalInSeconds) {
+		this.intervalInSeconds = intervalInSeconds;
 	}
 	
 	public LocalDateTime getDate() {
@@ -142,11 +146,22 @@ public class TestData {
 		return pathDestination;
 	}
 	
+	public void toDB(Connection conn) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO testdata (id_computer, versionData, osData, typeData, iterationsData, intervalData, dateData) "
+				+ "VALUES ('"+idComputer+"','"+version+"','"+os+"','"+type+"',"+iterations+","+intervalInSeconds+",'"+java.sql.Date.valueOf(date.toLocalDate())+"')");
+		ps.execute();
+		ResultSet rId = conn.createStatement().executeQuery("SELECT id FROM testdata WHERE id=LAST_INSERT_ID()");
+		rId.next();
+		int id = rId.getInt(1); 
+		for(TestRow tr : read) tr.toDB(conn, id, "r");
+		for(TestRow tr : write) tr.toDB(conn, id, "r");
+	}
+	
 	public Element toXML(Document document) throws ParserConfigurationException {
         Element crystal = document.createElement("CrystalDiskMark");
         Element test = document.createElement("test");
         test.setAttribute("date", date.format(formatter));
-        test.setAttribute("interval", interval);
+        test.setAttribute("interval", intervalInSeconds+"");
         test.setAttribute("iterations", iterations+"");
         test.setAttribute("type", type);
         test.setAttribute("os", os);
