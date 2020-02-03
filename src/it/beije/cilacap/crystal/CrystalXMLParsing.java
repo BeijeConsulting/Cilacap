@@ -55,7 +55,7 @@ public class CrystalXMLParsing {
 			test.setAttribute("os", tests.get(i).getOs());
 			test.setAttribute("type", tests.get(i).getType());
 			test.setAttribute("iterations", Integer.toString(tests.get(i).getIterations()));
-			test.setAttribute("interval", tests.get(i).getInterval());
+			test.setAttribute("interval", Integer.toString(tests.get(i).getIntervalInSeconds()));
 			test.setAttribute("date", tests.get(i).getDate());
 
 			Element read = document.createElement("read");
@@ -229,7 +229,7 @@ public class CrystalXMLParsing {
 				testData.setType(temp);
 				temp = row;
 				temp = temp.substring((temp.indexOf("val:") + 4), (temp.indexOf("sec"))); // preso interval
-				testData.setInterval(temp);
+				testData.setIntervalInSeconds(Integer.parseInt(temp));
 				temp = row;
 				temp = temp.substring((temp.indexOf("(x") + 2), (temp.indexOf(")"))); // preso Itertion
 				testData.setIterations(Integer.parseInt(temp));
