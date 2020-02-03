@@ -16,16 +16,21 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import it.beije.cilacap.rubrica.Utility;
+
 public class CrystalXMLParsing {
 
 	public static void main(String[] args) throws Exception {
 
 		File file = new File("crystal/01/CDM_20200102145818.txt");
 		TestData test = importData(file);
+		File file2 = new File("crystal/01/CDM_20200102151619.txt");
+		TestData test2 = importData(file2);
 		List<TestData> tests = new ArrayList<TestData>();
 		tests.add(test);
-		String filePathExport = "xml/newTest_1220.xml";
-		esportaRubricaInXML(tests, filePathExport);
+		tests.add(test2);
+//		String filePathExport = "xml/newTest_1220.xml";
+		esportaRubricaInXML(tests, Utility.choosePath(true));
 	}
 
 	private static void esportaRubricaInXML(List<TestData> tests, String filePath) throws Exception {
@@ -155,25 +160,7 @@ public class CrystalXMLParsing {
 
 		System.out.println("file esportato con successo!");
 
-	}
-
-	@SuppressWarnings("unused")
-	private static TestRow matchSection(String readSection, File file) throws Exception {
-
-		FileReader fileReader = new FileReader(file);
-		BufferedReader reader = new BufferedReader(fileReader);
-		String row;
-		while ((row = reader.readLine()) != null) {
-			TestRow sequential1 = new TestRow();
-			TestRow sequential2 = new TestRow();
-			TestRow random1 = new TestRow();
-			TestRow random2 = new TestRow();
-			String[] array = row.split(" ");
-
-		}
-		reader.close();
-		return null;
-	}
+	}	
 
 	@SuppressWarnings("unused")
 	private static TestData importData(String filePath) throws Exception {
@@ -294,11 +281,12 @@ public class CrystalXMLParsing {
 	private static TestRow riempiRow(TestRow testRow, String row) { // metodo che prende sia Sequential che Random nella
 		// parte Read and Write
 		String temp = row;
-		temp = temp.substring((temp.indexOf("Q") + 2), (temp.indexOf("Q") + 3)); // Q=..., Sequential1MiB Q
+		// Sequential1MiB(Q=8,T=1):98.981MB/s[94.4 IOPS]<83783.98us>
+		temp = temp.substring((temp.indexOf("Q") + 2), (temp.indexOf(","))); // Q=..., Sequential1MiB Q
 		testRow.setQ(Integer.parseInt(temp));
 		// System.out.println(testRow.getQ());
 		temp = row;
-		temp = temp.substring((temp.indexOf("T") + 2), (temp.indexOf("T") + 3)); // T=...) Sequential1MiB T
+		temp = temp.substring((temp.indexOf("T") + 2), (temp.indexOf(")"))); // T=...) Sequential1MiB T
 		testRow.setT(Integer.parseInt(temp));
 		// System.out.println(testRow.getT());
 		temp = row;

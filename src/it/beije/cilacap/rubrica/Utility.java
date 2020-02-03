@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +25,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class Utility {
-	
+
 	@SuppressWarnings("resource")
 	public static String choosePath(boolean csv_xml) { // false:csvFile, true:xmlFile estensione
 		System.out.println();
@@ -36,14 +39,16 @@ public class Utility {
 		}
 	}
 
-	public static List<Contatto> caricaContattiDaCSV(String filePath) throws IOException {
+	public static List<Contatto> caricaContattiDaCSV(String filePath) throws IOException { // overload sotto
+
 		File file = new File(filePath);
 		return caricaContattiDaCSV(file);
 	}
 
-	public static List<Contatto> caricaContattiDaCSV(File file) throws IOException {
+	public static List<Contatto> caricaContattiDaCSV(File file) throws IOException { // prendo il Bean Contatto dal File
+																						// csv parsandolo. [Read]
 		List<Contatto> listaContatti = new ArrayList<Contatto>();
-		
+
 		FileReader fileReader = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
@@ -60,12 +65,13 @@ public class Utility {
 		return listaContatti;
 	}// fine metodo
 
-	public static List<Contatto> caricaContattiDaXML(String filePath) throws Exception {
+	public static List<Contatto> caricaContattiDaXML(String filePath) throws Exception { // overload sotto
 		File file = new File(filePath);
 		return caricaContattiDaXML(file);
 	}
 
-	public static List<Contatto> caricaContattiDaXML(File file) throws Exception {
+	public static List<Contatto> caricaContattiDaXML(File file) throws Exception { // prendo il Bean Contatto dal File
+																					// xml parsandolo. [Read]
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -93,16 +99,21 @@ public class Utility {
 
 			listaContatti.add(contatto);
 		}
-			return listaContatti;
+		return listaContatti;
 
 	}
 
-	public static void esportaRubricaInCSV(String filePath, List<Contatto> listaContatti) throws Exception {
+	public static void esportaRubricaInCSV(String filePath, List<Contatto> listaContatti) throws Exception {// overload
+																											// sotto
+
 		File file = new File(filePath);
 		esportaRubricaInCSV(file, listaContatti);
 	}
 
-	public static void esportaRubricaInCSV(File file, List<Contatto> listaContatti) throws Exception {
+	public static void esportaRubricaInCSV(File file, List<Contatto> listaContatti) throws Exception { // prendo i Bean
+																										// e costruisco
+																										// il CSV di
+																										// contatti.
 		FileWriter fileWriter = new FileWriter(file, true); // true nell'append
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
 		for (Contatto c : listaContatti) {
@@ -112,15 +123,22 @@ public class Utility {
 		System.out.println("file esportato con successo ! ! !");
 		bWriter.flush();
 		bWriter.close();
-		
+
 	}// fine metodo
-	
-	public static void esportaRubricaInXML(String filePath, List<Contatto> listaContatti) throws Exception {
+
+	public static void esportaRubricaInXML(String filePath, List<Contatto> listaContatti) throws Exception {// overload
+																											// sotto
 		File file = new File(filePath);
 		esportaRubricaInXML(file, listaContatti);
 	}
 
-	public static void esportaRubricaInXML(File file, List<Contatto> listaContatti) throws Exception {
+	public static void esportaRubricaInXML(File file, List<Contatto> listaContatti) throws Exception { // prendo i Bean
+																										// e costruisco
+																										// l'XML,
+																										// inoltre
+																										// scelgo il
+																										// destination
+																										// path.
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -187,9 +205,62 @@ public class Utility {
 
 	}// fine metodo
 
-	
-	
-	
-	
+	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException { // inserisci Contatto in DB
+																							// cilacap.rubrica
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		boolean esito = false;
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+
+			// metodo alternativo, lungo
+			// StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES
+			// (null,")
+			// .append('\'').append(contatto.getNome()).append("\',")
+			// .append('\'').append(contatto.getCognome()).append("\',")
+			// .append('\'').append(contatto.getTelefono()).append("\',")
+			// .append('\'').append(contatto.getEmail()).append('t').append("\')");
+			// System.out.println(insert.toString());
+			pstmt = connection
+					.prepareStatement("INSERT INTO cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
+			pstmt.setString(1, contatto.getNome());
+			pstmt.setString(2, contatto.getCognome());
+			pstmt.setString(3, contatto.getTelefono());
+			pstmt.setString(4, contatto.getEmail());
+
+			esito = pstmt.execute();
+			System.out.println(pstmt.getUpdateCount());
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				pstmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		return esito;
+	}
+
+	public static void importDaCSVaDB(String filePath) { // overload sotto.
+		File file = new File(filePath);
+		importDaCSVaDB(file);
+	}
+
+	public static void importDaCSVaDB(File file) { // preleva tutti i Bean contatto dal file CSV e li inserisci
+													// all'interno del DB.
+		try {
+
+			List<Contatto> listaContatti = caricaContattiDaCSV(file); // ottengo tutti i contattai dal file csv.
+			for (int i = 0; i < listaContatti.size(); i++) {
+				insertContatto(listaContatti.get(i));
+			}
+
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 }

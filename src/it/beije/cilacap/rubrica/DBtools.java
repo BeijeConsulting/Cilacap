@@ -24,16 +24,18 @@ public class DBtools {
 		System.out.println("3 -- Lista Contatti -------------");
 		System.out.println("4 -- Esporta contatti in XML ----");
 		System.out.println("5 -- Esporta contatti in CSV ----");
-		System.out.println("6 -- Esci Dall'Applicazione -----");
+		System.out.println("6 -- importa contatti da CSV ----");
+		System.out.println("7 -- importa contatti da XML ----");
+		System.out.println("8 -- Esci Dall'Applicazione -----");
 		System.out.println(".................................");
-		
+
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		int choose = scan.nextInt();
 		switch (choose) {
 		case 1:
 			Contatto contatto = Utility.inserisciContatto();
-			insertContatto(contatto);
+			Utility.insertContatto(contatto);
 			break;
 		case 2:
 			updateContatto();
@@ -48,14 +50,19 @@ public class DBtools {
 			esportaDaDBaCSV(Utility.choosePath(false), leggiContatti());
 			break;
 		case 6:
+//			Utility.importDaCSVaDB(Utility.choosePath(false)); Da finire
+			break;
+		case 7:
+//			TODO devo finire il metodo.
+			break;
+		case 8:
 			uscita = -1;
 			break;
 		}
 		return uscita;
 	}
 
-	
-	public static Contatto trovaContattoByID(List<Contatto> listaContatti, int ID) throws NullPointerException {
+	public static Contatto trovaContattoByID(List<Contatto> listaContatti, int ID) throws NullPointerException { //usando l'id nel DB prelevo il contatto relativo a quell'ID.
 
 		for (int i = 0; i < listaContatti.size(); i++) {
 			if (listaContatti.get(i).getId() == ID) {
@@ -67,7 +74,7 @@ public class DBtools {
 	}
 
 	@SuppressWarnings("resource")
-	public static void updateContatto() {
+	public static void updateContatto() { // query update del contatto con l'id rispettivo.
 
 		List<Contatto> listaContatti = null;
 		Connection connection = null;
@@ -76,7 +83,7 @@ public class DBtools {
 		try {
 
 			listaContatti = leggiContatti(); // prendo listaContatti da DB
-			System.out.println("#####################Ecco i contatti#####################");
+			System.out.println("##################### Ecco i contatti #####################");
 			stampaContatti(listaContatti);
 			System.out.println("............................................");
 			System.out.println("-- Inserisci L'Id dell'utente da modificare--");
@@ -86,7 +93,7 @@ public class DBtools {
 			String query = "";
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			query = "UPDATE cilacap.rubrica SET nome = ?, cognome = ?, telefono = ?, email = ? WHERE id= " + c.getId()
-					+ ";";
+			+ ";";
 
 			pstmt = connection.prepareStatement(query);
 			Contatto contatto = Utility.inserisciContatto();
@@ -109,32 +116,33 @@ public class DBtools {
 		}
 
 	}
-	
-	public static void esportaDaDBaXML(String filePath) {
+
+	public static void esportaDaDBaXML(String filePath) { //overload sotto
 		File file = new File(filePath);
 		esportaDaDBaXML(file);
 	}
 
-	public static void esportaDaDBaXML(File file) {
+	public static void esportaDaDBaXML(File file) { // leggo i contatti dal DB e li scrivo in un XML.
 		try {
-			ParserXML.writeContattiInFile(leggiContatti(), file);
+			ParserXML.writeContattiInFile(leggiContatti(), file); 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 	}
 
-	public static void esportaDaDBaCSV(String filePath, List<Contatto> listaContatti) throws IOException {
+	public static void esportaDaDBaCSV(String filePath, List<Contatto> listaContatti) throws IOException { //overload sotto
 		File file = new File(filePath);
 		esportaDaDBaCSV(file, listaContatti);
 	}
 
-	public static void esportaDaDBaCSV(File file, List<Contatto> listaContatti) throws IOException {
+	public static void esportaDaDBaCSV(File file, List<Contatto> listaContatti) throws IOException { //metto lista del DB in un file CSV.
+		
 		FileWriter fileWriter = new FileWriter(file, true); // true nell'append
 		BufferedWriter bWriter = new BufferedWriter(fileWriter);
 		for (Contatto c : listaContatti) {
 			bWriter.append(c.getNome()).append(";").append(c.getCognome()).append(";").append(c.getTelefono())
-					.append(";").append(c.getEmail()).append(";").append("\n");
+			.append(";").append(c.getEmail()).append(";").append("\n");
 		}
 		System.out.println("file esportato con successo ! ! !");
 		bWriter.flush();
@@ -142,7 +150,7 @@ public class DBtools {
 
 	}// fine metodo
 
-	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
+	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException { //SELECT * FROM cilacap.rubrica.
 
 		List<Contatto> contatti = new ArrayList<Contatto>();
 
@@ -163,12 +171,6 @@ public class DBtools {
 				contatto.setCognome(rs.getString("cognome"));
 				contatto.setTelefono(rs.getString("telefono"));
 				contatto.setEmail(rs.getString("email"));
-				//
-				// System.out.println("id = " + contatto.getId());
-				// System.out.println("nome = " + contatto.getNome());
-				// System.out.println("cognome = " + contatto.getCognome());
-				// System.out.println("telefono = " + contatto.getTelefono());
-				// System.out.println("email = " + contatto.getEmail());
 				contatti.add(contatto);
 			}
 
@@ -183,13 +185,11 @@ public class DBtools {
 				System.out.println("PROBLEMA : " + finEx);
 			}
 		}
-
 		System.out.println("contatti letti : " + contatti.size());
-
 		return contatti;
 	}
 
-	public static void stampaContatti(List<Contatto> listaContatti) {
+	public static void stampaContatti(List<Contatto> listaContatti) { //stampa una lista Contatti.
 		boolean primogiro = true;
 		for (Contatto contatto : listaContatti) {
 			if (primogiro) {
@@ -205,54 +205,12 @@ public class DBtools {
 		}
 	}
 
-	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException {
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		boolean esito = false;
-
-		try {
-			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
-
-			// StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES
-			// (null,")
-			// .append('\'').append(contatto.getNome()).append("\',")
-			// .append('\'').append(contatto.getCognome()).append("\',")
-			// .append('\'').append(contatto.getTelefono()).append("\',")
-			// .append('\'').append(contatto.getEmail()).append('t').append("\')");
-			// System.out.println(insert.toString());
-			pstmt = connection
-					.prepareStatement("INSERT INTO cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
-			pstmt.setString(1, contatto.getNome());
-			pstmt.setString(2, contatto.getCognome());
-			pstmt.setString(3, contatto.getTelefono());
-			pstmt.setString(4, contatto.getEmail());
-
-			esito = pstmt.execute();
-			System.out.println(pstmt.getUpdateCount());
-
-			// pstmt.executeUpdate();
-
-		} catch (SQLException sqlEx) {
-			System.out.println("PROBLEMA : " + sqlEx);
-		} finally {
-			try {
-				pstmt.close();
-				connection.close();
-			} catch (SQLException finEx) {
-				System.out.println("PROBLEMA : " + finEx);
-			}
-		}
-
-		return esito;
-	}
-
+	
 	public static void main(String[] args) {
 		try {
 			int uscita = 0;
 			while (uscita != -1) {
-
 				uscita = onMainMenu();
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
