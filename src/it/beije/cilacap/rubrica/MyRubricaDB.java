@@ -17,9 +17,8 @@ public class MyRubricaDB
 		getContattiFromDB(listacontatti); //metodo autoesplicativo
 		//MyRubricaXML.writeContattiInFile(listacontatti, "xml\\DBtoXML.xml"); //stampa su XML
 		//MyRubricaXML.writeContattiInFileCSV(listacontatti, "csv\\DBtoCSV.csv"); //stampa su CSV
+		setContattiFromXMLToDB(listacontatti); //scrittura su DB del contenuto del bean listacontatti
 		
-		
-
 	}
 	
 	public static void getContattiFromDB(List<Contatto> contatti) throws ClassNotFoundException, SQLException
@@ -42,12 +41,6 @@ public class MyRubricaDB
 	        	valore.setCognome(rs.getString("cognome"));
 	        	valore.setTelefono(rs.getString("telefono"));
 	        	valore.setEmail(rs.getString("email"));
-	        	
-	        	System.out.println("id = " + valore.getId());
-	        	System.out.println("nome = " + valore.getNome());
-	        	System.out.println("cognome = " + valore.getCognome());
-	        	System.out.println("telefono = " + valore.getTelefono());
-	        	System.out.println("email = " + valore.getEmail());
 	        	
 	        	contatti.add(valore);
 			}
@@ -73,44 +66,45 @@ public class MyRubricaDB
 		System.out.println("contatti letti : " + contatti.size());
 	}
 	
-	public static void setContattiFromXML(List<Contatto> contatti) throws ClassNotFoundException {
+	public static void setContattiFromXMLToDB(List<Contatto> contatti) throws ClassNotFoundException
+	{
 		Connection connection = null;
 		PreparedStatement pstmt = null;
-		boolean esito = false;
 		
-		try {
+		try
+		{
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			
-//			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
-//					.append('\'').append(contatto.getNome()).append("\',")
-//					.append('\'').append(contatto.getCognome()).append("\',")
-//					.append('\'').append(contatto.getTelefono()).append("\',")
-//					.append('\'').append(contatto.getEmail()).append('t').append("\')");
-//			System.out.println(insert.toString());
+			for (Contatto c : contatti)
+			{
+				pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
+				pstmt.setString(1, c.getNome());
+				pstmt.setString(2, c.getCognome());
+				pstmt.setString(3, c.getTelefono());
+				pstmt.setString(4, c.getEmail());
+				
+				pstmt.executeUpdate();
+			}
 			
-			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
-			pstmt.setString(1, contatti.getNome());
-			pstmt.setString(2, contatti.getCognome());
-			pstmt.setString(3, contatti.getTelefono());
-			pstmt.setString(4, contatti.getEmail());
-			
-			esito = pstmt.execute();
-			System.out.println(pstmt.getUpdateCount());
-			
-			//pstmt.executeUpdate();
-			
-		} catch (SQLException sqlEx) {
+		}
+		catch (SQLException sqlEx)
+		{
 			System.out.println("PROBLEMA : " + sqlEx);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				pstmt.close();
 				connection.close();
-			} catch (SQLException finEx) {
+			}
+			catch (SQLException finEx)
+			{
 				System.out.println("PROBLEMA : " + finEx);
 			}
+			
+			System.out.println("Dati inseriti in DB");
 		}
-		
-		return esito;
 	}
 
 }
