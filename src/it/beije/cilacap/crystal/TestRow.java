@@ -1,13 +1,13 @@
 package it.beije.cilacap.crystal;
 
-public class TestRow {
+public class TestRow { //per ciascuna iterazione identifica delle variabili
 
-	private String type;
-	private int q;
-	private int t;
-	private double mbs;
-	private double iops;
-	private double us;
+	private String type; //read or write?
+	private int q; //valore q
+	private int t; //valore t
+	private double mbs; //velocità in MB/s
+	private double iops; //valore IOPS
+	private double us; //valore us
 	
 	public String getType() {
 		return type;

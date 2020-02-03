@@ -5,13 +5,13 @@ import java.util.List;
 
 public class TestData {
 	
-	private String idComputer;
-	private String version;
-	private String os;
-	private String type;
-	private int iterations;
-	private String interval;
-	private String date;
+	private String idComputer; //nome cartella del file. Default 01
+	private String version; //versione Crystal presente nella prima riga
+	private String os; //sotto la dicitura OS (ultima riga)
+	private String type; //quantità RAM
+	private String iterations; //valore presente accanto alla RAM
+	private String interval; //Indicata in secondi tra parentesi quadre vicino RAM
+	private String date; //sotto la dicitura date
 	
 	private List<TestRow> read = new ArrayList<TestRow>();
 	private List<TestRow> write = new ArrayList<TestRow>();
@@ -45,10 +45,10 @@ public class TestData {
 		this.type = type;
 	}
 	
-	public int getIterations() {
+	public String getIterations() {
 		return iterations;
 	}
-	public void setIterations(int iterations) {
+	public void setIterations(String iterations) {
 		this.iterations = iterations;
 	}
 	
