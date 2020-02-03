@@ -16,10 +16,11 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
-import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInFileCSV;
-import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInXML;
-import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.loadContactListFromCSV;
-import static it.beije.cilacap.rubrica.ParserXML.getContattiFromFile;
+import it.beije.cilacap.rubrica.Tools;
+//import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInFileCSV;
+//import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInXML;
+//import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.loadContactListFromCSV;
+//import static it.beije.cilacap.rubrica.ParserXML.getContattiFromFile;
 
 
 public class EsercizioDB {
@@ -44,13 +45,13 @@ public class EsercizioDB {
 				File f1=new File("csv/database.csv");
 				List<Contatto> listaContatti2=new ArrayList<Contatto>();
 				listaContatti2=DBtools.leggiContatti();
-				writeInFileCSV(listaContatti2, f1);
+				Tools.writeInFileCSV(listaContatti2, f1);
 				break;
 			case 3:
 				File f2=new File("xml/database.xml");
 				List<Contatto> listaContatti3=new ArrayList<Contatto>();
 				listaContatti3=DBtools.leggiContatti();
-				writeInXML(listaContatti3, f2);
+				Tools.writeInXML(listaContatti3, f2);
 				break;
 			case 4:
 				File f3=new File("csv/rubrica.csv");
@@ -59,7 +60,7 @@ public class EsercizioDB {
 			case 5:
 				File f4=new File("xml/rubrica.xml");
 
-				fromXMLoDatabase(f4);
+				fromXMLToDatabase(f4);
 				break;
 			default: break;
 				
@@ -76,7 +77,7 @@ public class EsercizioDB {
 	
 	public static void fromCSVToDatabase(File f1) throws IOException, ClassNotFoundException {
 		List<Contatto> listaContatti=new ArrayList <Contatto>();
-		listaContatti=loadContactListFromCSV(f1);
+		listaContatti=Tools.loadContactListFromCSV(f1);
 		
 		for(int i=0; i< listaContatti.size();i++) {
 			DBtools.insertContatto(listaContatti.get(i));
@@ -86,9 +87,9 @@ public class EsercizioDB {
 		
 	}
 	
-	public static void fromXMLoDatabase(File f1) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+	public static void fromXMLToDatabase(File f1) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		List<Contatto> listaContatti=new ArrayList <Contatto>();
-		listaContatti=getContattiFromFile(f1);
+		listaContatti=Tools.getContattiFromFile(f1);
 		
 		for(int i=0; i< listaContatti.size();i++) {
 			DBtools.insertContatto(listaContatti.get(i));

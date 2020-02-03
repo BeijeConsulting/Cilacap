@@ -98,9 +98,10 @@ public class GestoreReadCrystal {
 				if(parola.length()!=0)
 					listRiga.add(parola);
 			}
+		
+		
 			riga=listRiga.toArray(new String[0]);
 			TestRow raccoltaDatiRead= new TestRow();
-			TestRow datiEffettivi=new TestRow();
 			for(int j =0; j<riga.length; j++) {
 				
 //            		String parola= createWord(riga[j]);
@@ -244,6 +245,12 @@ public class GestoreReadCrystal {
 	return parola;
 	}
 	
- //CE 20200131
+ //CE 20200131 prova metodo array senza spazi
+//	public static List<String> createListContenuto(List <String> contenuto){
+//		
+//	}
+	
+	
+	
 
 }
