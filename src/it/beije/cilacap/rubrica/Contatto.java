@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import it.beije.cilacap.esercizi.TextFileManager;
 
@@ -20,7 +25,7 @@ public class Contatto {
 	private String cognome;
 	private String telefono;
 	private String email;
-<<<<<<< HEAD
+
 
 	public Contatto() {
 
@@ -30,14 +35,15 @@ public class Contatto {
 		this.cognome=c;
 		this.telefono=t;
 		this.email=e;
-=======
+	}
+
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
->>>>>>> refs/remotes/origin/master
+
 	}
 
 	public String getNome() {
@@ -203,12 +209,65 @@ public class Contatto {
 	public  List<Contatto> scriviXml()throws Exception{
 		File mioFile=new File("C:\\Users\\Padawan05\\Desktop\\Esercizio\\Rubrica.csv");
 		List<Contatto> lista=new ArrayList<Contatto>();
+//		try {
+		lista=Contatto.dammiContattoDaFile(mioFile );
+//		}catch(SAXParseException e) {
+//			System.out.println("a");
+//		}
+		return lista;
+	}
+	
+	
+	
+	
+	
+public static List<Contatto> dammiContattoDaFile(File file) throws Exception {
+		
+		List<Contatto> listaContatti = new ArrayList<Contatto>();
 		try {
-		lista=ParserXML.getContattiFromFile(mioFile );
-		}catch(SAXParseException e) {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        // Load the input XML document, parse it and return an instance of the
+        // Document class.
+        Document document = builder.parse(file);
+        Element element = document.getDocumentElement();       
+        System.out.println(element.getTagName());
+        
+        //System.out.println(element.getChildNodes().getLength());
+        NodeList contatti = element.getElementsByTagName("contatto");
+        System.out.println("contatti : " + contatti.getLength());
+
+        for (int i = 0; i < contatti.getLength(); i++) {
+        	Element utente = (Element)contatti.item(i);
+        	System.out.println(utente.getTagName() + " " + i);
+        	System.out.println("\tanni = " + utente.getAttribute("anni"));
+ 
+        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
+        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
+        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
+        	Element email = (Element)utente.getElementsByTagName("email").item(0);
+        	
+        	Contatto contatto = new Contatto();
+        	contatto.setNome(nome.getTextContent());
+        	contatto.setCognome(cognome.getTextContent());
+        	contatto.setTelefono(telefono.getTextContent());
+        	contatto.setEmail(email.getTextContent());
+        	
+        	System.out.println("\tnome = " + contatto.getNome());
+        	System.out.println("\tcognome = " + contatto.getCognome());
+        	System.out.println("\ttelefono = " + contatto.getTelefono());
+        	System.out.println("\temail = " + contatto.getEmail());
+        	
+        	listaContatti.add(contatto);
+        }
+		}catch(Exception e) {
 			System.out.println("a");
 		}
-		return lista;
+        
+	
+        
+        return listaContatti;
 	}
 	
 

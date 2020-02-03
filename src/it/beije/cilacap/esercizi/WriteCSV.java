@@ -14,10 +14,11 @@ public class WriteCSV {
 		String separatore=";";
 		Contatto rubrica=new Contatto();
 		List <Contatto> contatto=new ArrayList<>();
-//        contatto=rubrica.scheletroCsv();
-//        rubrica.scrivisuFile(contatto, separatore);
-//		rubrica.settoFile();
-//		rubrica.fileXML();
+        contatto=rubrica.scheletroCsv();
+        rubrica.scrivisuFile(contatto, separatore);
+		rubrica.settoFile();
+		rubrica.fileXML();
+		
 		rubrica.scriviXml();
 
 	}
