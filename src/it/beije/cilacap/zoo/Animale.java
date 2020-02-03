@@ -16,5 +16,7 @@ public abstract class Animale {
 		this.age = age;
 	}
 	
+	public abstract String getNome();
+	
 
 }

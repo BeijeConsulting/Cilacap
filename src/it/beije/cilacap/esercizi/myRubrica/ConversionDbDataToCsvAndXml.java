@@ -50,6 +50,7 @@ public class ConversionDbDataToCsvAndXml {
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException, ParserConfigurationException, SAXException, SQLException, TransformerException {
+		
 		// import in db from .csv
 		importInDbFromCsv("C:\\Users\\Padawan04\\Desktop\\newRubrica.csv");
 		

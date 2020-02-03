@@ -93,7 +93,8 @@ public class DBtools {
 //					.append('\'').append(contatto.getCognome()).append("\',")
 //					.append('\'').append(contatto.getTelefono()).append("\',")
 //					.append('\'').append(contatto.getEmail()).append('t').append("\')");
-//			System.out.println(insert.toString());
+			
+			// La posizione dei ? parte dalla posizione 1
 			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
 			pstmt.setString(1, contatto.getNome());
 			pstmt.setString(2, contatto.getCognome());

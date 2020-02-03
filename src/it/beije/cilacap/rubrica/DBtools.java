@@ -9,6 +9,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBtools {
+	
+	public static int updateContatti(Contatto c, String newCognome) throws ClassNotFoundException {
+		Connection connection = null;
+		Statement stmt = null;
+		
+		int updatedContatti = 0;
+		
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			
+			stmt = connection.createStatement();
+			updatedContatti = stmt.executeUpdate("UPDATE cilacap.rubrica SET cognome = \'" + newCognome + "\' WHERE Nome = \'" + c.getNome() + "\'");
+			
+			
+			
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		
+		
+		return updatedContatti;
+	}
 
 	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -100,6 +129,12 @@ public class DBtools {
 		
 		try {
 			//insertContatto(leggiContatti().get(0));
+			Contatto c = new Contatto();
+			c.setNome("Riccardo");
+			c.setCognome("pippo");
+			c.setTelefono("025896369");
+			c.setEmail("bb@b.it");
+			System.out.println(updateContatti(c, "Baioni"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
