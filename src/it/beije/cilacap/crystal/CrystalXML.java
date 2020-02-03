@@ -24,18 +24,19 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import it.beije.cilacap.esercizi.rubrica.Contatto;
+import it.beije.cilacap.crystal.GestoreReadCrystal;;
 
-public class CrystalXML extends GestoreReadCrystal {
+public class CrystalXML {
 	
 	public static void main (String [] args) throws Exception {
 		
 		File fileCrystal= new File("crystal/01/CDM_20200102131948.txt");
 		System.out.println(fileCrystal.exists());
 		List <String> contenutoCrystal = new ArrayList<String>();
-		contenutoCrystal=readFileRows(fileCrystal);
+		contenutoCrystal=GestoreReadCrystal.readFileRows(fileCrystal);
 		System.out.println(contenutoCrystal.toString());
-		TestData datiDiCrystal=createListOfData(contenutoCrystal);
-		datiDiCrystal.setIdComputer(fileCrystal.getPath().substring(9,10));
+		TestData datiDiCrystal=GestoreReadCrystal.createListOfData(contenutoCrystal);
+		datiDiCrystal.setIdComputer(fileCrystal.getPath().substring(15,fileCrystal.getPath().length()-4));
 //		System.out.println(datiDiCrystal.getType());
 //		System.out.println(datiDiCrystal.getDate());
 //		System.out.println(datiDiCrystal.getVersion());
@@ -61,7 +62,7 @@ public class CrystalXML extends GestoreReadCrystal {
         test.setAttribute("os", datiDiCrystal.getOs());
         test.setAttribute("type", datiDiCrystal.getType());
         test.setAttribute("iterations",Integer.toString( datiDiCrystal.getIterations()));
-        test.setAttribute("interval", datiDiCrystal.getInterval());
+        test.setAttribute("interval", String.valueOf(datiDiCrystal.getIntervalInSeconds()));
         test.setAttribute("date", datiDiCrystal.getDate());
         crystal.appendChild(test);
         

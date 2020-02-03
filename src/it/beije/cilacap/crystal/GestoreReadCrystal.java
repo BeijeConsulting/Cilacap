@@ -25,11 +25,11 @@ public class GestoreReadCrystal {
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
 		while ((row = reader.readLine()) != null) {
-			System.out.println(row);
+//			System.out.println(row);
 			rows.add(row);
 		}
 		
-		System.out.println("rows size : " + rows.size());
+//		System.out.println("rows size : " + rows.size());
 		return rows;
 	}
 	
@@ -50,14 +50,14 @@ public class GestoreReadCrystal {
 		dati=contenuto.toArray(dati);
 
 		for(; i<dati.length;i++) {
-			System.out.println("nel for di createdListOfData");
+//			System.out.println("nel for di createdListOfData");
 		//CE 20200125: creazione array con le parole di una riga.
 			String [] riga= dati[i].split(" ");
 			
 		//CE 20200125: inizio analisi della riga
 			CICLO: for(int j=0; j<riga.length; j++) {
 //				System.out.println("nel for di createdList colonna");
-				System.out.println(riga[j]);
+//				System.out.println(riga[j]);
 				
 				String colonna= riga[j].trim();
 				
@@ -67,7 +67,7 @@ public class GestoreReadCrystal {
 				
 
 				
-				System.out.println(parola);
+//				System.out.println(parola);
 					if(parola.equalsIgnoreCase("CrystalDiskMark")) {
 						info.setVersion(createWord(riga[++j].trim())+ " "+ createWord(riga[++j].trim()));
 					}
@@ -87,7 +87,7 @@ public class GestoreReadCrystal {
 	//CE 20200130. metodo per prendere i dati nella sezione read e write tramite ricorsione
 	public static void takeData(TestData info, String[] dati) {
 		List<TestRow> listaDati = new ArrayList<TestRow> ();
-		System.out.println("dentro metodo takereadfielddata");
+//		System.out.println("dentro metodo takereadfielddata");
 		
 		CICLO_INIZIALE: for(; i<dati.length; i++) {
 			String [] riga= dati[i].split(" ");
@@ -117,7 +117,7 @@ public class GestoreReadCrystal {
 						break CICLO_INIZIALE;
 					}
 					if(colonna.equalsIgnoreCase("Profile:")) {
-						System.out.println("è uguale");
+//						System.out.println("è uguale");
 						takeProfileFieldData(info, dati);
 						break CICLO_INIZIALE;
 					} 
@@ -214,7 +214,7 @@ public class GestoreReadCrystal {
 //									System.out.println(info.getIterations());
 									break;
 					case "[Interval:":  
-						                info.setInterval(createWord(riga[col+1])+ " "+ createWord(riga[col+2]).substring(0,3) );
+						                info.setIntervalInSeconds(Integer.parseInt(createWord(riga[col+1])));
 						                
 //										System.out.println(info.getInterval());
 										break;
