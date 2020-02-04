@@ -40,7 +40,7 @@ public class MyRubrica {
 			listaContatti = inserisciContatto(listaContatti);
 			break;
 		case 2:
-			visualizzaRubrica(listaContatti);
+			Utility.visualizzaRubrica(listaContatti);
 			break;
 		case 3:
 			listaContatti = Utility.caricaContattiDaCSV(Utility.choosePath(false)); // false = csv, true = xml
@@ -109,21 +109,7 @@ public class MyRubrica {
 
 	}// fine metodo
 
-	private static void visualizzaRubrica(List<Contatto> listaContatti) {
-		if (listaContatti.size() > 0) {
-			for (int i = 0; i < listaContatti.size(); i++) {
-				if (i == 0)
-					System.out.println("..........................................");
-				System.out.println("contatto numero " + (i + 1));
-				System.out.println("nome: " + listaContatti.get(i).getNome());
-				System.out.println("cognome: " + listaContatti.get(i).getCognome());
-				System.out.println("telefono: " + listaContatti.get(i).getTelefono());
-				System.out.println("email: " + listaContatti.get(i).getEmail());
-				System.out.println("..........................................");
-				System.out.println();
-			} // fine for
-		} // fine if
-	}// fine metodo
+	
 
 	
 

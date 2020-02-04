@@ -217,7 +217,7 @@ public class DBtools {
 //			e.printStackTrace();
 //		}
 		File file = new File("crystal/01/CDM_20200102145818.txt");
-		Utility.insertTest(file);
+		Utility.insertTestDataInDB(file);
 
 	}
 
