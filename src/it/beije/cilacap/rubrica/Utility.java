@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import it.beije.cilacap.crystal.TestData;
@@ -640,13 +641,9 @@ public class Utility {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        // Load the input XML document, parse it and return an instance of the
-        // Document class.
         Document document = builder.parse(fileXML);
-        Element element = document.getDocumentElement();       
-//        System.out.println(element.getTagName());
+        Element element = document.getDocumentElement();  //root elem     
         
-        //System.out.println(element.getChildNodes().getLength());
         NodeList tests = element.getElementsByTagName("test");
         System.out.println("tests : " + tests.getLength());
 
@@ -659,18 +656,39 @@ public class Utility {
         	testData.setOs(test.getAttribute("os"));
         	testData.setType(test.getAttribute("type"));
         	testData.setIterations(Integer.parseInt(test.getAttribute("iterations")));
-        	testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("inverval")));
+        	testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("interval")));
         	testData.setDate(test.getAttribute("date"));
         	
-        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
-        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
-        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
-        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+        	TestRow testRow = new TestRow();
         	
-        	Element writeS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
-        	Element writeS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
-        	Element writeR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
-        	Element writeR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
+//        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
+//        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
+//        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+        	
+        	
+//        	for(int j = 0; j < nodiDiSequential.getLength(); j++) {
+//        	
+//        	testRow.setQ(Integer.parseInt(sequentialRead.getAttribute("q")));
+//        	testRow.setT(Integer.parseInt(sequentialRead.getAttribute("t")));
+//        	
+//        	Element mbs = (Element)nodiDiSequential.item(0);
+//        	Element iops = (Element)nodiDiSequential.item(1);
+//        	Element us = (Element)nodiDiSequential.item(2);
+//        	testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
+//        	testRow.setIops(Double.parseDouble(iops.getTextContent()));
+//        	testRow.setUs(Double.parseDouble(us.getTextContent()));
+//        	}
+//        	
+//        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
+//        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
+//        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
+//        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+//        	
+//        	Element writeS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
+//        	Element writeS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
+//        	Element writeR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
+//        	Element writeR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
 //        	
 //        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
 //        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
@@ -689,10 +707,11 @@ public class Utility {
 //        	System.out.println("\temail = " + contatto.getEmail());
         	
 //        	listaContatti.add(contatto);
+        	listaTestData.add(testData);
         }
         
 //        return listaContatti;
 
-		return null;
+		return listaTestData;
 	}
 }

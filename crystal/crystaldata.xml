@@ -1,5 +1,5 @@
 <CrystalDiskMark>
-	<test id_computer="01" version="7.0.0 x64" os="Windows 10" type="1 GiB" iterations="5" interval="5 sec" date="2020/01/02 13:19:48">
+	<test id_computer="20200102131948" version="7.0.0 x64" os="Windows 10" type="1 GiB" iterations="5" interval="5" date="2020/01/02 13:19:48">
 		<read>
 			<Sequential_1MiB q="8" t="1">
 				<MBs>108.212</MBs>
