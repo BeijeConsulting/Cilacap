@@ -33,18 +33,27 @@ public class Crystal {
 		
 		File f = new File("C:\\Users\\Padawan06\\git\\Cilacap\\crystal\\06\\CDM_20200102151422.txt");
 		List<String> listaStringa = new ArrayList<>();
+		StringBuilder builder = new StringBuilder();
 		listaStringa.addAll(readFileRows(f));
 		for(int i=0;i<listaStringa.size();i++)
 		{
-			if(listaStringa.get(i).charAt(0) < 32 )
-				listaStringa.remove(i);
+			for(int j=0;j<listaStringa.get(i).length();j++)
+			{
+				if(listaStringa.get(i).charAt(j) < 32 )
+				{
+					builder.append(listaStringa.get(i));
+					builder.replace(listaStringa.get(i).charAt(j), listaStringa.get(i).charAt(j), "");
+				}
+			}
 		}
 		//s=readFileContent(f);
 		//System.out.println(listaStringa.get(10));
 	    //data.setDate(listaStringa.get(42).substring(listaStringa.get(42).substring(listaStringa.get(42).indexOf("Date:")+2)));
 		System.out.println(listaStringa.size());
 		data.setDate(listaStringa.get(21).trim().substring(10));
-		data.setIntervalInSeconds((int)(listaStringa.get(20).charAt(30)));
+		
+		data.setIntervalInSeconds((int)(listaStringa.get(20).charAt(listaStringa.get(20).indexOf("[")+9)));
+		System.out.println(listaStringa.get(20).charAt(listaStringa.get(20).indexOf("[")+12));
 		System.out.println(data.getDate());
 		System.out.println(data.getIntervalInSeconds());
 		
