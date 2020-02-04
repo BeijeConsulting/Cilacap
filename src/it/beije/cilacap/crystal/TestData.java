@@ -3,17 +3,47 @@ package it.beije.cilacap.crystal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="testdata")
 public class TestData {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="id_computer")
 	private String idComputer;
+	
+	@Column(name="version")
 	private String version;
+	
+	@Column(name="os")
 	private String os;
+	
+	@Column(name="type")
 	private String type;
+	
+	@Column(name="iterations")
 	private int iterations;
+	
+	@Column(name="interval_test")
 	private int intervalInSeconds;
+	
+	@Column(name="date")
 	private String date;
 	
+	@Transient
 	private List<TestRow> read = new ArrayList<TestRow>();
+	@Transient
 	private List<TestRow> write = new ArrayList<TestRow>();
 	
 	
@@ -78,6 +108,12 @@ public class TestData {
 	}
 	public void setWrite(List<TestRow> write) {
 		this.write = write;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

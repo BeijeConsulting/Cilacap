@@ -43,8 +43,9 @@ public class MainCrystal {
     public static void main(String[] args) throws Exception 
     { 
     	CrystalTestManager c = new CrystalTestManager();
-    	List<TestData> testFromDB = c.getTestFromDB();
-    	
+    	List<TestData> testFromDB = c.getTestFromHDB();
+//    	List<TestData> testFromDB = c.getTestFromDB();
+
     	// Provide full path for directory(change accordingly)   
         String maindirpath = "crystal"; 
                   
@@ -98,7 +99,7 @@ public class MainCrystal {
 	    	   boolean esito = newTests.removeIf(a -> a.getIdComputer().contentEquals(test.getIdComputer()));	
 	       }
 	       boolean esito1 = newTests.removeIf(a -> a.getIdComputer().equals(null));
-	       c.insertTestInDB(newTests);
+	       c.insertTestInHDB(newTests);
        }
 	}
     

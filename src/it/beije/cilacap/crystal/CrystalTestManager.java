@@ -18,12 +18,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import it.beije.cilacap.rubrica.Contatto;
-import it.beije.cilacap.rubrica.DBManager;
 
 
 
@@ -214,6 +219,175 @@ public class CrystalTestManager {
 		} catch(Exception exception) {
 			throw exception;
 		}
+		
+		return tests;
+	}
+	public  boolean insertTestInHDB(List<TestData> tests) throws ClassNotFoundException ,NullPointerException{
+		System.out.println("INIZIO");
+	
+		//inizializzo configurazione
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(TestData.class)
+				.addAnnotatedClass(TestRow.class);
+		
+		//chiedo generatore di sessioni
+		SessionFactory factory = configuration.buildSessionFactory();
+		
+		System.out.println("is open? " + factory.isOpen());
+		
+		//apro sessione
+		Session session = factory.openSession();
+		System.out.println("session is open? " + session.isOpen());
+	
+		//esempio query HQL
+	//	String hql = "SELECT c FROM Contatto as c WHERE cognome = 'rossi'";
+	//	Query<Contatto> query = session.createQuery(hql);
+	//	System.out.println(query.list().size());
+		
+		//esempio Criteria
+	//	Criteria criteria = session.createCriteria(Contatto.class);
+	//	criteria.add(Restrictions.eq("cognome", "rossi"));
+	//	List<Contatto> contatti = criteria.list();
+		
+	//	for (Contatto contatto : query.list()) {
+	//	for (Contatto contatto : contatti) {
+	//		System.out.println("id : " + contatto.getId());
+	//		System.out.println("nome : " + contatto.getNome());
+	//		System.out.println("cognome : " + contatto.getCognome());
+	//		System.out.println("telefono : " + contatto.getTelefono());
+	//		System.out.println("email : " + contatto.getEmail());
+	//	}
+		
+		//apro transazione
+		Transaction transaction = session.beginTransaction();
+		
+		//esempio UPDATE
+	//	Contatto contatto = session.get(Contatto.class, 1);
+	//	System.out.println(contatto);
+	//	contatto.setTelefono("432432421243");
+	//	System.out.println(contatto);
+		
+		//esempio INSERT
+		
+		for (TestData test : tests) {
+			for (TestRow row : test.getRead()) {
+				row.setId_testdata(test.getIdComputer());
+				row.setTestType("r");
+				session.save(row);
+			}
+			for (TestRow row : test.getWrite()) {
+				row.setId_testdata(test.getIdComputer());
+				row.setTestType("w");
+				session.save(row);
+			}
+			session.save(test);
+		}
+		
+		
+	
+	//	session.save(contatto);
+		
+		//confermo aggiornamento su DB
+		transaction.commit();
+		
+		//annullo aggiornamento su DB
+	//	transaction.rollback();
+		
+		//chiudo la sessione
+		session.close();
+		factory.close();
+		System.out.println("session is open? " + session.isOpen());
+		
+		return true;
+	}
+	
+	public  List<TestData> getTestFromHDB() throws ClassNotFoundException ,NullPointerException{
+		System.out.println("INIZIO");
+	
+		//inizializzo configurazione
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(TestData.class)
+				.addAnnotatedClass(TestRow.class);
+		
+		//chiedo generatore di sessioni
+		SessionFactory factory = configuration.buildSessionFactory();
+		
+		System.out.println("is open? " + factory.isOpen());
+		
+		//apro sessione
+		Session session = factory.openSession();
+		System.out.println("session is open? " + session.isOpen());
+	
+		//esempio query HQL
+	//	String hql = "SELECT c FROM Contatto as c WHERE cognome = 'rossi'";
+	//	Query<Contatto> query = session.createQuery(hql);
+	//	System.out.println(query.list().size());
+		
+		//esempio Criteria
+		Criteria criteria = session.createCriteria(TestData.class);
+		
+		List<TestData> tests = criteria.list();
+		
+		for (TestData test : tests) {
+
+			Criteria criteriaRowRead = session.createCriteria(TestRow.class);
+			Criterion crit1 = Restrictions.eq("id_testdata",test.getIdComputer());
+			Criterion critRead = Restrictions.eq("testType", "r");
+//			criteriaRowRead.add(Restrictions.eq("id_testdata",test.getIdComputer()));
+//			criteriaRowRead.add(Restrictions.eq("mood_type", "r"));
+			
+			LogicalExpression andExp1 = Restrictions.and(crit1,critRead);
+			
+			criteriaRowRead.add(andExp1);
+			test.setRead(criteriaRowRead.list());
+			
+			Criteria criteriaRowWrite = session.createCriteria(TestRow.class);
+			Criterion critWrite = Restrictions.eq("testType", "w");
+//			criteriaRowWrite.add(Restrictions.eq("id_testdata",test.getIdComputer()));
+//			criteriaRowWrite.add(Restrictions.eq("mood_type", "w"));
+			
+			LogicalExpression andExp2 = Restrictions.and(crit1,critWrite);
+			
+			criteriaRowWrite.add(andExp2);
+			test.setWrite(criteriaRowWrite.list());
+		}
+		
+	//	for (Contatto contatto : query.list()) {
+	//	for (Contatto contatto : contatti) {
+	//		System.out.println("id : " + contatto.getId());
+	//		System.out.println("nome : " + contatto.getNome());
+	//		System.out.println("cognome : " + contatto.getCognome());
+	//		System.out.println("telefono : " + contatto.getTelefono());
+	//		System.out.println("email : " + contatto.getEmail());
+	//	}
+		
+		//apro transazione
+//		Transaction transaction = session.beginTransaction();
+		
+		//esempio UPDATE
+	//	Contatto contatto = session.get(Contatto.class, 1);
+	//	System.out.println(contatto);
+	//	contatto.setTelefono("432432421243");
+	//	System.out.println(contatto);
+		
+		//esempio INSERT
+		
+		
+	
+	//	session.save(contatto);
+		
+		//confermo aggiornamento su DB
+//		transaction.commit();
+		
+		//annullo aggiornamento su DB
+	//	transaction.rollback();
+		
+		//chiudo la sessione
+		session.close();
+		factory.close();
+		System.out.println("session is open? " + session.isOpen());
 		
 		return tests;
 	}
@@ -740,6 +914,8 @@ public class CrystalTestManager {
 		}
 		return esito;
 	}
+	
+	
 	
 	public static String pulisciSpazi(String str) {
 		if (str.length()>0) {
