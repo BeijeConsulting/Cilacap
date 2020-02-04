@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import static rubrica.ParserXML.*;
 import rubrica.DBtools;
 public class MioText {
@@ -28,6 +33,13 @@ public class MioText {
 		StringBuilder stringaB = new StringBuilder();
 		System.out.println("f.exists() ? " + f.exists());
 		Contatto contatto=new Contatto();
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(Contatto.class);
+		//chiedo generatore di sessioni
+		SessionFactory factory = configuration.buildSessionFactory();
+		
+		System.out.println("is open? " + factory.isOpen());
 		
 		while(s)
 		{
@@ -72,7 +84,7 @@ public class MioText {
 				int i=0;
 				for(i=0;i<generaLista(f).size();i++)
 				{
-					insertContatto(generaLista(f).get(i));
+					Metodi.insertContatto(generaLista(f).get(i) , factory);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -87,7 +99,7 @@ public class MioText {
 					int i=0;
 					for(i=0;i<getContattiFromFile(fxml).size();i++)
 					{
-						insertContatto(getContattiFromFile(fxml).get(i));
+						Metodi.insertContatto(getContattiFromFile(fxml).get(i) , factory);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -101,7 +113,7 @@ public class MioText {
 			try
 			{
 				
-				writeFileContent(generaLista(leggiContatti()), fdbcsv);
+				writeFileContent(generaLista(Metodi.leggiContatti(factory)), fdbcsv);
 			}
 			catch(Exception e)
 			{
@@ -112,7 +124,7 @@ public class MioText {
 			System.out.println("esportare xml dal database? ");
 			if(scanner.nextLine().equalsIgnoreCase("si"))
 			{
-				writeContattiInFile(leggiContatti(), "c:/work/dbtoxml.xml");
+				writeContattiInFile(Metodi.leggiContatti(factory), "c:/work/dbtoxml.xml");
 				
 			}
 	}

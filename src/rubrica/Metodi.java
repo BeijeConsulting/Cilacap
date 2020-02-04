@@ -1,6 +1,7 @@
 package rubrica;
 
 import static rubrica.ParserXML.writeContattiInFile;
+import org.hibernate.Transaction;
 import static rubrica.ParserXML.getContattiFromFile;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,6 +12,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 public class Metodi {
 	public static Contatto impostaContatto() throws IOException
@@ -51,7 +59,62 @@ public class Metodi {
 	}
 	
 	
+	public static List<Contatto> leggiContatti(SessionFactory factory)
+	{
+		Session session = factory.openSession();
+		System.out.println("session is open? " + session.isOpen());
 	
+		//esempio query HQL
+		String hql = "SELECT c FROM Contatto as c";
+		Query<Contatto> query = session.createQuery(hql);
+		System.out.println(query.list().size());
+		List<Contatto> listaContatti = new ArrayList<>();
+//		//esempio Criteria
+//		Criteria criteria = session.createCriteria(Contatto.class);
+//		criteria.add(Restrictions.eq("cognome", "rossi"));
+//		List<Contatto> contatti = criteria.list();
+		
+		for (Contatto contatto : query.list()) 
+		{
+			listaContatti.add(contatto);
+		}
+		
+		return listaContatti;	
+	}
+	
+	
+	
+	public static void insertContatto(Contatto c , SessionFactory factory)
+	{
+		
+		
+		//apro sessione
+		Session session = factory.openSession();
+		System.out.println("session is open? " + session.isOpen());
+		Transaction transaction = session.beginTransaction();
+		Contatto contatto = new Contatto();
+		contatto.setNome(c.getNome());
+		contatto.setCognome(c.getCognome());
+		contatto.setEmail(c.getEmail());
+		contatto.setTelefono(c.getTelefono());
+
+		System.out.println("id : " + contatto.getId());
+		session.save(contatto);
+		System.out.println("id : " + contatto.getId());
+
+//		session.save(contatto);
+		
+		//confermo aggiornamento su DB
+		transaction.commit();
+		
+		//annullo aggiornamento su DB
+//		transaction.rollback();
+		
+		//chiudo la sessione
+		session.close();
+		System.out.println("session is open? " + session.isOpen());
+		
+	}
 	
 	
 	

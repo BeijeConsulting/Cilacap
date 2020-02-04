@@ -1,12 +1,40 @@
 package rubrica;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="contatti")
 public class Contatto {
 
-	private String nome;
-	private String cognome;
-	private String telefono;
-	private String email;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
+	
+	@Column(name="nome")
+	private String nome;
+
+	@Column(name="cognome")
+	private String cognome;
+
+	@Column(name="telefono")
+	private String telefono;
+
+	@Column(name="email")
+	private String email;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -34,13 +62,7 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getId() {
-		
-		return id;
-	}
-	public void setId(int id) {
-		this.id=id;
-	}
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("cognome : ").append(cognome).append('\n');
@@ -49,8 +71,5 @@ public class Contatto {
 		builder.append("email : ").append(email).append('\n');
 		return builder.toString();
 	}
-	
-	
-	
-	
 }
+

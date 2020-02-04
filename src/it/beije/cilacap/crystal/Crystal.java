@@ -21,28 +21,50 @@ import rubrica.Contatto;
 
 public class Crystal {
 
-	
-	public void metodo() throws IOException
+	public static void main(String[] args) throws IOException
 	{
-		File f = new File("C:\\Users\\Padawan06\\git\\Cilacap\\crystal\\06");
+		metodo();
+		
+	}
+	public static List<String> metodo() throws IOException
+	{
+		TestData data = new TestData();
+		
+		
+		File f = new File("C:\\Users\\Padawan06\\git\\Cilacap\\crystal\\06\\CDM_20200102151422.txt");
 		List<String> listaStringa = new ArrayList<>();
 		listaStringa.addAll(readFileRows(f));
-		listaStringa.indexOf("CrystalDiskMark ");
+		for(int i=0;i<listaStringa.size();i++)
+		{
+			if(listaStringa.get(i).charAt(0) < 32 )
+				listaStringa.remove(i);
+		}
+		//s=readFileContent(f);
+		//System.out.println(listaStringa.get(10));
+	    //data.setDate(listaStringa.get(42).substring(listaStringa.get(42).substring(listaStringa.get(42).indexOf("Date:")+2)));
+		System.out.println(listaStringa.size());
+		data.setDate(listaStringa.get(21).trim().substring(10));
+		data.setIntervalInSeconds((int)(listaStringa.get(20).charAt(30)));
+		System.out.println(data.getDate());
+		System.out.println(data.getIntervalInSeconds());
+		
+		return listaStringa;
 	}
+	
 	
 
 	public static void writeContattiInFile(List<TestData> dati, String pathfile) throws Exception {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-
+        
         Document document = builder.newDocument();
         Element docElement = document.createElement("CrystalDiskMark");
         document.appendChild(docElement);
         
         for (TestData d : dati) {
         	Element testDate = document.createElement("testdata");
-        	testDate.setAttribute("test date", value);
+        	testDate.setAttribute("test date", metodo().get(metodo().indexOf("Date")));
         	Element nome = document.createElement("nome");
         	Element cognome = document.createElement("cognome");
         	Element telefono = document.createElement("telefono");
@@ -114,6 +136,13 @@ public class Crystal {
 		return readFileRows(file);
 	}
 	
+	public static String trim(String s)
+	{
+		char c=(char)0;
+		s=s.replace(c, ' ');
+		return s;
+		
+	}
 	public static List<String> readFileRows(File file) throws IOException {
 		List<String> rows = new ArrayList<String>();
 		
@@ -122,7 +151,8 @@ public class Crystal {
 		String row;
 		while ((row = reader.readLine()) != null) {
 			//System.out.println(row);
-			rows.add(row);
+		
+				rows.add(row);
 		}
 		
 		System.out.println("rows size : " + rows.size());

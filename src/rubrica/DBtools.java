@@ -1,5 +1,4 @@
 package rubrica;
-import rubrica.Contatto;
 import rubrica.MioText;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
