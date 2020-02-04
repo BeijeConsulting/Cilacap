@@ -10,52 +10,57 @@ import java.util.List;
 
 public class DBtools {
 
-//	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
-//		List<Contatto> contatti = new ArrayList<Contatto>();
-//		
-//		Connection connection = null;
-//		Statement stmt = null;
-//		
-//		try {
-//			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
-//			
-//			stmt = connection.createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.rubrica");
-//			
-//			Contatto contatto = null;
-//			while (rs.next()) {
-//				contatto = new Contatto();
-//				contatto.setId(rs.getInt("id"));
-//	        	contatto.setNome(rs.getString("nome"));
-//	        	contatto.setCognome(rs.getString("cognome"));
-//	        	contatto.setTelefono(rs.getString("telefono"));
-//	        	contatto.setEmail(rs.getString("email"));
-//	        	
-//	        	System.out.println("id = " + contatto.getId());
-//	        	System.out.println("nome = " + contatto.getNome());
-//	        	System.out.println("cognome = " + contatto.getCognome());
-//	        	System.out.println("telefono = " + contatto.getTelefono());
-//	        	System.out.println("email = " + contatto.getEmail());
-//	        	
-//	        	contatti.add(contatto);
-//			}
-//			
-//		} catch (SQLException sqlEx) {
-//			System.out.println("PROBLEMA : " + sqlEx);
-//			throw sqlEx;
-//		} finally {
-//			try {
-//				stmt.close();
-//				connection.close();
-//			} catch (SQLException finEx) {
-//				System.out.println("PROBLEMA : " + finEx);
-//			}
-//		}
-//		
-//		System.out.println("contatti letti : " + contatti.size());
-//		
-//		return contatti;
-//	}
+	public static List<TestData> leggiTestData() throws ClassNotFoundException, SQLException {
+		List<TestData> listaTestData = new ArrayList<TestData>();
+		
+		Connection connection = null;
+		Statement stmt = null;
+		
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.testdata JOIN cilacap.test_row ON id_testdata=id_computer");
+			
+			TestData testData= null;
+			while (rs.next()) {
+				testData = new TestData();
+				testData.setIdComputer(rs.getInt("id_computer")); 
+	        	testData.setDate(rs.getString("date"));
+	        	testData.setIntervalInSeconds(rs.getInt("interval"));
+	        	testData.setIterations(rs.getInt("iterations"));
+	        	testData.setOs(rs.getString("os"));
+	        	testData.setType(rs.getString("type"));
+	        	testData.setVersion(rs.getString("version"));
+	        	
+	        	System.out.println("id = " + testData.getDate());
+	        	System.out.println("nome = " + testData.getIdComputer());
+	        	System.out.println("cognome = " + testData.getIntervalInSeconds());
+	        	System.out.println("telefono = " + testData.getIterations());
+	        	System.out.println("email = " + testData.getOs());
+	        	System.out.println("email = " + testData.getType());
+	        	System.out.println("email = " + testData.getVersion());
+
+	        	
+	        	listaTestData.add(testData);
+			}
+			
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+			throw sqlEx;
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		
+		System.out.println("contatti letti : " + contatti.size());
+		
+		return contatti;
+	}
 	
 	public static boolean insertTestData(TestData testData) throws ClassNotFoundException {
 		Connection connection = null;

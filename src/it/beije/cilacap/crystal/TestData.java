@@ -20,8 +20,8 @@ public class TestData {
 	public String getIdComputer() {
 		return idComputer;
 	}
-	public void setIdComputer(String idComputer) {
-		this.idComputer = idComputer;
+	public void setIdComputer(int i) {
+		this.idComputer = i;
 	}
 	
 	public String getVersion() {

@@ -15,6 +15,7 @@ public class GestoreCrystalDB {
 		System.out.println("Menu:");
 		System.out.println("1-inserire testdata da file in db");
 		System.out.println("2- inserire testdata da xml in db");
+		System.out.println("3- visualizzazione contenuto db");
 		
 		Scanner s=new Scanner(System.in);
 		int risposta=s.nextInt();
@@ -31,7 +32,10 @@ public class GestoreCrystalDB {
 		
 		case 2: 
 			File fileCrystalXML= new File("crystal/01/CDM_20200102131948.txt");
-
+			break;
+			
+		case 3: 
+			break;
 		
 		}
 
