@@ -147,14 +147,18 @@ public class TestData {
 	}
 	
 	public void toDB(Connection conn) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO testdata (id_computer, versionData, osData, typeData, iterationsData, intervalData, dateData) "
-				+ "VALUES ('"+idComputer+"','"+version+"','"+os+"','"+type+"',"+iterations+","+intervalInSeconds+",'"+java.sql.Date.valueOf(date.toLocalDate())+"')");
-		ps.execute();
-		ResultSet rId = conn.createStatement().executeQuery("SELECT id FROM testdata WHERE id=LAST_INSERT_ID()");
-		rId.next();
-		int id = rId.getInt(1); 
-		for(TestRow tr : read) tr.toDB(conn, id, "r");
-		for(TestRow tr : write) tr.toDB(conn, id, "r");
+		try {
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO testdata (id_computer, versionData, osData, typeData, iterationsData, intervalData, dateData) "
+					+ "VALUES ('"+idComputer+"','"+version+"','"+os+"','"+type+"',"+iterations+","+intervalInSeconds+",'"+java.sql.Date.valueOf(date.toLocalDate())+"')");
+			ps.execute();
+			ResultSet rId = conn.createStatement().executeQuery("SELECT id FROM testdata WHERE id=LAST_INSERT_ID()");
+			rId.next();
+			int id = rId.getInt(1); 
+			for(TestRow tr : read) tr.toDB(conn, id, "r");
+			for(TestRow tr : write) tr.toDB(conn, id, "r");
+		}catch(NullPointerException e) {
+			System.out.println("File non valido");
+		}
 	}
 	
 	public Element toXML(Document document) throws ParserConfigurationException {

@@ -43,6 +43,7 @@ public class CrystalMain {
 				Connection conn = DBManager.getMySqlConnection("", "", "");
 				test.toDB(conn);
 				conn.close();
+				System.out.println("File convertito correttamente");
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Errore nel file");
@@ -54,7 +55,7 @@ public class CrystalMain {
 				e.printStackTrace();
 			} 
 		}
-		System.out.println("File convertito correttamente");
+		
         scan.close();
 	}
 	

@@ -23,7 +23,7 @@ public class RubricaMain {
 	}
 	
 	private static List<Contatto> aggiungiElencoContatti() {
-		List<Contatto> elenco = new ArrayList<>();
+		List<Contatto> elenco = new ArrayList<Contatto>();
 		while(true) {
 			Contatto cont = new Contatto();
 			for(String intestazione : Contatto.INTESTAZIONE) {

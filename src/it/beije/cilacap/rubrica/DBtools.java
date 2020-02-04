@@ -83,6 +83,8 @@ public class DBtools {
 				connection.close();
 			} catch (SQLException finEx) {
 				System.out.println("PROBLEMA : " + finEx);
+			} catch (Exception e) {
+				System.out.println("nullpointer?"+e);
 			}
 		}
 		
