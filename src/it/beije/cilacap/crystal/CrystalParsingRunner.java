@@ -7,7 +7,7 @@ import java.util.List;
 import it.beije.cilacap.rubrica.Utility;
 
 
-public class CrystalXMLParsingMain {
+public class CrystalParsingRunner {
 
 	public static void main(String[] args) throws Exception {
 
