@@ -17,7 +17,7 @@ public class DBtools {
 		Statement stmt = null;
 		
 		try {
-			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+//			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.rubrica");
@@ -63,7 +63,7 @@ public class DBtools {
 		boolean esito = false;
 		
 		try {
-			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+//			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			
 //			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
 //					.append('\'').append(contatto.getNome()).append("\',")

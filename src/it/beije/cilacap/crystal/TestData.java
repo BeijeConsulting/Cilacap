@@ -1,5 +1,10 @@
 package it.beije.cilacap.crystal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +142,84 @@ public class TestData {
 		return read;
 	}
 	
+	public static void InserisciInDB(TestData Test) throws ClassNotFoundException{
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			connection = DBManagerCrystal.getMySqlConnection(DBManagerCrystal.DB_URL, DBManagerCrystal.DB_USER, DBManagerCrystal.DB_PASSWORD);
+			stmt = connection.prepareStatement("INSERT into cilacap.testdata (id_computer,version,os,type,iterations,testdata.interval,date) VALUES (?,?,?,?,?,?,?)");
+			stmt.setString(1, Test.getIdComputer());
+			stmt.setString(2, Test.getVersion());
+			stmt.setString(3, Test.getOs());
+			stmt.setString(4, Test.getType());
+			stmt.setInt(5, Test.getIterations());
+			stmt.setString(6, Test.getInterval());
+			stmt.setString(7, Test.getDate());
+			
+			stmt.execute();
+		}catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}		
+	}
 	
+	
+	public static void InserisciReadWrite (TestData Test) throws ClassNotFoundException{
+		Connection connection = null;
+		Statement stmt = null;
+		PreparedStatement stmt2 = null;
+		
+		try {
+			connection = DBManagerCrystal.getMySqlConnection(DBManagerCrystal.DB_URL, DBManagerCrystal.DB_USER, DBManagerCrystal.DB_PASSWORD);
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT id FROM cilacap.testdata where date='"+Test.getDate()+"'");
+			rs.next();
+			int id_testdata = rs.getInt("id");
+			for(int i=0;i<Test.getRead().size();i++) {
+				stmt2 = connection.prepareStatement("INSERT into cilacap.test_row (test_type,mood_type,q,t,mbs,iops,us,id_testdata) VALUES (?,?,?,?,?,?,?,?)");
+				stmt2.setString(1, Test.getRead().get(i).getType());
+				stmt2.setString(2, "r");
+				stmt2.setInt(3,Test.getRead().get(i).getQ());
+				stmt2.setInt(4,Test.getRead().get(i).getT());
+				stmt2.setDouble(5, Test.getRead().get(i).getMbs());
+				stmt2.setDouble(6, Test.getRead().get(i).getIops());
+				stmt2.setDouble(7,Test.getRead().get(i).getUs());
+				stmt2.setInt(8,id_testdata );
+				stmt2.execute();
+			}
+			for(int i=0;i<Test.getWrite().size();i++) {
+				stmt2 = connection.prepareStatement("INSERT into cilacap.test_row (test_type,mood_type,q,t,mbs,iops,us,id_testdata) VALUES (?,?,?,?,?,?,?,?)");
+				stmt2.setString(1, Test.getWrite().get(i).getType());
+				stmt2.setString(2, "w");
+				stmt2.setInt(3,Test.getWrite().get(i).getQ());
+				stmt2.setInt(4,Test.getWrite().get(i).getT());
+				stmt2.setDouble(5, Test.getWrite().get(i).getMbs());
+				stmt2.setDouble(6, Test.getWrite().get(i).getIops());
+				stmt2.setDouble(7,Test.getWrite().get(i).getUs());
+				stmt2.setInt(8,id_testdata );
+				stmt2.execute();
+			}
+			
+		}catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				stmt.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}	
+		
+		
+	}
 	
 	
 	

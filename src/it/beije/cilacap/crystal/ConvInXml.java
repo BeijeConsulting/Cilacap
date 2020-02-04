@@ -2,7 +2,6 @@ package it.beije.cilacap.crystal;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -22,16 +20,31 @@ import org.w3c.dom.Element;
 
 public class ConvInXml {
 
-	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException {
+	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException, ClassNotFoundException {
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\03\\CDM_20200107153224.txt");
 		TestData testData = new TestData();
 		TestRow test2 = new TestRow();
 		ArrayList<String> RigaPerRiga = new ArrayList<>(); 
 		RigaPerRiga = RiuoviCarattereStrano(file);
 		testData=testData.Popola(RigaPerRiga);
-		CreaXml(testData);
-		int x=0;
+		testData.InserisciInDB(testData);
+		testData.InserisciReadWrite(testData);
+		//CreaXml(testData);
 		
+//		File file = new File("C:\\Users\\Padawan03\\git\\Cilacap\\crystal");
+//	    File[] files = file.listFiles(); 
+//	    
+//        System.out.println("Files are:"); 
+//
+//        // Display the names of the files 
+//        for (int i = 0; i < files.length; i++) { 
+//            System.out.println(files[i].getName()); 
+//            if(files[i].isDirectory()) {
+//            	File ff = new File("C:\\Users\\Padawan03\\git\\Cilacap\\crystal\\"+files[i].getName());
+//            	for(File ff2: ff.listFiles())
+//            		System.out.println(ff2.getName());
+//            }
+//        } 
 		
 		
 	}
@@ -43,7 +56,6 @@ public class ConvInXml {
 		String row = reader.readLine();
 		 row = reader.readLine();
 		 row = reader.readLine();
-		 int riga=0;
 		 ArrayList<String> prova = new ArrayList<>(); 
 		 while(row!= null) {
 			 String appoggio= new String();
@@ -65,6 +77,9 @@ public class ConvInXml {
 		}
 		return Array;
 	}
+	
+	
+	
 	public static void CreaXml(TestData testData) throws ParserConfigurationException, TransformerException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -128,9 +143,6 @@ public class ConvInXml {
 
 		System.out.println("File saved!");
         
-		
-		
-		
 		
 	}
 

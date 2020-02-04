@@ -4,9 +4,9 @@ public abstract class Animale {
 
 	private int age;
 
-//	public Animale(int age) {
-//		this.age = age;
-//	}
+	public Animale(int age) {
+		this.age = age;
+	}
 	
 	public int getAge() {
 		return age;

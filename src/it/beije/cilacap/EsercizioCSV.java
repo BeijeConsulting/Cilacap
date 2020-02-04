@@ -21,8 +21,8 @@ public class EsercizioCSV {
 //		prova = provaz.CreaFileCsv();
 //		provaz.ScrivereContattiCsv(prova);
 //		provaz.CaricareContatti();
-//		provaz.CreaFileXml();
-		provaz.CreaCSVdaXML();
+		provaz.CreaFileXml();
+//		provaz.CreaCSVdaXML();
 		
 	}
 
