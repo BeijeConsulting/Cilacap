@@ -87,7 +87,6 @@ public class TestData {
 	public void setWrite(List<TestRow> write) {
 		this.write = write;
 	}
-	
-	
+
 
 }

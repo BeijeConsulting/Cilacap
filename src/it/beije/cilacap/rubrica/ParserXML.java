@@ -100,8 +100,6 @@ public class ParserXML {
 		DOMSource source = new DOMSource(document);
 		StreamResult result = new StreamResult(new File(pathfile));
 
-		// Output to console for testing
-		//StreamResult result = new StreamResult(System.out);
 
 		transformer.transform(source, result);
 
