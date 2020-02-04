@@ -52,4 +52,8 @@ public class Migrater {
 		ParserXML.writeContattiInFile(lista, newFile.getAbsolutePath());
 	}
 
+	public static void fromXMLtoHDB(File f) throws Exception {
+		ParserHDB.writeContattiInHDB(ParserXML.getContattiFromFile(f));
+	}
+
 }

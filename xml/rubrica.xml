@@ -12,4 +12,9 @@
         <telefono>4242354321</telefono>
         <email>max@rossi.it</email>
     </contatto>
+    <contatto anni="25">
+    	<nome>Sri</nome>
+    	<cognome>Rerrr</cognome>
+    	<telefono>55555555</telefono>
+    	<email>rerr@der.it</email></contatto>
 </rubrica>
