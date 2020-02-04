@@ -45,6 +45,7 @@ public class MyCrystal
 		String row = reader.readLine();
 		while (row != null)
 		{
+			row = row.replace("\0", "");
 			righe.add(row);
 			row = reader.readLine();
 		}
@@ -57,12 +58,20 @@ public class MyCrystal
 		TestData dato = new TestData();
 		
 		dato.setIdComputer("1");
-		dato.setVersion(righe.get(2).substring(33, 51).trim());
-		dato.setOs(righe.get(44).substring(19, 38).trim());
-		dato.setType(righe.get(40).substring(19, 29).trim());
-		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')).trim());
-		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6).trim());
-		dato.setDate(righe.get(42).substring(19, 50).trim());
+		
+		for(int i=0; i<righe.size(); i++)
+		{
+			if(righe.get(i).contains("CrystalDiskMark"))
+			{
+				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+4, righe.get(i).indexOf("(C)")));
+			}
+		}
+		
+//		dato.setOs(righe.get(44).substring(19, 38).trim());
+//		dato.setType(righe.get(40).substring(19, 29).trim());
+//		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')).trim());
+//		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6).trim());
+//		dato.setDate();
 		
 		dati.add(dato);
 	}
@@ -79,12 +88,12 @@ public class MyCrystal
         for (TestData c : dati) { //aggiungo i seguenti tag per ciascun tag di tipo Contatto
         	Element test = document.createElement("test");
         	
-        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
+//        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
 //        	test.setAttribute("interval", c.getInterval());
 //        	test.setAttribute("iterations", c.getIterations());
 //        	test.setAttribute("type", c.getType());
 //        	test.setAttribute("os", c.getOs());
-//        	test.setAttribute("version", c.getVersion());
+        	test.setAttribute("version", c.getVersion());
         	test.setAttribute("id_computer", c.getIdComputer());
         	
         	
