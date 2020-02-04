@@ -20,43 +20,43 @@ public class ConverterXML_DB {
 		
 		File file = new File(pathfile);
 		
-		return getContattiFromFile(file);
+		return XMLtools.getContattiFromFile(file);
 	}
 	
-	public static List<Contatto> getContattiFromFile(File file) throws Exception {
-		
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
-		
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        // Load the input XML document, parse it and return an instance of the
-        // Document class.
-        Document document = builder.parse(file);
-        Element element = document.getDocumentElement();       
-        
-        NodeList contatti = element.getElementsByTagName("contatto");
-       
-        for (int i = 0; i < contatti.getLength(); i++) {
-        	
-        	Element utente = (Element)contatti.item(i);
- 
-        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
-        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
-        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
-        	Element email = (Element)utente.getElementsByTagName("email").item(0);
-        	
-        	Contatto contatto = new Contatto();
-        	contatto.setNome(nome.getTextContent());
-        	contatto.setCognome(cognome.getTextContent());
-        	contatto.setTelefono(telefono.getTextContent());
-        	contatto.setEmail(email.getTextContent());
-        	
-        	listaContatti.add(contatto);
-        }
-        
-        return listaContatti;
-	}
+//	public static List<Contatto> getContattiFromFile(File file) throws Exception {
+//		
+//		List<Contatto> listaContatti = new ArrayList<Contatto>();
+//		
+//		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder builder = factory.newDocumentBuilder();
+//
+//        // Load the input XML document, parse it and return an instance of the
+//        // Document class.
+//        Document document = builder.parse(file);
+//        Element element = document.getDocumentElement();       
+//        
+//        NodeList contatti = element.getElementsByTagName("contatto");
+//       
+//        for (int i = 0; i < contatti.getLength(); i++) {
+//        	
+//        	Element utente = (Element)contatti.item(i);
+// 
+//        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
+//        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
+//        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
+//        	Element email = (Element)utente.getElementsByTagName("email").item(0);
+//        	
+//        	Contatto contatto = new Contatto();
+//        	contatto.setNome(nome.getTextContent());
+//        	contatto.setCognome(cognome.getTextContent());
+//        	contatto.setTelefono(telefono.getTextContent());
+//        	contatto.setEmail(email.getTextContent());
+//        	
+//        	listaContatti.add(contatto);
+//        }
+//        
+//        return listaContatti;
+//	}
 	
 	public static boolean insertContatto(List<Contatto> contacts) throws ClassNotFoundException {
 		Connection connection = null;
