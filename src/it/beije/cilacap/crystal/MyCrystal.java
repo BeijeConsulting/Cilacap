@@ -32,7 +32,7 @@ public class MyCrystal
 		
 		readContent(contenuto, f); //lettura e salvataggio del file .txt in ArrayList di stringhe contenuto
 		setData(contenuto, data); //Metodo che utilizza i metodi di TestData e popola il bean
-		writeInXML(data, "xml\\Crystal.xml");
+		writeInXML(data, "xml\\MyCrystal.xml");
 		
 		
 	}
@@ -56,15 +56,13 @@ public class MyCrystal
 	{
 		TestData dato = new TestData();
 		
-		System.out.println();
-		
 		dato.setIdComputer("1");
-		dato.setVersion(righe.get(2).substring(33, 51));
-		dato.setOs(righe.get(44).substring(19, 38));
-		dato.setType(righe.get(40).substring(19, 29));
-		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')));
-		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6));
-		dato.setDate(righe.get(42).substring(19, 50));
+		dato.setVersion(righe.get(2).substring(33, 51).trim());
+		dato.setOs(righe.get(44).substring(19, 38).trim());
+		dato.setType(righe.get(40).substring(19, 29).trim());
+		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')).trim());
+		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6).trim());
+		dato.setDate(righe.get(42).substring(19, 50).trim());
 		
 		dati.add(dato);
 	}
@@ -75,17 +73,22 @@ public class MyCrystal
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         Document document = builder.newDocument(); //creazione nuovo documento XML
-        Element docElement = document.createElement("CrystalDiskMark"); //creazione elemento radice rubrica
+        Element docElement = document.createElement("CrystalDiskMark"); //creazione elemento radice CrystalDiskMark
         document.appendChild(docElement); //appendo l'elemento radice al documento XML
         
         for (TestData c : dati) { //aggiungo i seguenti tag per ciascun tag di tipo Contatto
-        	Element info = document.createElement("test");
+        	Element test = document.createElement("test");
         	
-        	//info.setTextContent(c.getDate()); //popolo i Contatto utilizando i metodi get
+        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
+//        	test.setAttribute("interval", c.getInterval());
+//        	test.setAttribute("iterations", c.getIterations());
+//        	test.setAttribute("type", c.getType());
+//        	test.setAttribute("os", c.getOs());
+//        	test.setAttribute("version", c.getVersion());
+        	test.setAttribute("id_computer", c.getIdComputer());
         	
-        	//info.appendChild(info); //appendo gli Element a contatto
-
-        	docElement.appendChild(info); //infine appendo contatto all'elemento radice
+        	
+        	docElement.appendChild(test); //infine appendo test all'elemento radice
         }
 
 		// write the content into xml file
