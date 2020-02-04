@@ -334,4 +334,74 @@ public class Utility {
 		}
 	}
 
+	public static List<TestData> importaTestDaXML(String filePath) throws Exception { //overload sotto
+		File file = new File(filePath);
+		return importaTestDaXML(file);
+	}
+
+	@SuppressWarnings("unused")
+	public static List<TestData> importaTestDaXML(File fileXML) throws Exception { // prelevo Bean TestData dal file XML
+
+		List<TestData> listaTestData = new ArrayList<TestData>();
+		List<TestRow> listaRead = new ArrayList<TestRow>();
+		List<TestRow> listaWrite = new ArrayList<TestRow>();
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        // Load the input XML document, parse it and return an instance of the
+        // Document class.
+        Document document = builder.parse(fileXML);
+        Element element = document.getDocumentElement();       
+//        System.out.println(element.getTagName());
+        
+        //System.out.println(element.getChildNodes().getLength());
+        NodeList tests = element.getElementsByTagName("test");
+        System.out.println("tests : " + tests.getLength());
+
+        for (int i = 0; i < tests.getLength(); i++) {
+        	
+        	Element test = (Element)tests.item(i);
+        	TestData testData = new TestData();
+        	testData.setIdComputer(test.getAttribute("id_computer"));
+        	testData.setVersion(test.getAttribute("version"));
+        	testData.setOs(test.getAttribute("os"));
+        	testData.setType(test.getAttribute("type"));
+        	testData.setIterations(Integer.parseInt(test.getAttribute("iterations")));
+        	testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("inverval")));
+        	testData.setDate(test.getAttribute("date"));
+        	
+        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
+        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
+        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
+        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+        	
+        	Element writeS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
+        	Element writeS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
+        	Element writeR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
+        	Element writeR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
+//        	
+//        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
+//        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
+//        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
+//        	Element email = (Element)utente.getElementsByTagName("email").item(0);
+//        	
+//        	Contatto contatto = new Contatto();
+//        	contatto.setNome(nome.getTextContent());
+//        	contatto.setCognome(cognome.getTextContent());
+//        	contatto.setTelefono(telefono.getTextContent());
+//        	contatto.setEmail(email.getTextContent());
+//        	
+//        	System.out.println("\tnome = " + contatto.getNome());
+//        	System.out.println("\tcognome = " + contatto.getCognome());
+//        	System.out.println("\ttelefono = " + contatto.getTelefono());
+//        	System.out.println("\temail = " + contatto.getEmail());
+        	
+//        	listaContatti.add(contatto);
+        }
+        
+//        return listaContatti;
+
+		return null;
+	}
 }

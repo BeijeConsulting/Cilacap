@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class DBtools {
 
+	@SuppressWarnings("unused")
 	private static int onMainMenu() throws ClassNotFoundException, SQLException, IOException {
 
 		int uscita = 0; // -1 esco
