@@ -3,6 +3,11 @@ package it.beije.cilacap.crystal;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +21,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import it.beije.cilacap.rubrica.Contatto;
+import it.beije.cilacap.rubrica.DBManager;
 
 
 
@@ -57,33 +65,33 @@ public class CrystalTestManager {
 				if (setAttribute[0].contentEquals("CrystalDiskMark")) {
 					
 					tests.setVersion(setAttribute[1]  + " " + setAttribute[2]);
-					System.out.println("Version: " + tests.getVersion());
+//					System.out.println("Version: " + tests.getVersion());
 				}
 				
 				if (setAttribute[0].contentEquals("Test:")) {
 					
 					tests.setType(setAttribute[1]  + " " + setAttribute[2]);
-					System.out.println("Type: " + tests.getType());
+//					System.out.println("Type: " + tests.getType());
 					
 					tests.setIterations((int)setAttribute[3].charAt(2));
-					System.out.println("Iterations: " + tests.getIterations());
+//					System.out.println("Iterations: " + tests.getIterations());
 				
-					tests.setInterval(setAttribute[5]  + " " + setAttribute[6].replace("]", ""));
-					System.out.println("Interval: " + tests.getInterval());
+					tests.setIntervalInSeconds(Integer.parseInt(row.split("Interval:")[1].trim().split(" sec")[0].trim()));
+//					System.out.println("Interval: " + tests.getIntervalInSeconds());
 				}
 				
 				if (setAttribute[0].contentEquals("Date:")) {
 					
 					tests.setDate(setAttribute[1]  + " " + setAttribute[2]);
-					System.out.println("Date: " + tests.getDate());
+//					System.out.println("Date: " + tests.getDate());
 					tests.setIdComputer(tests.getDate().trim().replace("/", "").replace(":", "").replace(" ", ""));
-					System.out.println("Id Computer: " + tests.getIdComputer());
+//					System.out.println("Id Computer: " + tests.getIdComputer());
 				}
 				
 				if (setAttribute[0].contentEquals("OS:")) {
 					
 					tests.setOs(setAttribute[1]  + " " + setAttribute[2]);
-					System.out.println("OS: " + tests.getOs());
+//					System.out.println("OS: " + tests.getOs());
 				}
 				
 				if (setAttribute[0].contentEquals("Sequential") && inReadSeq > 0) {
@@ -91,22 +99,22 @@ public class CrystalTestManager {
 					tests.getRead().add(new TestRow());
 					
 					tests.getRead().get(indexRead).setType(setAttribute[0]  + " " + setAttribute[1]);
-					System.out.println("Read"+indexRead+" -Type: " + tests.getRead().get(indexRead).getType());
+//					System.out.println("Read"+indexRead+" -Type: " + tests.getRead().get(indexRead).getType());
 					
 					tests.getRead().get(indexRead).setQ(Integer.parseInt(row.split("Q=")[1].trim().split(",")[0].trim()));
-					System.out.println("Read"+indexRead+"-Q: " + tests.getRead().get(indexRead).getQ());
+//					System.out.println("Read"+indexRead+"-Q: " + tests.getRead().get(indexRead).getQ());
 					
 					tests.getRead().get(indexRead).setT(Integer.parseInt(row.split("T=")[1].trim().split("\\)")[0].trim()));
-					System.out.println("Read"+indexRead+" -T: " + tests.getRead().get(indexRead).getT());
+//					System.out.println("Read"+indexRead+" -T: " + tests.getRead().get(indexRead).getT());
 					
 					tests.getRead().get(indexRead).setMbs(Double.parseDouble(row.split(":")[1].trim().split("MB")[0].trim()));
-					System.out.println("Read"+indexRead+" -MB/s: " + tests.getRead().get(indexRead).getMbs());
+//					System.out.println("Read"+indexRead+" -MB/s: " + tests.getRead().get(indexRead).getMbs());
 					
 					tests.getRead().get(indexRead).setIops(Double.parseDouble(row.split("\\[")[1].trim().split("IOPS")[0].trim()));
-					System.out.println("Read"+indexRead+" -IOPS: " + tests.getRead().get(indexRead).getIops());
+//					System.out.println("Read"+indexRead+" -IOPS: " + tests.getRead().get(indexRead).getIops());
 					
 					tests.getRead().get(indexRead).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
-					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
+//					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
 					
 					indexRead++;
 					inReadSeq--;
@@ -117,22 +125,22 @@ public class CrystalTestManager {
 					tests.getWrite().add(new TestRow());
 					
 					tests.getWrite().get(indexWrite).setType(setAttribute[0]  + " " + setAttribute[1]);
-					System.out.println("Write "+indexWrite+" -Type: " + tests.getWrite().get(indexWrite).getType());
+//					System.out.println("Write "+indexWrite+" -Type: " + tests.getWrite().get(indexWrite).getType());
 					
 					tests.getWrite().get(indexWrite).setQ(Integer.parseInt(row.split("Q=")[1].trim().split(",")[0].trim()));
-					System.out.println("Write "+indexWrite+"-Q: " + tests.getWrite().get(indexWrite).getQ());
+//					System.out.println("Write "+indexWrite+"-Q: " + tests.getWrite().get(indexWrite).getQ());
 					
 					tests.getWrite().get(indexWrite).setT(Integer.parseInt(row.split("T=")[1].trim().split("\\):")[0].trim()));
-					System.out.println("Write"+indexWrite+" -T: " + tests.getWrite().get(indexWrite).getT());
+//					System.out.println("Write"+indexWrite+" -T: " + tests.getWrite().get(indexWrite).getT());
 					
 					tests.getWrite().get(indexWrite).setMbs(Double.parseDouble(row.split(":")[1].trim().split("MB")[0].trim()));
-					System.out.println("Write"+indexWrite+" -MB/s: " + tests.getWrite().get(indexWrite).getMbs());
+//					System.out.println("Write"+indexWrite+" -MB/s: " + tests.getWrite().get(indexWrite).getMbs());
 					
 					tests.getWrite().get(indexWrite).setIops(Double.parseDouble(row.split("\\[")[1].trim().split("IOPS")[0].trim()));
-					System.out.println("Write"+indexWrite+" -IOPS: " + tests.getWrite().get(indexWrite).getIops());
+//					System.out.println("Write"+indexWrite+" -IOPS: " + tests.getWrite().get(indexWrite).getIops());
 					
 					tests.getWrite().get(indexWrite).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
-					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
+//					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
 					
 					indexWrite++;
 					inWriteSeq--;
@@ -143,22 +151,22 @@ public class CrystalTestManager {
 					tests.getRead().add(new TestRow());
 					
 					tests.getRead().get(indexRead).setType(setAttribute[0]  + " " + setAttribute[1]);
-					System.out.println("Read"+indexRead+" -Type: " + tests.getRead().get(indexRead).getType());
+//					System.out.println("Read"+indexRead+" -Type: " + tests.getRead().get(indexRead).getType());
 					
 					tests.getRead().get(indexRead).setQ(Integer.parseInt(row.split("Q=")[1].trim().split(",")[0].trim()));
-					System.out.println("Read"+indexRead+"-Q: " + tests.getRead().get(indexRead).getQ());
+//					System.out.println("Read"+indexRead+"-Q: " + tests.getRead().get(indexRead).getQ());
 					
 					tests.getRead().get(indexRead).setT(Integer.parseInt(row.split("T=")[1].trim().split("\\):")[0].trim()));
-					System.out.println("Read"+indexRead+" -T: " + tests.getRead().get(indexRead).getT());
+//					System.out.println("Read"+indexRead+" -T: " + tests.getRead().get(indexRead).getT());
 					
 					tests.getRead().get(indexRead).setMbs(Double.parseDouble(row.split(":")[1].trim().split("MB")[0].trim()));
-					System.out.println("Read"+indexRead+" -MB/s: " + tests.getRead().get(indexRead).getMbs());
+//					System.out.println("Read"+indexRead+" -MB/s: " + tests.getRead().get(indexRead).getMbs());
 					
 					tests.getRead().get(indexRead).setIops(Double.parseDouble(row.split("\\[")[1].trim().split("IOPS")[0].trim()));
-					System.out.println("Read"+indexRead+" -IOPS: " + tests.getRead().get(indexRead).getIops());
+//					System.out.println("Read"+indexRead+" -IOPS: " + tests.getRead().get(indexRead).getIops());
 					
 					tests.getRead().get(indexRead).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
-					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
+//					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
 					
 					indexRead++;
 					inReadRan--;
@@ -169,22 +177,22 @@ public class CrystalTestManager {
 					tests.getWrite().add(new TestRow());
 					
 					tests.getWrite().get(indexWrite).setType(setAttribute[0]  + " " + setAttribute[1]);
-					System.out.println("Write "+indexWrite+" -Type: " + tests.getWrite().get(indexWrite).getType());
+//					System.out.println("Write "+indexWrite+" -Type: " + tests.getWrite().get(indexWrite).getType());
 					
 					tests.getWrite().get(indexWrite).setQ(Integer.parseInt(row.split("Q=")[1].trim().split(",")[0].trim()));
-					System.out.println("Write "+indexWrite+"-Q: " + tests.getWrite().get(indexWrite).getQ());
+//					System.out.println("Write "+indexWrite+"-Q: " + tests.getWrite().get(indexWrite).getQ());
 					
 					tests.getWrite().get(indexWrite).setT(Integer.parseInt(row.split("T=")[1].trim().split("\\):")[0].trim()));
-					System.out.println("Write"+indexWrite+" -T: " + tests.getWrite().get(indexWrite).getT());
+//					System.out.println("Write"+indexWrite+" -T: " + tests.getWrite().get(indexWrite).getT());
 					
 					tests.getWrite().get(indexWrite).setMbs(Double.parseDouble(row.split(":")[1].trim().split("MB")[0].trim()));
-					System.out.println("Write"+indexWrite+" -MB/s: " + tests.getWrite().get(indexWrite).getMbs());
+//					System.out.println("Write"+indexWrite+" -MB/s: " + tests.getWrite().get(indexWrite).getMbs());
 					
 					tests.getWrite().get(indexWrite).setIops(Double.parseDouble(row.split("\\[")[1].trim().split("IOPS")[0].trim()));
-					System.out.println("Write"+indexWrite+" -IOPS: " + tests.getWrite().get(indexWrite).getIops());
+//					System.out.println("Write"+indexWrite+" -IOPS: " + tests.getWrite().get(indexWrite).getIops());
 					
 					tests.getWrite().get(indexWrite).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
-					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
+//					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
 					
 					indexWrite++;
 					inWriteRan--;
@@ -241,7 +249,7 @@ public class CrystalTestManager {
 			        	test.setOs(itemTest.getAttribute("os"));
 			        	test.setType(itemTest.getAttribute("type"));
 			        	test.setIterations(Integer.parseInt(itemTest.getAttribute("iterations")));
-			        	test.setInterval(itemTest.getAttribute("interval"));
+			        	test.setIntervalInSeconds(Integer.parseInt(itemTest.getAttribute("interval")));
 			        	test.setDate(itemTest.getAttribute("type"));
 			        	
 			        	NodeList nodeRead = itemTest.getElementsByTagName("read");
@@ -389,7 +397,7 @@ public class CrystalTestManager {
 					testChild.setAttribute("os", test.getOs());
 					testChild.setAttribute("type", test.getType());
 					testChild.setAttribute("iterations", Integer.toString(test.getIterations()));
-					testChild.setAttribute("interval", test.getInterval());
+					testChild.setAttribute("interval", Integer.toString(test.getIntervalInSeconds()));
 					testChild.setAttribute("date", test.getDate());
 					
 					Element read = (Element)document.createElement("read");
@@ -465,9 +473,8 @@ public class CrystalTestManager {
 			throw exception;
 		}
 	}
-public void writeTestToXML(List<TestData> tests, String pathFile, boolean isNew) throws Exception{
-		
-		
+	
+	public void writeTestToXML(List<TestData> tests, String pathFile, boolean isNew) throws Exception{
 		
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -487,7 +494,7 @@ public void writeTestToXML(List<TestData> tests, String pathFile, boolean isNew)
 				testChild.setAttribute("os", test.getOs());
 				testChild.setAttribute("type", test.getType());
 				testChild.setAttribute("iterations", Integer.toString(test.getIterations()));
-				testChild.setAttribute("interval", test.getInterval());
+				testChild.setAttribute("interval", Integer.toString(test.getIntervalInSeconds()));
 				testChild.setAttribute("date", test.getDate());
 				
 				Element read = (Element)document.createElement("read");
@@ -563,6 +570,175 @@ public void writeTestToXML(List<TestData> tests, String pathFile, boolean isNew)
 		}catch (Exception exception) {
 			throw exception;
 		}
+	}
+	public List<TestData> getTestFromDB() throws ClassNotFoundException , SQLException {
+		
+		Connection connection = null;
+		Statement stmt = null;
+		Statement stmt1 = null;
+		List<TestData> tests = new ArrayList<>();
+		
+		try {
+			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+			
+			stmt = connection.createStatement();
+			stmt1 = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.testdata");
+			
+			
+			TestData test = null;
+			TestRow  testRow = null;
+				while (rs.next()) {
+					test = new TestData();
+					
+					System.out.println("Elaborando... ID_COMPUTER = "+rs.getString("id_computer"));
+					
+					test.setIdComputer(rs.getString("id_computer"));
+					test.setVersion(rs.getString("version"));
+					test.setOs(rs.getString("os"));
+					test.setType(rs.getString("type"));
+					test.setIterations(rs.getInt("iterations"));
+					test.setIntervalInSeconds(rs.getInt("interval_test"));
+					test.setDate(rs.getString("date"));
+					
+					ResultSet rs1 = stmt1.executeQuery("SELECT * FROM cilacap.test_row WHERE id_testdata =" + rs.getString("id_computer"));
+					while (rs1.next()) {
+						testRow = new TestRow();
+						
+						if (rs1.getString("test_type").contentEquals("r")) {
+							
+							testRow.setType(rs1.getString("mood_type"));
+							testRow.setQ(rs1.getInt("q"));
+							testRow.setT(rs1.getInt("t"));
+							testRow.setMbs(rs1.getDouble("mbs"));
+							testRow.setIops(rs1.getDouble("iops"));
+							testRow.setUs(rs1.getDouble("us"));
+							
+							test.getRead().add(testRow);
+							
+						}else if (rs1.getString("test_type").contentEquals("w")) {
+
+							testRow.setType(rs1.getString("mood_type"));
+							testRow.setQ(rs1.getInt("q"));
+							testRow.setT(rs1.getInt("t"));
+							testRow.setMbs(rs1.getDouble("mbs"));
+							testRow.setIops(rs1.getDouble("iops"));
+							testRow.setUs(rs1.getDouble("us"));
+							
+							test.getWrite().add(testRow);
+						}
+					}	
+		        	tests.add(test);
+				}
+			
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+			throw sqlEx;
+		} finally {
+			try {
+				stmt.close();
+				stmt1.close();
+				connection.close();
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			}
+		}
+		
+		return tests;
+	}
+	public  boolean insertTestInDB(List<TestData> tests) throws ClassNotFoundException ,NullPointerException{
+		Connection connection = null;
+		Connection connection1 = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmtRow = null;
+		String testType = "";
+		boolean esito = false;
+		try {
+			for (TestData test : tests) {
+				connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+				connection1 = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
+				pstmt = connection.prepareStatement("INSERT into cilacap.testdata (id_computer,version,os,type,iterations,interval_test,date) VALUES (?,?,?,?,?,?,?)");
+				pstmtRow = connection1.prepareStatement("INSERT into cilacap.test_row (test_type,mood_type,q,t,mbs,iops,us,id_testdata) VALUES (?,?,?,?,?,?,?,?)");
+				
+				if(!test.getIdComputer().isEmpty()) {
+					
+					
+										
+					pstmt.setString(1, test.getIdComputer());
+					pstmt.setString(2, test.getVersion());
+					pstmt.setString(3, test.getOs());
+					pstmt.setString(4, test.getType());
+					pstmt.setInt(5, test.getIterations());
+					pstmt.setInt(6, test.getIntervalInSeconds());
+					pstmt.setString(7, test.getDate().trim());
+					
+					esito = pstmt.execute();
+					System.out.println(pstmt.getUpdateCount());
+					
+					try {
+						for (TestRow row : test.getRead()) {
+						
+							testType = "r";
+							
+							pstmtRow.setString(1, testType);
+							pstmtRow.setString(2, row.getType());
+							pstmtRow.setInt(3, row.getQ());
+							pstmtRow.setInt(4, row.getT());
+							pstmtRow.setDouble(5, row.getMbs());
+							pstmtRow.setDouble(6, row.getIops());
+							pstmtRow.setDouble(7, row.getUs());
+							pstmtRow.setString(8, test.getIdComputer());
+							
+							esito = pstmtRow.execute();
+							System.out.println(pstmtRow.getUpdateCount());
+						}
+						
+						for (TestRow row : test.getWrite()) {
+							
+							testType = "w";
+							
+							pstmtRow.setString(1, testType);
+							pstmtRow.setString(2, row.getType());
+							pstmtRow.setInt(3, row.getQ());
+							pstmtRow.setInt(4, row.getT());
+							pstmtRow.setDouble(5, row.getMbs());
+							pstmtRow.setDouble(6, row.getIops());
+							pstmtRow.setDouble(7, row.getUs());
+							pstmtRow.setString(8, test.getIdComputer());
+							
+							esito = pstmtRow.execute();
+							System.out.println(pstmtRow.getUpdateCount());
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					} finally {
+						try {
+							pstmtRow.close();
+							connection1.close();
+						} catch (SQLException finEx) {
+							System.out.println("PROBLEMA : " + finEx);
+						} catch (NullPointerException finEx) {
+							System.out.println("PROBLEMA NULLLL: " + finEx);
+						}
+					}
+				}
+			}
+		} catch (SQLException sqlEx) {
+			System.out.println("PROBLEMA : " + sqlEx);
+		} finally {
+			try {
+				if (pstmt !=null) {
+					pstmt.close();
+					connection.close();
+				}
+				
+			} catch (SQLException finEx) {
+				System.out.println("PROBLEMA : " + finEx);
+			} catch (NullPointerException finEx) {
+				System.out.println("PROBLEMA nullll: " + finEx);
+			}
+		}
+		return esito;
 	}
 	
 	public static String pulisciSpazi(String str) {

@@ -42,7 +42,10 @@ public class MainCrystal {
     // Driver Method 
     public static void main(String[] args) throws Exception 
     { 
-        // Provide full path for directory(change accordingly)   
+    	CrystalTestManager c = new CrystalTestManager();
+    	List<TestData> testFromDB = c.getTestFromDB();
+    	
+    	// Provide full path for directory(change accordingly)   
         String maindirpath = "crystal"; 
                   
         // File object 
@@ -68,11 +71,12 @@ public class MainCrystal {
        }
        for (int x = 0; x < DIR_TEST.size(); x++) {
     	   System.out.println(DIR_TEST.get(x));
-	       CrystalTestManager c = new CrystalTestManager();
+	       
 	       
 	       String pathFile="crystal\\outputsXML\\" + DIR_TEST.get(x).replace("\\", " ").split(" ")[1] ;
 	       creaDir("crystal\\outputsXML\\");
 	       creaDir(pathFile);
+	       System.out.println("\n");
 	        
 	       List<TestData> newTests = new ArrayList<>();
 	        
@@ -83,10 +87,18 @@ public class MainCrystal {
 		    	   System.out.println("-------------------------------------------------------------------");
 		    	   System.out.println("Lettura file n_"+i+": directory |" + PATHS_TEST.get(i)+ "|\n");
 		    	   newTests.add(c.readTestFile(PATHS_TEST.get(i)));
+		    	   System.out.println("Lettura andata a buon fine\n");
+
 	    	   }
 	       }
 	       //List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
 	       c.writeTestToXML(newTests, pathFile + "\\crystalOutput.xml",true);
+		   
+	       for(TestData test : testFromDB) {
+	    	   boolean esito = newTests.removeIf(a -> a.getIdComputer().contentEquals(test.getIdComputer()));	
+	       }
+	       boolean esito1 = newTests.removeIf(a -> a.getIdComputer().equals(null));
+	       c.insertTestInDB(newTests);
        }
 	}
     
@@ -100,7 +112,7 @@ public class MainCrystal {
       {
         System.out.println("Ho creato: " + Dir);
       }else{
-        System.out.println("Impossibile creare: " + Dir);
+        System.out.println("Directory già esistente: " + Dir);
       }
    
     }
