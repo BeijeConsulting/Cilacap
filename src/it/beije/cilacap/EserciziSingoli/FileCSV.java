@@ -1,4 +1,4 @@
-package it.beije.cilacap;
+package it.beije.cilacap.EserciziSingoli;
 
 import java.io.*;
 import java.io.FileReader;

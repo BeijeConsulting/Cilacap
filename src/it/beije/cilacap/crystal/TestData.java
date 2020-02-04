@@ -27,7 +27,7 @@ public class TestData {
 	public String getVersion() {
 		return version;
 	}
-	public void setVersion(String version) {
+	public void setVersion(String version) {  //fatto
 		this.version = version;
 	}
 	

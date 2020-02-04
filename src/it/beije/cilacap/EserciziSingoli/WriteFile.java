@@ -1,7 +1,10 @@
+package it.beije.cilacap.EserciziSingoli;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class WriteFile {
@@ -27,7 +30,7 @@ public class WriteFile {
 			System.out.println("Reinserisci il cognome");
 			cognome=sc.next();
 		}
-		return cognome + "\n";
+		return cognome + ";";
 	}
 
 	static String writeNome(String nome) {
@@ -35,15 +38,15 @@ public class WriteFile {
 			System.out.println("Reinserisci il nome");
 			nome=sc.next();
 		}
-		return nome +  "\n";
+		return "\n "+ nome +  ";";
 	}
 
-	static String writemail(String email) {
+	static public String writemail(String email) {
 		while(email.equalsIgnoreCase(" ")) {
 			System.out.println("Reinserisci il email");
 			email=sc.next();
 		}
-		return email +  "\n";
+		return email +  ";";
 	}
 
 	static String writenumero(String numero) {
@@ -51,12 +54,13 @@ public class WriteFile {
 			System.out.println("Reinserisci il telefono");
 			numero=sc.next();
 		}
-		return numero + "\n";
+		return numero + ";";
 	}
 
-	public static void main(String[] args) throws IOException {
+	static public  void main(String[] args) throws IOException {
 		File file;
-		String filePath = "csv/rubrica.txt";
+		File filea;
+		String filePath = "csv/rubrica.csv";
 		StringBuilder stringa = new StringBuilder();
 		String risp;
 		Scanner sc = new Scanner(System.in);
@@ -79,10 +83,7 @@ public class WriteFile {
 			bufferedWriter.append(stringa);
 			System.out.print("Vuoi inserire altri contatti? S/N");
 			risp=sc.next();
-			while(!risp.equalsIgnoreCase("S")||!risp.equalsIgnoreCase("N")) {
-				System.out.print("Vuoi inserire altri contatti? S/N");
-				risp=sc.next();
-			}
+			
 			if(risp.equalsIgnoreCase("S")) {
 				System.out.print("Inserire cognome");
 				 cognome = sc.next();
@@ -97,6 +98,9 @@ public class WriteFile {
 				stringa.append(writemail(email));
 				stringa.append(writenumero(telefono));
 				bufferedWriter.append(stringa);
+			
+				bufferedWriter.flush();
+				bufferedWriter.close();
 			
 			}else if(risp.equalsIgnoreCase("N")) {
 				System.out.println("Ok chiudo.");
