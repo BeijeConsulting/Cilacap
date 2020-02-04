@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBtools {
-
+	
 	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
-		List<Contatto> contatti = new ArrayList<Contatto>();
+		
+		List<Contatto> contacts = new ArrayList<Contatto>();
 		
 		Connection connection = null;
 		Statement stmt = null;
@@ -37,7 +38,7 @@ public class DBtools {
 	        	System.out.println("telefono = " + contatto.getTelefono());
 	        	System.out.println("email = " + contatto.getEmail());
 	        	
-	        	contatti.add(contatto);
+	        	contacts.add(contatto);
 			}
 			
 		} catch (SQLException sqlEx) {
@@ -52,25 +53,23 @@ public class DBtools {
 			}
 		}
 		
-		System.out.println("contatti letti : " + contatti.size());
+		System.out.println("contatti letti : " + contacts.size());
 		
-		return contatti;
+		return contacts;
 	}
 	
-	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException {
+	public static boolean insertContatto(List<Contatto> contacts) throws ClassNotFoundException {
+		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		boolean esito = false;
 		
 		try {
+			
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			
-//			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
-//					.append('\'').append(contatto.getNome()).append("\',")
-//					.append('\'').append(contatto.getCognome()).append("\',")
-//					.append('\'').append(contatto.getTelefono()).append("\',")
-//					.append('\'').append(contatto.getEmail()).append('t').append("\')");
-//			System.out.println(insert.toString());
+			for(Contatto contatto : contacts) {
+			
 			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
 			pstmt.setString(1, contatto.getNome());
 			pstmt.setString(2, contatto.getCognome());
@@ -78,9 +77,8 @@ public class DBtools {
 			pstmt.setString(4, contatto.getEmail());
 			
 			esito = pstmt.execute();
-			System.out.println(pstmt.getUpdateCount());
-			
-			//pstmt.executeUpdate();
+		
+			}
 			
 		} catch (SQLException sqlEx) {
 			System.out.println("PROBLEMA : " + sqlEx);
@@ -96,14 +94,4 @@ public class DBtools {
 		return esito;
 	}
 	
-	public static void main(String[] args) {
-		
-		try {
-			//insertContatto(leggiContatti().get(0));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
 }

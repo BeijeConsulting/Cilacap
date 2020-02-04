@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,8 +24,7 @@ public class XMLtools {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        // Load the input XML document, parse it and return an instance of the
-        // Document class.
+        // Load the input XML document, parse it and return an instance of the Document class
         Document document = builder.parse(file);
         Element element = document.getDocumentElement();       
         
@@ -48,4 +51,43 @@ public class XMLtools {
         return listaContatti;
 	}
 
+	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception {
+
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        Document document = builder.newDocument();
+        Element docElement = document.createElement("rubrica");
+        document.appendChild(docElement);
+        
+        for (Contatto c : contatti) {
+        	Element contatto = document.createElement("contatto");
+        	Element nome = document.createElement("nome");
+        	Element cognome = document.createElement("cognome");
+        	Element telefono = document.createElement("telefono");
+        	Element email = document.createElement("email");
+        	
+        	nome.setTextContent(c.getNome());
+        	cognome.setTextContent(c.getCognome());
+        	telefono.setTextContent(c.getTelefono());
+        	email.setTextContent(c.getEmail());
+        	
+        	contatto.appendChild(nome);
+        	contatto.appendChild(cognome);
+        	contatto.appendChild(telefono);
+        	contatto.appendChild(email);
+
+        	docElement.appendChild(contatto);
+        }
+
+		// Write the content into XML file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		StreamResult result = new StreamResult(new File(pathfile));
+
+		transformer.transform(source, result);
+
+		System.out.println("File saved!");
+	}
 }
