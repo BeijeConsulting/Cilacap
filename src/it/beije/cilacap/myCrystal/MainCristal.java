@@ -70,7 +70,7 @@ public class MainCristal {
 		testData.setOs(CrystalUtil.getTest(s)[1]);
 		testData.setType(CrystalUtil.getTest(s)[2]);
 		testData.setIterations(Integer.parseInt(CrystalUtil.getTest(s)[3]));
-		testData.setInterval(CrystalUtil.getTest(s)[4]);
+		testData.setIntervalInSeconds(Integer.parseInt(CrystalUtil.getTest(s)[4].replace(" sec", "")));
 		testData.setDate(CrystalUtil.getTest(s)[5]);
 
 		for(int i = 0; i < CrystalUtil.getMBsRead(s).length; i++) {
@@ -184,7 +184,7 @@ public class MainCristal {
 			test.setAttribute("os", testData.getOs());
 			test.setAttribute("type", testData.getType());
 			test.setAttribute("iterations", "" + testData.getIterations());
-			test.setAttribute("interval", testData.getInterval());
+			test.setAttribute("interval", ""+testData.getIntervalInSeconds());
 			test.setAttribute("date", testData.getDate());
 
 			// read

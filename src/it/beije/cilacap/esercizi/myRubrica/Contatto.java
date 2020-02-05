@@ -1,11 +1,31 @@
 package it.beije.cilacap.esercizi.myRubrica;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="rubrica")
 public class Contatto {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
+	
+	@Column(name="nome")
 	private String nome;
+
+	@Column(name="cognome")
 	private String cognome;
+
+	@Column(name="telefono")
 	private String telefono;
+
+	@Column(name="email")
 	private String email;
 	
 	public int getId() {
@@ -42,10 +62,6 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getCsvString() {
-		return this.getNome() + ";" + this.getCognome() + ";" + this.getTelefono() + ";" + this.getEmail();
-	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -54,5 +70,9 @@ public class Contatto {
 		builder.append("telefono : ").append(telefono).append('\n');
 		builder.append("email : ").append(email).append('\n');
 		return builder.toString();
+	}
+	
+	public String getCsvString() {
+		return nome + ";" + cognome + ";" + telefono + ";" + email;
 	}
 }

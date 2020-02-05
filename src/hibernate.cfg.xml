@@ -20,9 +20,7 @@
       </property>
       
       <property name = "hibernate.connection.username">root</property>
-      <property name = "hibernate.connection.password">beije</property>
-      
-      <!-- List of XML mapping files -->
+      <property name = "hibernate.connection.password">Beije04</property><!-- List of XML mapping files -->
       <!-- mapping resource = "Contatto.hbm.xml"/ -->
       
       <!-- property name="show_sql">true</property -->

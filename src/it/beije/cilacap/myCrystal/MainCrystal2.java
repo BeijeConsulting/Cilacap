@@ -39,7 +39,7 @@ public class MainCrystal2 {
 			newTest.setAttribute("os", test.getOs());
 			newTest.setAttribute("type", test.getType());
 			newTest.setAttribute("iterations", ""+test.getIterations());
-			newTest.setAttribute("interval", ""+test.getInterval());
+			newTest.setAttribute("interval", ""+test.getIntervalInSeconds() + " sec");
 			newTest.setAttribute("date", test.getDate());
 			newTest.setAttribute("id_computer", test.getIdComputer());
 

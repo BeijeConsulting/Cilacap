@@ -3,6 +3,8 @@ package it.beije.cilacap.myCrystal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Transient;
+
 public class TestData {
 	
 	private String idComputer;
@@ -10,10 +12,11 @@ public class TestData {
 	private String os;
 	private String type;
 	private int iterations;
-	private String interval;
+	private int intervalInSeconds;
 	private String date;
-	
+	@Transient
 	private List<TestRow> read = new ArrayList<TestRow>();
+	@Transient
 	private List<TestRow> write = new ArrayList<TestRow>();
 	
 	
@@ -52,11 +55,11 @@ public class TestData {
 		this.iterations = iterations;
 	}
 	
-	public String getInterval() {
-		return interval;
+	public int getIntervalInSeconds() {
+		return intervalInSeconds;
 	}
-	public void setInterval(String interval) {
-		this.interval = interval;
+	public void setIntervalInSeconds(int intervalInSeconds) {
+		this.intervalInSeconds = intervalInSeconds;
 	}
 	
 	public String getDate() {
