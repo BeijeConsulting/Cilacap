@@ -22,6 +22,7 @@ public class ConvInXml {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException, ClassNotFoundException {
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\03\\CDM_20200107153224.txt");
+		File file2 = new File("C:\\Users\\Padawan03\\Desktop\\crystaldata.xml");
 		TestData testData = new TestData();
 		TestRow test2 = new TestRow();
 		ArrayList<String> RigaPerRiga = new ArrayList<>(); 
@@ -29,6 +30,7 @@ public class ConvInXml {
 		testData=testData.Popola(RigaPerRiga);
 		testData.InserisciInDB(testData);
 		testData.InserisciReadWrite(testData);
+		
 		//CreaXml(testData);
 		
 //		File file = new File("C:\\Users\\Padawan03\\git\\Cilacap\\crystal");
@@ -143,6 +145,13 @@ public class ConvInXml {
 
 		System.out.println("File saved!");
         
+		
+	}
+	
+	public static void CreaXMLdaDB() {
+		
+		
+		
 		
 	}
 

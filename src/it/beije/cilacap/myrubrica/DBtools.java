@@ -17,6 +17,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -31,15 +36,18 @@ public class DBtools {
 		List <Contatto> LeggiContattiDB = new ArrayList<Contatto>();
 		ListaContattiCaricati = CaricareContattiCSV();
 		ListaContattiCaricatiXML = CaricaContattiXML();
-		for(int i=0 ; i<ListaContattiCaricati.size();i++) {
-			insertContatto(ListaContattiCaricati.get(i));
-		}
-		for(int i=0 ; i<ListaContattiCaricatiXML.size();i++) {
-			insertContatto(ListaContattiCaricatiXML.get(i));
-		}
-		LeggiContattiDB = leggiContattiDalDB();
-		writeContattiInFile(LeggiContattiDB, "PathdelFIleXML");
-		ScrivereContattiCsv(LeggiContattiDB);
+//		for(int i=0 ; i<ListaContattiCaricati.size();i++) {
+//			//insertContatto(ListaContattiCaricati.get(i));
+//			InserimentoHibernate(ListaContattiCaricati.get(i));
+//		}
+//		for(int i=0 ; i<ListaContattiCaricatiXML.size();i++) {
+//			//insertContatto(ListaContattiCaricatiXML.get(i));
+//			InserimentoHibernate(ListaContattiCaricatiXML.get(i));
+//		}
+		LetturaHibernate();
+//		LeggiContattiDB = leggiContattiDalDB();
+//		writeContattiInFile(LeggiContattiDB, "PathdelFIleXML");
+//		ScrivereContattiCsv(LeggiContattiDB);
 		
 		
 	}
@@ -253,5 +261,45 @@ public class DBtools {
 		we.writeFileContent(provafile.toString(), file);
 		
 	}
+	
+	public static void InserimentoHibernate(Contatto contatto) {
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(Contatto.class);
+		
+		SessionFactory factory = configuration.buildSessionFactory();
+		
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+		session.save(contatto);
+		
+		transaction.commit();
+		
+		session.close();
+	}
+	
+	public static void LetturaHibernate() {
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(Contatto.class);
+		
+		SessionFactory factory = configuration.buildSessionFactory();
+		
+		Session session = factory.openSession();
+		
+		String hql = "SELECT c FROM Contatto as c";
+		Query<Contatto> query = session.createQuery(hql);
+		
+		for (Contatto contatto : query.list()) {
+			System.out.println(contatto);
+		}
+		
+		
+		
+		
+	}
+	
+	
 	
 }

@@ -15,7 +15,7 @@ public class TestData {
 	private String os;
 	private String type;
 	private int iterations;
-	private int intervalInSeconds;
+	private String intervalInSeconds;
 	private String date;
 	
 	private List<TestRow> read = new ArrayList<TestRow>();
@@ -57,11 +57,11 @@ public class TestData {
 		this.iterations = iterations;
 	}
 	
-	public int getIntervalInSeconds() {
+	public String getInterval() {
 		return intervalInSeconds;
 	}
-	public void setIntervalInSeconds(int intervalInSeconds) {
-		this.intervalInSeconds = intervalInSeconds;
+	public void setInterval(String string) {
+		this.intervalInSeconds = string;
 	}
 	
 	public String getDate() {
