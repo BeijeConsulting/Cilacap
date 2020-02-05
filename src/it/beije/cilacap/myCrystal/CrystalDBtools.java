@@ -67,6 +67,7 @@ public class CrystalDBtools {
 				testData.setOs(rs.getString("os"));
 				testData.setType(rs.getString("type"));
 				testData.setVersion(rs.getString("version"));
+				testData.setDate(rs.getString("date").trim());
 
 
 				Statement readStmt = connection.createStatement();

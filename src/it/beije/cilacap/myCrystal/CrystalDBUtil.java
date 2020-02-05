@@ -46,8 +46,12 @@ public class CrystalDBUtil {
 	}
 	
 	// da XML a DB
-	public static void fromXmlToDB() {
-		
+	public static void fromXmlToDB(String xmlPath) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException {
+		List<TestData> lista = caricaArrayListDiTestDataFromXML(xmlPath);
+		System.out.println(lista.size());
+		for(TestData testData : lista) {
+			CrystalDBtools.insertTestData(testData);
+		}
 	}
 
 	// da DB a XML
@@ -79,20 +83,86 @@ public class CrystalDBUtil {
 				Element test = (Element)crystal.item(i);
 				
 				TestData testData = new TestData();
-				testData.setVersion(test.getAttribute("version"));
 				
-//				Element nome = (Element)utente.getElementsByTagName("nome").item(0);
-//				Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
-//				Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
-//				Element email = (Element)utente.getElementsByTagName("email").item(0);
-//
-//				Contatto contatto = new Contatto();
-//				contatto.setNome(nome.getTextContent());
-//				contatto.setCognome(cognome.getTextContent());
-//				contatto.setTelefono(telefono.getTextContent());
-//				contatto.setEmail(email.getTextContent());
-//
-//				listaContatti.add(contatto);
+				testData.setVersion(test.getAttribute("version"));
+				testData.setDate(test.getAttribute("date"));
+				testData.setIdComputer(test.getAttribute("id_computer"));
+				testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("interval")));
+				testData.setIterations(Integer.parseInt(test.getAttribute("iterations")));
+				testData.setOs(test.getAttribute("os"));
+				testData.setType(test.getAttribute("type"));
+				
+				NodeList read = test.getElementsByTagName("read");
+				Element readEl = (Element)read.item(0);
+				
+				// Read
+				NodeList seqRead = readEl.getElementsByTagName("Sequential_1Mib");
+				List<TestRow> listTestRowRead = new ArrayList<TestRow>();
+				for(int r = 0; r < seqRead.getLength(); r++) {
+					Element seq = (Element)seqRead.item(i);
+					TestRow testRow = new TestRow();
+					testRow.setQ(Integer.parseInt(seq.getAttribute("q")));
+					testRow.setT(Integer.parseInt(seq.getAttribute("t")));
+					
+					testRow.setMbs(Double.parseDouble(((Element)seq.getElementsByTagName("MBs").item(0)).getTextContent()));
+					testRow.setIops(((Double.parseDouble(((Element)seq.getElementsByTagName("IOPS").item(0)).getTextContent()))));
+					testRow.setUs(Double.parseDouble(((Element)seq.getElementsByTagName("us").item(0)).getTextContent()));
+					
+					listTestRowRead.add(testRow);
+				}
+				
+				NodeList randRead = readEl.getElementsByTagName("Random_4KiB");
+				for(int r = 0; r < seqRead.getLength(); r++) {
+					Element seq = (Element)randRead.item(i);
+					TestRow testRow = new TestRow();
+					testRow.setQ(Integer.parseInt(seq.getAttribute("q")));
+					testRow.setT(Integer.parseInt(seq.getAttribute("t")));
+					
+					testRow.setMbs(Double.parseDouble(((Element)seq.getElementsByTagName("MBs").item(0)).getTextContent()));
+					testRow.setIops(((Double.parseDouble(((Element)seq.getElementsByTagName("IOPS").item(0)).getTextContent()))));
+					testRow.setUs(Double.parseDouble(((Element)seq.getElementsByTagName("us").item(0)).getTextContent()));
+					
+					listTestRowRead.add(testRow);
+				}
+				
+				testData.setRead(listTestRowRead);
+				
+				
+				// Write
+				NodeList seqWrite = readEl.getElementsByTagName("Sequential_1Mib");
+				List<TestRow> listTestRowWrite = new ArrayList<TestRow>();
+				for(int r = 0; r < seqWrite.getLength(); r++) {
+					Element seq = (Element)seqRead.item(i);
+					TestRow testRow = new TestRow();
+					testRow.setQ(Integer.parseInt(seq.getAttribute("q")));
+					testRow.setT(Integer.parseInt(seq.getAttribute("t")));
+					
+					testRow.setMbs(Double.parseDouble(((Element)seq.getElementsByTagName("MBs").item(0)).getTextContent()));
+					testRow.setIops(((Double.parseDouble(((Element)seq.getElementsByTagName("IOPS").item(0)).getTextContent()))));
+					testRow.setUs(Double.parseDouble(((Element)seq.getElementsByTagName("us").item(0)).getTextContent()));
+					
+					listTestRowWrite.add(testRow);
+				}
+				
+				NodeList randWrite = readEl.getElementsByTagName("Sequential_1Mib");
+				for(int r = 0; r < seqWrite.getLength(); r++) {
+					Element seq = (Element)randWrite.item(i);
+					TestRow testRow = new TestRow();
+					testRow.setQ(Integer.parseInt(seq.getAttribute("q")));
+					testRow.setT(Integer.parseInt(seq.getAttribute("t")));
+					
+					testRow.setMbs(Double.parseDouble(((Element)seq.getElementsByTagName("MBs").item(0)).getTextContent()));
+					testRow.setIops(((Double.parseDouble(((Element)seq.getElementsByTagName("IOPS").item(0)).getTextContent()))));
+					testRow.setUs(Double.parseDouble(((Element)seq.getElementsByTagName("us").item(0)).getTextContent()));
+					
+					listTestRowWrite.add(testRow);
+				}
+				
+				testData.setWrite(listTestRowWrite);
+				
+				
+				listaTestData.add(testData);
+				
 			}
 		}
 
@@ -101,10 +171,12 @@ public class CrystalDBUtil {
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException, ParserConfigurationException, TransformerException, SQLException, SAXException {
 		String path = "crystal/";
-		// System.out.println(readFileCrystalWriteDb(path));
-//		CrystalDBUtil.fromDbToXml("C:\\Users\\Padawan04\\Desktop\\fromCrystalToDB.xml", path);
 		
-		caricaArrayListDiTestDataFromXML("C:\\Users\\Padawan04\\Desktop\\fromCrystalToDB.xml");
+		// read from DB and write XML
+		CrystalDBUtil.fromDbToXml("C:\\Users\\Padawan04\\Desktop\\fromCrystalToDB.xml", path);
+		
+		// read from XML and write in DB
+		fromXmlToDB("C:\\Users\\Padawan04\\Desktop\\fromCrystalToDB.xml");
 	}
 
 }

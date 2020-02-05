@@ -1,12 +1,29 @@
 package it.beije.cilacap.myCrystal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="test_row")
 public class TestRow {
 
+	@Column(name="test_type")
 	private String type;
+	
+	@Column(name="q")
 	private int q;
+	
+	@Column(name="t")
 	private int t;
+	
+	@Column(name="mbs")
 	private double mbs;
+	
+	@Column(name="iops")
 	private double iops;
+	
+	@Column(name="us")
 	private double us;
 	
 	public String getType() {
