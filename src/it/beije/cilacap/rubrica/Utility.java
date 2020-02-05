@@ -22,7 +22,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import it.beije.cilacap.crystal.TestData;
@@ -659,54 +658,17 @@ public class Utility {
         	testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("interval")));
         	testData.setDate(test.getAttribute("date"));
         	
+        	Element read =  (Element) test.getElementsByTagName("read").item(0);
+        	NodeList nodeListRead = read.getChildNodes();
+        	Element seq1read = (Element) nodeListRead.item(0);
         	TestRow testRow = new TestRow();
         	
-        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
-//        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
-//        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
-//        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
-        	
-        	
-//        	for(int j = 0; j < nodiDiSequential.getLength(); j++) {
-//        	
-//        	testRow.setQ(Integer.parseInt(sequentialRead.getAttribute("q")));
-//        	testRow.setT(Integer.parseInt(sequentialRead.getAttribute("t")));
-//        	
-//        	Element mbs = (Element)nodiDiSequential.item(0);
-//        	Element iops = (Element)nodiDiSequential.item(1);
-//        	Element us = (Element)nodiDiSequential.item(2);
-//        	testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
-//        	testRow.setIops(Double.parseDouble(iops.getTextContent()));
-//        	testRow.setUs(Double.parseDouble(us.getTextContent()));
-//        	}
-//        	
-//        	Element readS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
-//        	Element readS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
-//        	Element readR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
-//        	Element readR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
-//        	
-//        	Element writeS1 = (Element)test.getElementsByTagName("Sequential_1MiB").item(0);
-//        	Element writeS2 = (Element)test.getElementsByTagName("Sequentail_1MiB").item(1);
-//        	Element writeR1 = (Element)test.getElementsByTagName("Random_4KiB").item(0);
-//        	Element writeR2 = (Element)test.getElementsByTagName("Random_4KiB").item(1);
-//        	
-//        	Element nome = (Element)utente.getElementsByTagName("nome").item(0);
-//        	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
-//        	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
-//        	Element email = (Element)utente.getElementsByTagName("email").item(0);
-//        	
-//        	Contatto contatto = new Contatto();
-//        	contatto.setNome(nome.getTextContent());
-//        	contatto.setCognome(cognome.getTextContent());
-//        	contatto.setTelefono(telefono.getTextContent());
-//        	contatto.setEmail(email.getTextContent());
-//        	
-//        	System.out.println("\tnome = " + contatto.getNome());
-//        	System.out.println("\tcognome = " + contatto.getCognome());
-//        	System.out.println("\ttelefono = " + contatto.getTelefono());
-//        	System.out.println("\temail = " + contatto.getEmail());
-        	
-//        	listaContatti.add(contatto);
+        	testRow.setQ(Integer.parseInt(seq1read.getAttribute("q")));
+        	testRow.setT(Integer.parseInt(seq1read.getAttribute("t")));
+        	testRow.setType("seuquential");
+        	listaRead.add(testRow);
+        	testData.setRead(listaRead);
+
         	listaTestData.add(testData);
         }
         
