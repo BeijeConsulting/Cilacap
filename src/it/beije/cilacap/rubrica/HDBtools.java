@@ -13,8 +13,6 @@ import org.hibernate.query.Query;
 
 public class HDBtools {
 	
-	
-	
 	//public static void 
 
 	public static void main(String[] args) {
@@ -22,7 +20,7 @@ public class HDBtools {
 
 		//Initialize configuration
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure()
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
 				.addAnnotatedClass(Contatto.class);
 		
 		//Session generator
@@ -44,8 +42,8 @@ public class HDBtools {
 //		criteria.add(Restrictions.eq("cognome", "rossi"));
 //		List<Contatto> contatti = criteria.list();
 		
-		//for (Contatto contatto : query.list()) {
-		for (Contatto contatto : contatti) {
+		for (Contatto contatto : query.list()) {
+		//for (Contatto contatto : contatti) {
 			System.out.println("id : " + contatto.getId());
 			System.out.println("nome : " + contatto.getNome());
 			System.out.println("cognome : " + contatto.getCognome());
