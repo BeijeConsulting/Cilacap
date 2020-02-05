@@ -1,4 +1,4 @@
-package it.beije.cilacap.esercizi;
+package it.beije.cilacap.esercizi.myMethod;
 import java.util.Scanner;
 public class MyMethodMain {
 

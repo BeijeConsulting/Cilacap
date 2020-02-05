@@ -99,14 +99,14 @@ public class TextFileManager {
 //		System.out.println("f.exists() ? " + f.exists());
 //		System.out.println("f.getAbsolutePath() : " + f.getAbsolutePath());
 
-//		System.out.println(readFileContent(f));
+		System.out.println(readFileContent(f));
 //		System.out.println(readFileRows(f));
 		
-		writeFileContent(readFileContent(f), "csv/copia1.txt");
-		writeFileContent(readFileRows(f), "csv/copia2.txt");
+//		writeFileContent(readFileContent(f), "csv/copia1.txt");
+//		writeFileContent(readFileRows(f), "csv/copia2.txt");
 		
 		
-		System.out.println("the end");
+//		System.out.println("the end");
 	}
 
 }

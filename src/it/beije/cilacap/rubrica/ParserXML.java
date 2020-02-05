@@ -36,7 +36,7 @@ public class ParserXML {
         Element element = document.getDocumentElement();       
         System.out.println(element.getTagName());
         
-        //System.out.println(element.getChildNodes().getLength());
+        System.out.println(element.getChildNodes().getLength());
         NodeList contatti = element.getElementsByTagName("contatto");
         System.out.println("contatti : " + contatti.getLength());
 
@@ -49,10 +49,10 @@ public class ParserXML {
         	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
         	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
         	Element email = (Element)utente.getElementsByTagName("email").item(0);
-        	
+       	
         	Contatto contatto = new Contatto();
         	contatto.setNome(nome.getTextContent());
-        	contatto.setCognome(cognome.getTextContent());
+       	    contatto.setCognome(cognome.getTextContent());
         	contatto.setTelefono(telefono.getTextContent());
         	contatto.setEmail(email.getTextContent());
         	
@@ -112,7 +112,8 @@ public class ParserXML {
 	
 	public static void main(String[] args) throws Exception {
 		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
-		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
+//		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
+		
 	}
 
 }
