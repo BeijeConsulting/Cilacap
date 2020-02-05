@@ -1,6 +1,12 @@
 package it.beije.cilacap.rubrica;
 
 
+<<<<<<< HEAD
+=======
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
+>>>>>>> refs/remotes/origin/master
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,9 +14,11 @@ import org.hibernate.cfg.Configuration;
 
 
 public class HDBtools {
+	
+	private static Log logger = LogFactory.getLog(HDBtools.class);
 
 	public static void main(String[] args) {
-		System.out.println("INIZIO");
+		logger.debug("INIZIO");
 
 		//inizializzo configurazione
 		Configuration configuration = new Configuration();
@@ -77,7 +85,8 @@ public class HDBtools {
 		//chiudo la sessione
 		session.close();
 		System.out.println("session is open? " + session.isOpen());
-
+		
+		logger.debug("FINE");
 	}
 
 }
