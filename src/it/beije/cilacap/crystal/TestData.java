@@ -20,7 +20,7 @@ public class TestData {
 	public String getIdComputer() {
 		return idComputer;
 	}
-	public void setIdComputer(int i) {
+	public void setIdComputer(String i) {
 		this.idComputer = i;
 	}
 	

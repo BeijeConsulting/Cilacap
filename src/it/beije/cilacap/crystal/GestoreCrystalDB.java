@@ -32,6 +32,7 @@ public class GestoreCrystalDB {
 		
 		case 2: 
 			File fileCrystalXML= new File("crystal/01/CDM_20200102131948.txt");
+			
 			break;
 			
 		case 3: 

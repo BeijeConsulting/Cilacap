@@ -25,7 +25,7 @@ public class DBtools {
 			TestData testData= null;
 			while (rs.next()) {
 				testData = new TestData();
-				testData.setIdComputer(rs.getInt("id_computer")); 
+				testData.setIdComputer(rs.getString("id_computer")); 
 	        	testData.setDate(rs.getString("date"));
 	        	testData.setIntervalInSeconds(rs.getInt("interval"));
 	        	testData.setIterations(rs.getInt("iterations"));
@@ -37,9 +37,9 @@ public class DBtools {
 	        	System.out.println("nome = " + testData.getIdComputer());
 	        	System.out.println("cognome = " + testData.getIntervalInSeconds());
 	        	System.out.println("telefono = " + testData.getIterations());
-	        	System.out.println("email = " + testData.getOs());
-	        	System.out.println("email = " + testData.getType());
-	        	System.out.println("email = " + testData.getVersion());
+	        	System.out.println("os = " + testData.getOs());
+	        	System.out.println("type = " + testData.getType());
+	        	System.out.println("version = " + testData.getVersion());
 
 	        	
 	        	listaTestData.add(testData);
@@ -57,9 +57,9 @@ public class DBtools {
 			}
 		}
 		
-		System.out.println("contatti letti : " + contatti.size());
+		System.out.println("TestData letti : " + listaTestData.size());
 		
-		return contatti;
+		return listaTestData;
 	}
 	
 	public static boolean insertTestData(TestData testData) throws ClassNotFoundException {

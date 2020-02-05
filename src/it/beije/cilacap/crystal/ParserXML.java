@@ -28,7 +28,7 @@ public class ParserXML {
 	}
 
 	public static TestData getTestDataFromFile(File file) throws ParserConfigurationException, SAXException, IOException {
-		TestData listaContatti = new ArrayList<Contatto>();
+		TestData <Contatto >listaContatti = new ArrayList<Contatto>();
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
