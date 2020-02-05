@@ -194,6 +194,33 @@ public static void writeInXML(List<Contatto> contatti,File file) throws ParserCo
         
         return listaContatti;
 	}
+	
+	
+	
+	public static void fromXMLToDatabase(File f1) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+		List<Contatto> listaContatti=new ArrayList <Contatto>();
+		listaContatti=getContattiFromFile(f1);
+		
+		for(int i=0; i< listaContatti.size();i++) {
+			DBtools.insertContatto(listaContatti.get(i));
+		}
+		
+		
+		
+	}
+	
+
+	public static void fromCSVToDatabase(File f1) throws IOException, ClassNotFoundException {
+		List<Contatto> listaContatti=new ArrayList <Contatto>();
+		listaContatti=loadContactListFromCSV(f1);
+		
+		for(int i=0; i< listaContatti.size();i++) {
+			DBtools.insertContatto(listaContatti.get(i));
+		}
+		
+		
+		
+	}
 
 	
 }

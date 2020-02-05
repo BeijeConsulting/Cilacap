@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.hibernate.cfg.Configuration;
+
 
 public class DBManager {
 
@@ -18,5 +20,12 @@ public class DBManager {
 	}
 	
 
+	public static Configuration getHibernateConfiguration() {
+		
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure().addAnnotatedClass(Contatto.class);
+		
+		return configuration;
+	}
 
 }

@@ -14,9 +14,12 @@ import javax.swing.text.DefaultEditorKit.InsertContentAction;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.xml.sax.SAXException;
 
+import antlr.build.Tool;
 import it.beije.cilacap.rubrica.Tools;
+import it.beije.cilacap.rubrica.HibernateMethods;
 //import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInFileCSV;
 //import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.writeInXML;
 //import static it.beije.cilacap.esercizi.rubrica.EsercizioRubrica.loadContactListFromCSV;
@@ -26,47 +29,114 @@ import it.beije.cilacap.rubrica.Tools;
 public class EsercizioDB {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException, ParserConfigurationException, TransformerException, SAXException {
-		System.out.println("Cosa vuoi fare?");
-		System.out.println("1-leggere il database");
-		System.out.println("2-esportare il db in un csv");
-		System.out.println("3- esportare il db in un xml");
-		System.out.println("4- importare il file csv in db");
-		System.out.println("5- importare il file xml in db");
-		
+	
+		boolean continua=true;
+		do {
+			System.out.println("Cosa vuoi fare? \n");
+			System.out.println("Se vuoi usare JDBC:");
+			System.out.println("1-leggere il database usando jdbc");
+			System.out.println("2-esportare il db in un csv usando jdbc");
+			System.out.println("3- esportare il db in un xml usando jdbc");
+			System.out.println("4- importare il file csv in db usando jdbc");
+			System.out.println("5- importare il file xml in db usando jdbc  \n");
+			System.out.println("Se vuoi usare HIBERNATE: ");
+			System.out.println("6-leggere il database usando hibernate");
+			System.out.println("7- esportare il db in un csv usando hibernate");
+			System.out.println("8- esportare il db in un xml usando hibernate");
+			System.out.println("9- importare il file csv in db usando hibernate");
+			System.out.println("10- importare il file xml in db usando hibernate");
+
 		Scanner s=new Scanner(System.in);
 		int risposta= s.nextInt();
-		
+		List <Contatto> listaContatti = null; 
+		File f1= null;
 		switch(risposta) {
 			case 1:
-				List<Contatto> listaContatti=new ArrayList<Contatto>();
-				listaContatti=DBtools.leggiContatti();
-				break;
-			case 2:
-				File f1=new File("csv/database.csv");
-				List<Contatto> listaContatti2=new ArrayList<Contatto>();
-				listaContatti2=DBtools.leggiContatti();
-				Tools.writeInFileCSV(listaContatti2, f1);
-				break;
-			case 3:
-				File f2=new File("xml/database.xml");
-				List<Contatto> listaContatti3=new ArrayList<Contatto>();
-				listaContatti3=DBtools.leggiContatti();
-				Tools.writeInXML(listaContatti3, f2);
-				break;
-			case 4:
-				File f3=new File("csv/rubrica.csv");
-				fromCSVToDatabase(f3);
-				break;
-			case 5:
-				File f4=new File("xml/rubrica.xml");
-
-				fromXMLToDatabase(f4);
-				break;
-			default: break;
 				
+				
+				listaContatti=new ArrayList<Contatto>();
+				listaContatti=DBtools.leggiContatti();
+				
+				
+				break;
+			
+			
+			case 2:
+				
+				
+				
+				f1=new File("csv/database.csv");
+				listaContatti=DBtools.leggiContatti();
+				Tools.writeInFileCSV(listaContatti, f1);
+				break;
+			
+			
+			
+			case 3:
+				
+				
+				f1=new File("xml/database.xml");
+				listaContatti=DBtools.leggiContatti();
+				Tools.writeInXML(listaContatti, f1);
+				
+				
+				break;
 		
+			
+			case 4:
+				f1=new File("csv/rubrica.csv");
+				Tools.fromCSVToDatabase(f1);
+				break;
+				
+				
+			case 5:
+				
+				f1=new File("xml/rubrica.xml");
+				Tools.fromXMLToDatabase(f1);
+				
+				break;
+			case 6: 
+				
+				listaContatti=HibernateMethods.leggiContatti();
+				break;
 		
+			case 7:
+				f1=new File("csv/database.csv");
+				listaContatti=HibernateMethods.leggiContatti();
+				Tools.writeInFileCSV(listaContatti, f1);
+				break;
+			
+			case 8:
+				f1=new File("xml/database.xml");
+				listaContatti=HibernateMethods.leggiContatti();
+				Tools.writeInXML(listaContatti, f1);
+				break;
+			
+			case 9:
+				f1=new File("csv/rubrica1.csv");
+				listaContatti=Tools.loadContactListFromCSV(f1);
+				try {
+				HibernateMethods.inserisciContatti(listaContatti);
+				}catch(ConstraintViolationException e) {
+					System.out.println("Email già esistente, non è possibile avere duplicati di email, scegli un altro file");
+				}
+				break;
+			
+			case 10: 
+				f1=new File("xml/rubrica.xml");
+				listaContatti=Tools.getContattiFromFile(f1);
+				try {
+				HibernateMethods.inserisciContatti(listaContatti);
+				}catch (ConstraintViolationException e) {
+					System.out.println("Email già esistente, non è possibile avere duplicati di email, scegli un altro file");
+				}
+				break;
 		}
+		System.out.println("Vuoi fare qualco'altro?");
+		String risp=s.next();
+		if(risp.equals("n"))
+			continua=false;
+		} while(continua);
 		
 		
 		
@@ -75,27 +145,6 @@ public class EsercizioDB {
 		
 	}
 	
-	public static void fromCSVToDatabase(File f1) throws IOException, ClassNotFoundException {
-		List<Contatto> listaContatti=new ArrayList <Contatto>();
-		listaContatti=Tools.loadContactListFromCSV(f1);
-		
-		for(int i=0; i< listaContatti.size();i++) {
-			DBtools.insertContatto(listaContatti.get(i));
-		}
-		
-		
-		
-	}
 	
-	public static void fromXMLToDatabase(File f1) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
-		List<Contatto> listaContatti=new ArrayList <Contatto>();
-		listaContatti=Tools.getContattiFromFile(f1);
-		
-		for(int i=0; i< listaContatti.size();i++) {
-			DBtools.insertContatto(listaContatti.get(i));
-		}
-		
-		
-		
-	}
+	
 }
