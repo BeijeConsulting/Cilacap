@@ -1,12 +1,8 @@
 package it.beije.cilacap.rubrica;
 
 
-<<<<<<< HEAD
-=======
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
->>>>>>> refs/remotes/origin/master
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
