@@ -52,19 +52,19 @@ public class ParserXML {
         	Element cognome = (Element)utente.getElementsByTagName("cognome").item(0);
         	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
         	Element email = (Element)utente.getElementsByTagName("email").item(0);
-        	
-        	Contatto contatto = new Contatto();
-        	contatto.setNome(nome.getTextContent());
-        	contatto.setCognome(cognome.getTextContent());
-        	contatto.setTelefono(telefono.getTextContent());
-        	contatto.setEmail(email.getTextContent());
-        	
-        	System.out.println("\tnome = " + contatto.getNome());
-        	System.out.println("\tcognome = " + contatto.getCognome());
-        	System.out.println("\ttelefono = " + contatto.getTelefono());
-        	System.out.println("\temail = " + contatto.getEmail());
-        	
-        	listaContatti.add(contatto);
+//        	
+//        	Contatto contatto = new Contatto();
+//        	contatto.setNome(nome.getTextContent());
+//        	contatto.setCognome(cognome.getTextContent());
+//        	contatto.setTelefono(telefono.getTextContent());
+//        	contatto.setEmail(email.getTextContent());
+//        	
+//        	System.out.println("\tnome = " + contatto.getNome());
+//        	System.out.println("\tcognome = " + contatto.getCognome());
+//        	System.out.println("\ttelefono = " + contatto.getTelefono());
+//        	System.out.println("\temail = " + contatto.getEmail());
+//        	
+//        	listaContatti.add(contatto);
         }
         
         return listaContatti;
