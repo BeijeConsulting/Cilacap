@@ -49,7 +49,7 @@ public class EsScritturaFile{
 	}
 	
 	public static void ScritturaCredenziali(BufferedWriter bw) throws IOException {
-		
+			
 		for(int i = 0; i < Credenziali.length; i++) {
 			
 			if(i == (Credenziali.length - 1)) {
@@ -65,9 +65,14 @@ public class EsScritturaFile{
 	
 	
 	public static void ScritturaCredenzialiLette(BufferedReader br, BufferedWriter bw) throws IOException {
-		System.out.println(br.readLine());
 		
-		while(br.readLine() != null){
+		for (String cursore : CredenzialiSalvate) {
+			 bw.write(cursore + "\n");
+			 System.out.println(cursore);
+		}
+		
+		
+//		while(br.readLine() != null) {
 		for(int i = 0; i < Credenziali.length; i++) {
 			
 			if(i == (Credenziali.length - 1)) {
@@ -78,7 +83,7 @@ public class EsScritturaFile{
 				bw.write(CredenzialiLette[i] + ";");
 			}
 		}
-	}
+//	}
 }
 	
 	public static void ScriviAncora() {
@@ -133,14 +138,14 @@ public class EsScritturaFile{
 			do {
 				if(risposta.equals("1")) {
 					String row = br.readLine();
+					count++;
 					while(row != null) {
 						System.out.println(row);
 						CredenzialiSalvate.add(row);
 						row = br.readLine();
 					}
-					
-					System.out.println(CredenzialiSalvate);
 					rimani = false;
+					
 				} else if(risposta.equals("2")) {
 					System.out.println("Il file " + path + " è stato sovrascritto correttamente");
 					file.createNewFile();
