@@ -63,7 +63,7 @@ public class MyCrystal
 		{
 			if(righe.get(i).contains("CrystalDiskMark"))
 			{
-				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+4, righe.get(i).indexOf("(C)")));
+				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")));
 			}
 		}
 		
