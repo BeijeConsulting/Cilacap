@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import it.beije.cilacap.crystal.GestoreReadCrystal;
+import static it.beije.cilacap.crystal.ParserXML.*;
 public class GestoreCrystalDB {
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		
 		
 		System.out.println("Menu:");
@@ -31,7 +36,8 @@ public class GestoreCrystalDB {
 			break;
 		
 		case 2: 
-			File fileCrystalXML= new File("crystal/01/CDM_20200102131948.txt");
+			File fileCrystalXML= new File("crystal/crystaldata.xml");
+			TestData testData= getTestDataFromFileXML(fileCrystalXML);
 			
 			break;
 			
