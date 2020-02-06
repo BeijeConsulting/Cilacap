@@ -35,7 +35,7 @@ public class TestData {
 	@Column(name="iterations")
 	private int iterations;
 	
-	@Column(name="interval")
+	@Column(name="intervall")
 	private int intervalInSeconds;
 	
 	@Column(name="date")
@@ -47,6 +47,14 @@ public class TestData {
 	@Transient
 	private List<TestRow> write = new ArrayList<TestRow>();
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getIdComputer() {
 		return idComputer;
