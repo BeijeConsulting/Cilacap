@@ -48,12 +48,12 @@ public class TestData {
 	
 	@OneToMany(targetEntity=TestRow.class)
 	@JoinColumn(name = "testdataId")
-	@Where (clause = "TestRow.testType='w'")
+	@Where (clause = "TestRow.testType='r'")
 	private List<TestRow> read = new ArrayList<TestRow>();
 	
 	@OneToMany(targetEntity=TestRow.class)
 	@JoinColumn(name = "testdataId")
-	@Where (clause = "TestRow.testType='r'")
+	@Where (clause = "TestRow.testType='w'")
 	private List<TestRow> write = new ArrayList<TestRow>();
 	
 	
