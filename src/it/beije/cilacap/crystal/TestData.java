@@ -6,11 +6,11 @@ import java.util.List;
 public class TestData {
 	
 	private String idComputer;
-	private String version;
+	private String version;//ok
 	private String os;
-	private String type;
-	private int iterations;
-	private int intervalInSeconds;
+	private String type;//1gib
+	private int iterations;//x5
+	private int intervalInSeconds;//5sec
 	private String date;
 	
 	private List<TestRow> read = new ArrayList<TestRow>();

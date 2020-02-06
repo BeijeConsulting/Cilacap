@@ -18,14 +18,22 @@ public class MyCristal {
 		FileReader fileReader = new FileReader(f);
 		BufferedReader reader= new BufferedReader(fileReader);
 		String row =reader.readLine();
-		List<String> ls =new ArrayList<>();
-		while(row!=null) {
+//		List<String> ls =new ArrayList<>();
+		while((row=reader.readLine()) != null) {
 //			System.out.println(row);
-			ls.add(row);
-			row=reader.readLine();
+			row = row.replace("\0","");
+			if (row.contains("CrystalDiskMark")) {
+				test.setVersion(row.split("CrystalDiskMark ")[1].replace("(","").split("C")[0].trim());
+			}
+			if (row.contains("CrystalDiskMark")) {
+				test.setVersion(row.split("CrystalDiskMark ")[1].replace("(","").split("C")[0].trim());
+			}	
+				
+			
 		}
-		String prova = ls.get(2);
-		System.out.println(prova);
+		
+		
+		System.out.println(test.getVersion());
 	}
 
 }
