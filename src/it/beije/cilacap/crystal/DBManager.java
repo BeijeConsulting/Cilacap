@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import org.hibernate.cfg.Configuration;
 
-import it.beije.cilacap.rubrica.Contatto;
 
 
 public class DBManager {

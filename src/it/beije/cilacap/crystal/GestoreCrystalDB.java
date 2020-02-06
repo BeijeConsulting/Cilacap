@@ -1,26 +1,16 @@
 package it.beije.cilacap.crystal;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
-
 import it.beije.cilacap.crystal.ReadCrystal;
 import static it.beije.cilacap.crystal.ParserXML.*;
-import static it.beije.cilacap.crystal.CrystalXML.*;
 
 public class GestoreCrystalDB {
 
@@ -39,6 +29,7 @@ public class GestoreCrystalDB {
 		System.out.println("5-inserire testdata da xml in db HIBERNATE");
 		System.out.println("6- export db a xml con HIBERNATE");
 
+		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		int risposta = s.nextInt();
 		File fileCrystalCSV = new File("crystal/01/CDM_20200102131948.txt");

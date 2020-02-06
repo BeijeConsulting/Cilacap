@@ -22,6 +22,7 @@ public class ReadCrystal {
 		List<String> rows = new ArrayList<String>();
 		
 		FileReader fileReader = new FileReader(file);
+		@SuppressWarnings("resource")
 		BufferedReader reader = new BufferedReader(fileReader);
 		String row;
 		while ((row = reader.readLine()) != null) {
@@ -201,6 +202,7 @@ public class ReadCrystal {
 				String parola= createWord(riga[col]);
 //				System.out.println(parola);
 				
+				@SuppressWarnings("unused")
 				String colonna= riga[col].trim();
 				
 				switch(parola) {

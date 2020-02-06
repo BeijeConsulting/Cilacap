@@ -104,12 +104,6 @@ public class DBtools {
 		try {
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 
-//			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
-//					.append('\'').append(contatto.getNome()).append("\',")
-//					.append('\'').append(contatto.getCognome()).append("\',")
-//					.append('\'').append(contatto.getTelefono()).append("\',")
-//					.append('\'').append(contatto.getEmail()).append('t').append("\')");
-//			System.out.println(insert.toString());
 
 			// CE 20200302: inserimento test data in db
 			pstmt = connection.prepareStatement(
@@ -123,9 +117,7 @@ public class DBtools {
 			pstmt.setString(7, testData.getVersion());
 
 			esito = pstmt.execute();
-//			System.out.println(pstmt.getUpdateCount());
 
-			// pstmt.executeUpdate();
 
 			List<TestRow> listaRead = new ArrayList<TestRow>();
 			listaRead = testData.getRead();
@@ -194,6 +186,7 @@ public class DBtools {
 
 		String hql = "SELECT c FROM TestData as c ";
 
+		@SuppressWarnings("unchecked")
 		Query<TestData> query = session.createQuery(hql);
 		System.out.println(query.list().size());
 

@@ -16,7 +16,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class ParserXML {
@@ -52,6 +51,7 @@ public class ParserXML {
 		testData.setType(test.getAttribute("type"));
 		testData.setVersion(test.getAttribute("version"));
 
+		@SuppressWarnings("unused")
 		TestRow testRow = null;
 		List<TestRow> listaRead = new ArrayList<TestRow>();
 
@@ -130,6 +130,7 @@ public class ParserXML {
 
 	}
 
+	@SuppressWarnings("unused")
 	public static void createXML(TestData datiDiCrystal) throws ParserConfigurationException, TransformerException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -211,7 +212,7 @@ public class ParserXML {
 
 		}
 
-		CICLO: for (TestRow r : datiWrite) {
+		 for (TestRow r : datiWrite) {
 
 //    		System.out.println(r.getType());
 //    		System.out.println(r.getType()=="Sequential_1MIb");
