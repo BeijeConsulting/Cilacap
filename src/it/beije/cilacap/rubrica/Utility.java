@@ -29,7 +29,7 @@ import it.beije.cilacap.crystal.TestRow;
 
 public class Utility {
 
-	//Parte XML CSV standard Per Rubrica.
+	// Parte XML CSV standard Per Rubrica.
 	@SuppressWarnings("resource")
 	public static String choosePath(boolean csv_xml) { // false:csvFile, true:xmlFile estensione
 		System.out.println();
@@ -42,7 +42,7 @@ public class Utility {
 			return ("xml/" + nameFile + ".xml");
 		}
 	}
-	
+
 	public static void visualizzaRubrica(List<Contatto> listaContatti) {
 		if (listaContatti.size() > 0) {
 			for (int i = 0; i < listaContatti.size(); i++) {
@@ -223,7 +223,7 @@ public class Utility {
 
 	}// fine metodo
 
-	//PARTE JDBC Rubrica.
+	// PARTE JDBC Rubrica.
 	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException { // inserisci Contatto in DB
 																							// cilacap.rubrica
 		Connection connection = null;
@@ -281,15 +281,17 @@ public class Utility {
 		}
 	}
 
-	//------------------------------------------------------------------------------------//
-	//PARTE CRYSTAL
-	
+	// ------------------------------------------------------------------------------------//
+	// PARTE CRYSTAL
+
 	public static void esportaTestDataInXML(List<TestData> tests, String filePath) throws Exception {
 		File file = new File(filePath);
 		esportaTestDataInXML(tests, file);
 	}
 
-	public static void esportaTestDataInXML(List<TestData> tests, File file) throws Exception { //prende la lista di Test e li Esporta in XML
+	public static void esportaTestDataInXML(List<TestData> tests, File file) throws Exception { // prende la lista di
+																								// Test e li Esporta in
+																								// XML
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -411,8 +413,8 @@ public class Utility {
 
 		System.out.println("file esportato con successo!");
 
-	}	
-	
+	}
+
 	public static List<String> fileDivisoPerRighe(File file) throws Exception {
 
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -457,9 +459,10 @@ public class Utility {
 	public static TestData importTestDataFromFile(String filePath) throws Exception {
 		File file = new File(filePath);
 		return importTestDataFromFile(file);
-	}	
-	
-	public static TestData importTestDataFromFile(File file) throws Exception { //Parsing del File Crystal -- Mappa TestData Bean.
+	}
+
+	public static TestData importTestDataFromFile(File file) throws Exception { // Parsing del File Crystal -- Mappa
+																				// TestData Bean.
 
 		List<String> listaRighe = fileDivisoPerRighe(file); // metodo che restituisce tutte le righe dell'intero File
 		List<TestRow> testRowListRead = new ArrayList<TestRow>(); // bean Row parte read -- lista di testRow
@@ -553,10 +556,11 @@ public class Utility {
 		return testData;
 	} // fine metodo
 
-	//------------------------------------------------------------------------------------//
-	
-	//PARTE CRYSTAL JDBC
-	public static boolean insertTestDataInDB(File file) throws Exception { //Inserisci Il File Nel DB [JDBC - NON_hibernate]
+	// ------------------------------------------------------------------------------------//
+
+	// PARTE CRYSTAL JDBC
+	public static boolean insertTestDataInDB(File file) throws Exception { // Inserisci Il File Nel DB [JDBC -
+																			// NON_hibernate]
 
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -624,8 +628,7 @@ public class Utility {
 		return esito;
 	}
 
-	
-	public static List<TestData> importaTestDaXML(String filePath) throws Exception { //overload sotto
+	public static List<TestData> importaTestDaXML(String filePath) throws Exception { // overload sotto
 		File file = new File(filePath);
 		return importaTestDaXML(file);
 	}
@@ -636,42 +639,48 @@ public class Utility {
 		List<TestData> listaTestData = new ArrayList<TestData>();
 		List<TestRow> listaRead = new ArrayList<TestRow>();
 		List<TestRow> listaWrite = new ArrayList<TestRow>();
-		
+
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+		DocumentBuilder builder = factory.newDocumentBuilder();
 
-        Document document = builder.parse(fileXML);
-        Element element = document.getDocumentElement();  //root elem     
-        
-        NodeList tests = element.getElementsByTagName("test");
-        System.out.println("tests : " + tests.getLength());
+		Document document = builder.parse(fileXML);
+		Element element = document.getDocumentElement(); // root elem
 
-        for (int i = 0; i < tests.getLength(); i++) {
-        	
-        	Element test = (Element)tests.item(i);
-        	TestData testData = new TestData();
-        	testData.setIdComputer(test.getAttribute("id_computer"));
-        	testData.setVersion(test.getAttribute("version"));
-        	testData.setOs(test.getAttribute("os"));
-        	testData.setType(test.getAttribute("type"));
-        	testData.setIterations(Integer.parseInt(test.getAttribute("iterations")));
-        	testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("interval")));
-        	testData.setDate(test.getAttribute("date"));
-        	
-        	Element read =  (Element) test.getElementsByTagName("read").item(0);
-        	NodeList nodeListRead = read.getChildNodes();
-        	Element seq1read = (Element) nodeListRead.item(0);
-        	TestRow testRow = new TestRow();
-        	
-        	testRow.setQ(Integer.parseInt(seq1read.getAttribute("q")));
-        	testRow.setT(Integer.parseInt(seq1read.getAttribute("t")));
-        	testRow.setType("seuquential");
-        	listaRead.add(testRow);
-        	testData.setRead(listaRead);
+		NodeList tests = element.getElementsByTagName("test");
+		System.out.println("tests : " + tests.getLength());
 
-        	listaTestData.add(testData);
-        }
-        
+		for (int i = 0; i < tests.getLength(); i++) {
+
+			Element test = (Element) tests.item(i);
+			TestData testData = new TestData();
+			testData.setIdComputer(test.getAttribute("id_computer"));
+			testData.setVersion(test.getAttribute("version"));
+			testData.setOs(test.getAttribute("os"));
+			testData.setType(test.getAttribute("type"));
+			testData.setIterations(Integer.parseInt(test.getAttribute("iterations")));
+			testData.setIntervalInSeconds(Integer.parseInt(test.getAttribute("interval")));
+			testData.setDate(test.getAttribute("date"));
+
+			Element read = (Element) test.getElementsByTagName("read").item(0);
+			Element write = (Element) test.getElementsByTagName("write").item(0);
+			NodeList rows = read.getElementsByTagName("*");
+//			for (int j = 0; j <  row; j++) {
+//
+//				row = (Element) read.getElementsByTagName("*").item(j);
+//				
+//				if(row.getTagName().equals("Sequential_1MiB")){
+//					
+//					
+//				}
+//				System.out.println(j + " " + row);
+//			}			
+//			
+
+			testData.setRead(listaRead);
+
+			listaTestData.add(testData);
+		}
+
 //        return listaContatti;
 
 		return listaTestData;
