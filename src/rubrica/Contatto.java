@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="contatti")
+@Table(name="rubrica")
 public class Contatto {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="nome")
 	private String nome;
@@ -28,10 +28,11 @@ public class Contatto {
 	@Column(name="email")
 	private String email;
 	
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -65,6 +66,7 @@ public class Contatto {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("id : ").append(id).append('\n');
 		builder.append("cognome : ").append(cognome).append('\n');
 		builder.append("nome : ").append(nome).append('\n');
 		builder.append("telefono : ").append(telefono).append('\n');
@@ -72,4 +74,3 @@ public class Contatto {
 		return builder.toString();
 	}
 }
-
