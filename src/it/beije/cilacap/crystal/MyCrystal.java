@@ -32,6 +32,7 @@ public class MyCrystal
 		
 		readContent(contenuto, f); //lettura e salvataggio del file .txt in ArrayList di stringhe contenuto
 		setData(contenuto, data); //Metodo che utilizza i metodi di TestData e popola il bean
+		setRow(contenuto, row); //Metodo che utilizza i metodi di TestRow e popola il bean
 		writeInXML(data, "xml\\MyCrystal.xml");
 		
 		
@@ -95,12 +96,26 @@ public class MyCrystal
 	{
 		for(int i=0; i<contenuto.size(); i++)
 		{
-			if (contenuto.get(i).contains("Read"))
+			if (contenuto.get(i).contains("Read") || contenuto.get(i).contains("Write"))
 			{
+				TestRow riga = new TestRow();
+				if (contenuto.get(i).contains("Read")) riga.setType("Read");
+				else riga.setType("Write");
+				do
+				{
+					if(contenuto.get(i).contains("Sequential") || contenuto.get(i).contains("Random"))
+					{
+						//riga.setQ(Integer.parseInt(contenuto.get(i).substring(contenuto.get(i).indexOf("(Q")+4, contenuto.get(i).indexOf(",")-1)));
+						System.out.println(contenuto.get(i));
+						
+					}
+					i++;
+				}
+				while(!contenuto.get(i).contains("Read") || !contenuto.get(i).contains("Write") || !contenuto.get(i).contains("Profile"));
 				
+				row.add(riga);
 			}
 		}
-		
 	}
 	
 	public static void writeInXML(TestData dati, String pathfile) throws Exception
