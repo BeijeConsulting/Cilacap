@@ -62,7 +62,7 @@ public class CrystalDBtools {
 				testData = new TestData();
 				int id = rs.getInt("id");
 				testData.setIdComputer(rs.getString("id_computer"));
-				testData.setIntervalInSeconds(rs.getInt("interval"));
+				testData.setIntervalInSeconds(rs.getInt("intervall"));
 				testData.setIterations(rs.getInt("iterations"));
 				testData.setOs(rs.getString("os"));
 				testData.setType(rs.getString("type"));
@@ -135,7 +135,7 @@ public class CrystalDBtools {
 		try {
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 
-			pstmt = connection.prepareStatement("INSERT INTO cilacap.testdata (id_computer,version,os,testdata.type,iterations,testdata.interval,testdata.date) VALUES (?,?,?,?,?,?,?)");
+			pstmt = connection.prepareStatement("INSERT INTO cilacap.testdata (id_computer,version,os,testdata.type,iterations,testdata.intervall,testdata.date) VALUES (?,?,?,?,?,?,?)");
 			pstmt.setString(1, testData.getIdComputer());
 			pstmt.setString(2, testData.getVersion());
 			pstmt.setString(3, testData.getOs());
