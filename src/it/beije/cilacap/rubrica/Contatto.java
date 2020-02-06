@@ -8,41 +8,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="rubrica")
+@Table(name = "rubrica")
 public class Contatto {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="nome")
+
+	@Column(name = "nome")
 	private String nome;
 
-	@Column(name="cognome")
+	@Column(name = "cognome")
 	private String cognome;
 
-	@Column(name="telefono")
+	@Column(name = "telefono")
 	private String telefono;
 
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
-<<<<<<< HEAD
 
-	public int getId() {
-=======
-	
-	
 	public Integer getId() {
->>>>>>> refs/remotes/origin/master
 		return id;
 	}
-<<<<<<< HEAD
 
-	public void setId(int id) {
-=======
 	public void setId(Integer id) {
->>>>>>> refs/remotes/origin/master
 		this.id = id;
 	}
 
