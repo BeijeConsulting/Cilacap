@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
-import it.beije.cilacap.crystal.GestoreReadCrystal;
+import it.beije.cilacap.crystal.ReadCrystal;
 import static it.beije.cilacap.crystal.ParserXML.*;
 import static it.beije.cilacap.crystal.CrystalXML.*;
 
@@ -50,9 +50,9 @@ public class GestoreCrystalDB {
 
 		case 1:
 
-			contenutoCrystal = GestoreReadCrystal.readFileRows(fileCrystalCSV);
+			contenutoCrystal = ReadCrystal.readFileRows(fileCrystalCSV);
 
-			testDataCrystal = GestoreReadCrystal.getTestData(contenutoCrystal);
+			testDataCrystal = ReadCrystal.getTestData(contenutoCrystal);
 
 			testDataCrystal
 					.setIdComputer(fileCrystalCSV.getPath().substring(15, fileCrystalCSV.getPath().length() - 4));
@@ -73,8 +73,8 @@ public class GestoreCrystalDB {
 			break;
 		case 4:
 			contenutoCrystal = new ArrayList<String>();
-			contenutoCrystal = GestoreReadCrystal.readFileRows(fileCrystalCSV);
-			testDataCrystal = GestoreReadCrystal.getTestData(contenutoCrystal);
+			contenutoCrystal =ReadCrystal.readFileRows(fileCrystalCSV);
+			testDataCrystal = ReadCrystal.getTestData(contenutoCrystal);
 			testDataCrystal
 					.setIdComputer(fileCrystalCSV.getPath().substring(15, fileCrystalCSV.getPath().length() - 4));
 			DBtools.scriviTestDataHibernate(testDataCrystal);

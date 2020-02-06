@@ -9,7 +9,7 @@ import java.util.List;
 
 
 //CE 20200130: creazione di una classe esterna per gestire il metodo di read Crystal, migliore comprensione del codice
-public class GestoreReadCrystal {
+public class ReadCrystal {
 
 
 	public static List<String> readFileRows(String filePath) throws IOException {
