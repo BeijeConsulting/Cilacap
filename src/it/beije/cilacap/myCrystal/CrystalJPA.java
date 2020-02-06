@@ -23,23 +23,23 @@ public class CrystalJPA {
 			EntityManager entityManager = factory.createEntityManager();
 			entityManager.getTransaction().begin();
 			
+			// testdata
 			entityManager.persist(testData);
 			
-			int id_testdata = testData.getId();
-			
-			// test_row
+			// testrow
+			//read
 			for(TestRow testRowRead : testData.getRead()) {
-				testRowRead.setId_testdata(id_testdata);
+				testRowRead.setId_testdata(testData.getId());
 				testRowRead.setMode_type("r");
 				entityManager.persist(testRowRead);
-				//entityManager.getTransaction().commit();
 				
 			}
+			
+			//write
 			for(TestRow testRowWrite : testData.getWrite()) {
-				testRowWrite.setId_testdata(id_testdata);
+				testRowWrite.setId_testdata(testData.getId());
 				testRowWrite.setMode_type("w");
 				entityManager.persist(testRowWrite);
-				//entityManager.getTransaction().commit();
 			}
 			
 			entityManager.getTransaction().commit();
@@ -76,8 +76,6 @@ public class CrystalJPA {
 			
 			testData.setRead(listRead);
 			testData.setWrite(listWrite);
-			
-			//System.out.println("\tRead : " + listRead.size() + "\n\tWrite : " + listWrite.size());
 			
 		}
 		
