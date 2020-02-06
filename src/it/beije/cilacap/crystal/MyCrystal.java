@@ -114,7 +114,7 @@ public class MyCrystal
 					}
 					i++;
 				}
-				while(!contenuto.get(i).contains("Read") || !contenuto.get(i).contains("Write") || !contenuto.get(i).contains("Profile"));
+				while((!contenuto.get(i).contains("Read") || !contenuto.get(i).contains("Write")) && !contenuto.get(i).contains("Profile"));
 				
 				row.add(riga);
 			}
