@@ -48,7 +48,7 @@ public class Utility {
 			for (int i = 0; i < listaContatti.size(); i++) {
 				if (i == 0)
 					System.out.println("..........................................");
-				System.out.println("contatto numero " + (i + 1));
+				System.out.println("id: " + listaContatti.get(i).getId());
 				System.out.println("nome: " + listaContatti.get(i).getNome());
 				System.out.println("cognome: " + listaContatti.get(i).getCognome());
 				System.out.println("telefono: " + listaContatti.get(i).getTelefono());
