@@ -65,12 +65,13 @@ public class TestData {
 	private LocalDateTime date;
 	
 	@OneToMany(targetEntity=TestRow.class, cascade= CascadeType.ALL)
-	@Where(clause="test_type='r'")
+	@Where(clause="testType='r'")
 	@JoinColumn(name="testdata_id")
 	private List<TestRow> read = new ArrayList<TestRow>();
 	
 	@OneToMany(targetEntity=TestRow.class, cascade= CascadeType.ALL)
-	@Where(clause="test_type='w'")
+	@Where(clause="testType='w'")
+	@JoinColumn(name="testdata_id")
 	private List<TestRow> write = new ArrayList<TestRow>();
 
 	
@@ -124,7 +125,7 @@ public class TestData {
 				for(j=i+1; j<splitted.size()&&!splitted.get(j).equals(""); j++) {
 					tempW.add(splitted.get(j));
 				}
-				strRead.add(tempW);
+				strWrite.add(tempW);
 			}
 		}
 	}
