@@ -35,7 +35,7 @@ public class CrystalXML {
 		List<String> contenutoCrystal = new ArrayList<String>();
 		contenutoCrystal = GestoreReadCrystal.readFileRows(fileCrystal);
 		System.out.println(contenutoCrystal.toString());
-		TestData datiDiCrystal = GestoreReadCrystal.createListOfData(contenutoCrystal);
+		TestData datiDiCrystal = GestoreReadCrystal.getTestData(contenutoCrystal);
 		datiDiCrystal.setIdComputer(fileCrystal.getPath().substring(15, fileCrystal.getPath().length() - 4));
 //		System.out.println(datiDiCrystal.getType());
 //		System.out.println(datiDiCrystal.getDate());

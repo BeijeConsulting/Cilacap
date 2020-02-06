@@ -65,81 +65,84 @@ public class ParserXML {
 			System.out.println(i + " " + row);
 
 		}
+//
+//		CICLO: for (int i = 0; i < read.getElementsByTagName("*").getLength(); i++) {
+//			testRow = new TestRow();
+//			Element row = (Element) read.getElementsByTagName("*").item(i);
+//
+//			if (row.getTagName().equalsIgnoreCase("Sequential_1MiB"))
+//				testRow.setType("Sequential_1MiB");
+//			else if (row.getTagName().equalsIgnoreCase("Random_4KiB"))
+//				testRow.setType("Random_4KiB");
+//			else
+//				continue CICLO;
+//
+//			System.out.println(read.getElementsByTagName("*").item(i));
+//
+////    	   testRow.setQ(Integer.parseInt(row.getAttribute("q")));
+////    	   testRow.setT(Integer.parseInt(row.getAttribute("t")));
+//
+//			Element mbs = (Element) row.getElementsByTagName("MBs").item(0);
+//			testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
+//			System.out.println(i + " " + mbs);
+////    	   System.out.println(row.getElementsByTagName("*").getLength());
+//
+//			Element iops = (Element) row.getElementsByTagName("IOPS").item(0);
+//			System.out.println(i + " " + iops);
+//			testRow.setIops(Double.parseDouble(iops.getTextContent()));
+////    	   System.out.println(iops.getTextContent());
+//
+//			Element us = (Element) row.getElementsByTagName("us").item(0);
+//			System.out.println(i + " " + us);
+//			testRow.setUs(Double.parseDouble(us.getTextContent()));
+//
+//			listaRead.add(testRow);
+//
+//			System.out.println("OK");
+//		}
 
-		CICLO: for (int i = 0; i < read.getElementsByTagName("*").getLength(); i++) {
-			testRow = new TestRow();
-			Element row = (Element) read.getElementsByTagName("*").item(i);
-
-			if (row.getTagName().equalsIgnoreCase("Sequential_1MiB"))
-				testRow.setType("Sequential_1MiB");
-			else if (row.getTagName().equalsIgnoreCase("Random_4KiB"))
-				testRow.setType("Random_4KiB");
-			else
-				continue CICLO;
-
-			System.out.println(read.getElementsByTagName("*").item(i));
-
-//    	   testRow.setQ(Integer.parseInt(row.getAttribute("q")));
-//    	   testRow.setT(Integer.parseInt(row.getAttribute("t")));
-
-			Element mbs = (Element) row.getElementsByTagName("MBs").item(0);
-			testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
-			System.out.println(i + " " + mbs);
-//    	   System.out.println(row.getElementsByTagName("*").getLength());
-
-			Element iops = (Element) row.getElementsByTagName("IOPS").item(0);
-			System.out.println(i + " " + iops);
-			testRow.setIops(Double.parseDouble(iops.getTextContent()));
-//    	   System.out.println(iops.getTextContent());
-
-			Element us = (Element) row.getElementsByTagName("us").item(0);
-			System.out.println(i + " " + us);
-			testRow.setUs(Double.parseDouble(us.getTextContent()));
-
-			listaRead.add(testRow);
-
-			System.out.println("OK");
-		}
+		listaRead=getListRow(testData, write);
 
 		testData.setRead(listaRead);
 
 		List<TestRow> listaWrite = new ArrayList<TestRow>();
 
-		CICLO: for (int i = 0; i < write.getElementsByTagName("*").getLength(); i++) {
-			testRow = new TestRow();
-			Element row = (Element) write.getElementsByTagName("*").item(i);
-
-			if (row.getTagName().equalsIgnoreCase("Sequential_1MiB"))
-				testRow.setType("Sequential_1MiB");
-			else if (row.getTagName().equalsIgnoreCase("Random_4KiB"))
-				testRow.setType("Random_4KiB");
-			else
-				continue CICLO;
-
-			System.out.println(read.getElementsByTagName("*").item(i));
-
-//    	   testRow.setQ(Integer.parseInt(row.getAttribute("q")));
-//    	   testRow.setT(Integer.parseInt(row.getAttribute("t")));
-
-			Element mbs = (Element) row.getElementsByTagName("MBs").item(0);
-			testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
-			System.out.println(i + " " + mbs);
-//    	   System.out.println(row.getElementsByTagName("*").getLength());
-
-			Element iops = (Element) row.getElementsByTagName("IOPS").item(0);
-			System.out.println(i + " " + iops);
-			testRow.setIops(Double.parseDouble(iops.getTextContent()));
-//    	   System.out.println(iops.getTextContent());
-
-			Element us = (Element) row.getElementsByTagName("us").item(0);
-			System.out.println(i + " " + us);
-			testRow.setUs(Double.parseDouble(us.getTextContent()));
-
-			listaWrite.add(testRow);
-
-			System.out.println("OK");
-
-		}
+//		CICLO: for (int i = 0; i < write.getElementsByTagName("*").getLength(); i++) {
+//			testRow = new TestRow();
+//			Element row = (Element) write.getElementsByTagName("*").item(i);
+//
+//			if (row.getTagName().equalsIgnoreCase("Sequential_1MiB"))
+//				testRow.setType("Sequential_1MiB");
+//			else if (row.getTagName().equalsIgnoreCase("Random_4KiB"))
+//				testRow.setType("Random_4KiB");
+//			else
+//				continue CICLO;
+//
+//			System.out.println(read.getElementsByTagName("*").item(i));
+//
+////    	   testRow.setQ(Integer.parseInt(row.getAttribute("q")));
+////    	   testRow.setT(Integer.parseInt(row.getAttribute("t")));
+//
+//			Element mbs = (Element) row.getElementsByTagName("MBs").item(0);
+//			testRow.setMbs(Double.parseDouble(mbs.getTextContent()));
+//			System.out.println(i + " " + mbs);
+////    	   System.out.println(row.getElementsByTagName("*").getLength());
+//
+//			Element iops = (Element) row.getElementsByTagName("IOPS").item(0);
+//			System.out.println(i + " " + iops);
+//			testRow.setIops(Double.parseDouble(iops.getTextContent()));
+////    	   System.out.println(iops.getTextContent());
+//
+//			Element us = (Element) row.getElementsByTagName("us").item(0);
+//			System.out.println(i + " " + us);
+//			testRow.setUs(Double.parseDouble(us.getTextContent()));
+//
+//			listaWrite.add(testRow);
+//
+//			System.out.println("OK");
+//
+//		}
+		listaWrite=getListRow(testData, write);
 
 		testData.setWrite(listaWrite);
 
@@ -150,14 +153,14 @@ public class ParserXML {
 
 	}
 
-	public static List<TestRow> getListRow() {
+	public static List<TestRow> getListRow(TestData testData,Element padre) {
 
 		List<TestRow> list = new ArrayList<TestRow>();
 
 		TestRow testRow = null;
-		CICLO: for (int i = 0; i < read.getElementsByTagName("*").getLength(); i++) {
+		CICLO: for (int i = 0; i < padre.getElementsByTagName("*").getLength(); i++) {
 			testRow = new TestRow();
-			Element row = (Element) read.getElementsByTagName("*").item(i);
+			Element row = (Element) padre.getElementsByTagName("*").item(i);
 
 			if (row.getTagName().equalsIgnoreCase("Sequential_1MiB"))
 				testRow.setType("Sequential_1MiB");
@@ -166,7 +169,7 @@ public class ParserXML {
 			else
 				continue CICLO;
 
-			System.out.println(read.getElementsByTagName("*").item(i));
+			System.out.println(padre.getElementsByTagName("*").item(i));
 
 //	    	   testRow.setQ(Integer.parseInt(row.getAttribute("q")));
 //	    	   testRow.setT(Integer.parseInt(row.getAttribute("t")));
@@ -185,11 +188,10 @@ public class ParserXML {
 			System.out.println(i + " " + us);
 			testRow.setUs(Double.parseDouble(us.getTextContent()));
 
-			listaRead.add(testRow);
+			list.add(testRow);
 
 			System.out.println("OK");
 		}
-		testData.setRead(listaRead);
 
 		return list;
 

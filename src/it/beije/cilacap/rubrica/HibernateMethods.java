@@ -66,9 +66,9 @@ public class HibernateMethods {
 			Transaction transaction = session.beginTransaction();	
 			session.save(listaContatti.get(i));
 			transaction.commit();
-			session.close();
 		}
-	
+		session.close();
+
 				
 		
 	}

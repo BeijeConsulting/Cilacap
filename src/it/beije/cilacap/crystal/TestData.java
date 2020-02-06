@@ -35,7 +35,7 @@ public class TestData {
 	@Column(name="iterations")
 	private int iterations;
 	
-	@Column(name="interval")
+	@Column(name="intervall")
 	private int intervalInSeconds;	
 	
 	@Column(name="date")

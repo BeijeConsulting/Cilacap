@@ -40,7 +40,7 @@ public class GestoreReadCrystal {
 	static int i;
 	static boolean campoRead=true;
 
-	public static TestData  createListOfData(List <String> contenuto) {
+	public static TestData  getTestData (List <String> contenuto) {
 		TestData info= new TestData();
 		
 		//CE 20200125: creazione array con il contenuto del file, separati dal \n

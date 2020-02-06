@@ -7,13 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+
+@Entity
+@Table(name="test_row")
 public class TestRow {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "tast_type")
+	@Column(name = "test_type")
 	private String type;
 
 	@Column(name = "q")
