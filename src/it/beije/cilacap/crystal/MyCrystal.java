@@ -25,7 +25,7 @@ public class MyCrystal
 
 	public static void main(String[] args) throws Exception
 	{
-		List<TestData> data = new ArrayList<TestData>();//creazione struttura principale per i data
+		TestData data = new TestData();//creazione struttura principale per i data
 		List<TestRow> row = new ArrayList<TestRow>();//creazione struttura principale per i row
 		File f = new File("crystal\\01\\CDM_20200102131948.txt"); //importazione file
 		List<String> contenuto = new ArrayList<String>(); //struttura ArrayList di stringhe
@@ -53,50 +53,47 @@ public class MyCrystal
 		reader.close();
 	}
 	
-	public static void setData(List<String> righe, List<TestData> dati)
+	public static void setData(List<String> righe, TestData dati)
 	{
-		TestData dato = new TestData();
-		
-		dato.setIdComputer("01");
+		dati.setIdComputer("01");
 		
 		for(int i=0; i<righe.size(); i++)
 		{
 			if(righe.get(i).contains("CrystalDiskMark"))
 			{
-				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
+				dati.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
 			}
 			
 			if(righe.get(i).contains("OS"))
 			{
-				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
+				dati.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
 			}
 			
-			if(righe.get(i).contains("Test:"))
+			if(righe.get(i).contains("Test"))
 			{
-				dato.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")+3));
+				dati.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")+3));
 			}
 			
-			if(righe.get(i).contains("Test:"))
+			if(righe.get(i).contains("Test"))
 			{
-				dato.setIterations(righe.get(i).substring(righe.get(i).indexOf("(x")+2, righe.get(i).indexOf(")")));
+				dati.setIterations(righe.get(i).substring(righe.get(i).indexOf("(x")+2, righe.get(i).indexOf(")")));
 			}
 			
-			if(righe.get(i).contains("Test:"))
+			if(righe.get(i).contains("Test"))
 			{
-				dato.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
+				dati.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
 			}
 			
 			if(righe.get(i).contains("Date"))
 			{
-				dato.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
+				dati.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
 			}
 		}
-
-		
-		dati.add(dato);
 	}
 	
-	public static void writeInXML(List<TestData> dati, String pathfile) throws Exception
+	//public static void set
+	
+	public static void writeInXML(TestData dati, String pathfile) throws Exception
 	{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -105,24 +102,22 @@ public class MyCrystal
         Element docElement = document.createElement("CrystalDiskMark"); //creazione elemento radice CrystalDiskMark
         document.appendChild(docElement); //appendo l'elemento radice al documento XML
         
-        for (TestData c : dati) //aggiungo i seguenti tag per ciascun tag di tipo TestData
-        { 
-        	Element test = document.createElement("test");
-        	
-        	test.setAttribute("id_computer", c.getIdComputer());//aggiungo attributi utilizzando i metodi get
-        	test.setAttribute("version", c.getVersion());
-        	test.setAttribute("os", c.getOs());
-        	test.setAttribute("type", c.getType());
-        	test.setAttribute("iterations", c.getIterations());
-        	test.setAttribute("interval", c.getInterval());
-        	test.setAttribute("date", c.getDate());
-        	
-        	Element read = document.createElement("read");
-        	
-        	
-        	docElement.appendChild(test); //infine appendo test all'elemento radice
-        	test.appendChild(read);
-        }
+        Element test = document.createElement("test");
+        
+    	//aggiungo attributi utilizzando i metodi get
+    	test.setAttribute("id_computer", dati.getIdComputer());
+    	test.setAttribute("version", dati.getVersion());
+    	test.setAttribute("os", dati.getOs());
+    	test.setAttribute("type", dati.getType());
+    	test.setAttribute("iterations", dati.getIterations());
+    	test.setAttribute("interval", dati.getInterval());
+    	test.setAttribute("date", dati.getDate());
+    	
+    	Element read = document.createElement("read");
+    	
+    	
+    	docElement.appendChild(test); //infine appendo test all'elemento radice
+    	test.appendChild(read);
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
