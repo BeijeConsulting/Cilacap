@@ -39,23 +39,26 @@ public class Crystal {
 		{
 			for(int j=0;j<listaStringa.get(i).length();j++)
 			{
-				if(listaStringa.get(i).charAt(j) < 32 )
+				if(listaStringa.get(i).charAt(j) > 31 )
 				{
-					builder.append(listaStringa.get(i));
-					builder.replace(listaStringa.get(i).charAt(j), listaStringa.get(i).charAt(j), "");
+					
+					builder.append(listaStringa.get(i).charAt(j));
 				}
 			}
 		}
 		//s=readFileContent(f);
 		//System.out.println(listaStringa.get(10));
 	    //data.setDate(listaStringa.get(42).substring(listaStringa.get(42).substring(listaStringa.get(42).indexOf("Date:")+2)));
-		System.out.println(listaStringa.size());
-		data.setDate(listaStringa.get(21).trim().substring(10));
 		
-		data.setIntervalInSeconds((int)(listaStringa.get(20).charAt(listaStringa.get(20).indexOf("[")+9)));
-		System.out.println(listaStringa.get(20).charAt(listaStringa.get(20).indexOf("[")+12));
+//		System.out.println(builder);
+		System.out.println(builder.charAt(builder.indexOf("Interval")+10));
+		System.out.println(builder.substring(builder.indexOf("Date")+6,builder.indexOf("Date")+25));
+		data.setOs(builder.substring((builder.indexOf("OS:")+4),builder.indexOf("[", builder.indexOf("OS:"))));
+		data.setDate(builder.substring((builder.indexOf("Date")+6),builder.indexOf("\n",builder.indexOf("Date"))));
+		data.setIntervalInSeconds(Integer.parseInt(""+(builder.charAt(builder.indexOf("Interval")+10))));
 		System.out.println(data.getDate());
 		System.out.println(data.getIntervalInSeconds());
+		System.out.println(data.getOs());
 		
 		return listaStringa;
 	}
