@@ -61,17 +61,30 @@ public class MyCrystal
 		
 		for(int i=0; i<righe.size(); i++)
 		{
+			if(righe.get(i).contains("Date"))
+			{
+				dato.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
+			}
+			
 			if(righe.get(i).contains("CrystalDiskMark"))
 			{
 				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")));
 			}
+			
+			if(righe.get(i).contains("OS"))
+			{
+				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")));
+			}
+			
+			if(righe.get(i).contains("Test:"))
+			{
+				dato.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")-1));
+			}
 		}
 		
-//		dato.setOs(righe.get(44).substring(19, 38).trim());
 //		dato.setType(righe.get(40).substring(19, 29).trim());
 //		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')).trim());
 //		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6).trim());
-//		dato.setDate();
 		
 		dati.add(dato);
 	}
@@ -88,11 +101,11 @@ public class MyCrystal
         for (TestData c : dati) { //aggiungo i seguenti tag per ciascun tag di tipo Contatto
         	Element test = document.createElement("test");
         	
-//        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
+        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
 //        	test.setAttribute("interval", c.getInterval());
 //        	test.setAttribute("iterations", c.getIterations());
-//        	test.setAttribute("type", c.getType());
-//        	test.setAttribute("os", c.getOs());
+        	test.setAttribute("type", c.getType());
+        	test.setAttribute("os", c.getOs());
         	test.setAttribute("version", c.getVersion());
         	test.setAttribute("id_computer", c.getIdComputer());
         	
