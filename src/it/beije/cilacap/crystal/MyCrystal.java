@@ -57,18 +57,23 @@ public class MyCrystal
 	{
 		TestData dato = new TestData();
 		
-		dato.setIdComputer("1");
+		dato.setIdComputer("01");
 		
 		for(int i=0; i<righe.size(); i++)
 		{
-			if(righe.get(i).contains("Date"))
+			if(righe.get(i).contains("CrystalDiskMark"))
 			{
-				dato.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
+				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
+			}
+			
+			if(righe.get(i).contains("OS"))
+			{
+				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
 			}
 			
 			if(righe.get(i).contains("Test:"))
 			{
-				dato.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
+				dato.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")+3));
 			}
 			
 			if(righe.get(i).contains("Test:"))
@@ -78,17 +83,12 @@ public class MyCrystal
 			
 			if(righe.get(i).contains("Test:"))
 			{
-				dato.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")-1));
+				dato.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
 			}
 			
-			if(righe.get(i).contains("OS"))
+			if(righe.get(i).contains("Date"))
 			{
-				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
-			}
-			
-			if(righe.get(i).contains("CrystalDiskMark"))
-			{
-				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
+				dato.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
 			}
 		}
 
@@ -105,19 +105,23 @@ public class MyCrystal
         Element docElement = document.createElement("CrystalDiskMark"); //creazione elemento radice CrystalDiskMark
         document.appendChild(docElement); //appendo l'elemento radice al documento XML
         
-        for (TestData c : dati) { //aggiungo i seguenti tag per ciascun tag di tipo Contatto
+        for (TestData c : dati) //aggiungo i seguenti tag per ciascun tag di tipo TestData
+        { 
         	Element test = document.createElement("test");
         	
-        	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
-        	test.setAttribute("interval", c.getInterval());
-        	test.setAttribute("iterations", c.getIterations());
-        	test.setAttribute("type", c.getType());
-        	test.setAttribute("os", c.getOs());
+        	test.setAttribute("id_computer", c.getIdComputer());//aggiungo attributi utilizzando i metodi get
         	test.setAttribute("version", c.getVersion());
-        	test.setAttribute("id_computer", c.getIdComputer());
+        	test.setAttribute("os", c.getOs());
+        	test.setAttribute("type", c.getType());
+        	test.setAttribute("iterations", c.getIterations());
+        	test.setAttribute("interval", c.getInterval());
+        	test.setAttribute("date", c.getDate());
+        	
+        	Element read = document.createElement("read");
         	
         	
         	docElement.appendChild(test); //infine appendo test all'elemento radice
+        	test.appendChild(read);
         }
 
 		// write the content into xml file
