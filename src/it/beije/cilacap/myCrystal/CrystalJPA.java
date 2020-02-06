@@ -64,29 +64,35 @@ public class CrystalJPA {
 		
 		for(TestData testData : listaTestData) {
 			
-			String testRowQueryRead = "SELECT row FROM TestRow AS row WHERE mode_id = 'r'";
+			int id_testdata = testData.getId();
+			
+			String testRowQueryRead = "SELECT row FROM TestRow AS row WHERE mode_type = 'r' AND id_testdata = " + id_testdata;
 			TypedQuery<TestRow> queryRowRead = entityManager.createQuery(testRowQueryRead, TestRow.class);
 			List<TestRow> listRead = queryRowRead.getResultList();
 			
-			String testRowQueryWrite = "SELECT row FROM TestRow AS row WHERE mode_id = 'w'";
+			String testRowQueryWrite = "SELECT row FROM TestRow AS row WHERE mode_type = 'w' AND id_testdata = " + id_testdata;
 			TypedQuery<TestRow> queryRowWrite = entityManager.createQuery(testRowQueryWrite, TestRow.class);
 			List<TestRow> listWrite = queryRowWrite.getResultList();
 			
 			testData.setRead(listRead);
 			testData.setWrite(listWrite);
 			
-			System.out.println("\tRead : " + listRead.size() + "\n\tWrite : " + listWrite.size());
+			//System.out.println("\tRead : " + listRead.size() + "\n\tWrite : " + listWrite.size());
 			
 		}
 		
-		System.out.println("Test data : " + listaTestData.size());
+		System.out.println("Test data letti : " + listaTestData.size());
 		
 		return listaTestData;
 	}
 	
 	
 	public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException {
+		
 		writeJPAListOfContactsIntoDB(MainCristal.getAllFiles("crystal/"));
+		
+		readJPAListOfContactsFromDB();
+	
 	}
 	
 }
