@@ -53,45 +53,55 @@ public class MyCrystal
 		reader.close();
 	}
 	
-	public static void setData(List<String> righe, TestData dati)
+	public static void setData(List<String> contenuto, TestData dati)
 	{
 		dati.setIdComputer("01");
 		
-		for(int i=0; i<righe.size(); i++)
+		for(int i=0; i<contenuto.size(); i++)
 		{
-			if(righe.get(i).contains("CrystalDiskMark"))
+			if(contenuto.get(i).contains("CrystalDiskMark"))
 			{
-				dati.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
+				dati.setVersion(contenuto.get(i).substring(contenuto.get(i).indexOf("Mark")+5, contenuto.get(i).indexOf("(C)")-1));
 			}
 			
-			if(righe.get(i).contains("OS"))
+			if(contenuto.get(i).contains("OS"))
 			{
-				dati.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
+				dati.setOs(contenuto.get(i).substring(contenuto.get(i).indexOf("OS:")+4, contenuto.get(i).indexOf("[")-1));
 			}
 			
-			if(righe.get(i).contains("Test"))
+			if(contenuto.get(i).contains("Test"))
 			{
-				dati.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")+3));
+				dati.setType(contenuto.get(i).substring(contenuto.get(i).indexOf("Test")+6, contenuto.get(i).indexOf("GiB")+3));
 			}
 			
-			if(righe.get(i).contains("Test"))
+			if(contenuto.get(i).contains("Test"))
 			{
-				dati.setIterations(righe.get(i).substring(righe.get(i).indexOf("(x")+2, righe.get(i).indexOf(")")));
+				dati.setIterations(contenuto.get(i).substring(contenuto.get(i).indexOf("(x")+2, contenuto.get(i).indexOf(")")));
 			}
 			
-			if(righe.get(i).contains("Test"))
+			if(contenuto.get(i).contains("Test"))
 			{
-				dati.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
+				dati.setInterval(contenuto.get(i).substring(contenuto.get(i).indexOf("[")+11, contenuto.get(i).indexOf("sec")-1));
 			}
 			
-			if(righe.get(i).contains("Date"))
+			if(contenuto.get(i).contains("Date"))
 			{
-				dati.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
+				dati.setDate(contenuto.get(i).substring(contenuto.get(i).indexOf("Date")+6));
 			}
 		}
 	}
 	
-	//public static void set
+	public static void setRow(List<String> contenuto, List<TestRow> row)
+	{
+		for(int i=0; i<contenuto.size(); i++)
+		{
+			if (contenuto.get(i).contains("Read"))
+			{
+				
+			}
+		}
+		
+	}
 	
 	public static void writeInXML(TestData dati, String pathfile) throws Exception
 	{
