@@ -12,43 +12,40 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
-
 public class HDBtools {
-	
+
 	private static Log logger = LogFactory.getLog(HDBtools.class);
 
 	public static void main(String[] args) {
 		logger.debug("INIZIO");
 
-		//inizializzo configurazione
+		// inizializzo configurazione
 		Configuration configurationTestData = new Configuration();
-		configurationTestData = configurationTestData.configure()
-				.addAnnotatedClass(TestData.class);
-		
+		configurationTestData = configurationTestData.configure().addAnnotatedClass(TestData.class);
+
 		Configuration configurationTestRow = new Configuration();
-		configurationTestRow = configurationTestRow.configure()
-				.addAnnotatedClass(TestRow.class);
+		configurationTestRow = configurationTestRow.configure().addAnnotatedClass(TestRow.class);
 //				.addAnnotatedClass(altra classe)
-		
-		//chiedo generatore di sessioni
+
+		// chiedo generatore di sessioni
 		SessionFactory factory = configuration.buildSessionFactory();
-		
+
 		System.out.println("is open? " + factory.isOpen());
-		
-		//apro sessione
+
+		// apro sessione
 		Session session = factory.openSession();
 		System.out.println("session is open? " + session.isOpen());
 
-		//esempio query HQL
+		// esempio query HQL
 //		String hql = "SELECT c FROM Contatto as c WHERE cognome = 'rossi'";
 //		Query<Contatto> query = session.createQuery(hql);
 //		System.out.println(query.list().size());
-		
-		//esempio Criteria
+
+		// esempio Criteria
 //		Criteria criteria = session.createCriteria(Contatto.class);
 //		criteria.add(Restrictions.eq("cognome", "rossi"));
 //		List<Contatto> contatti = criteria.list();
-		
+
 //		for (Contatto contatto : query.list()) {
 //		for (Contatto contatto : contatti) {
 //			System.out.println("id : " + contatto.getId());
@@ -57,16 +54,16 @@ public class HDBtools {
 //			System.out.println("telefono : " + contatto.getTelefono());
 //			System.out.println("email : " + contatto.getEmail());
 //		}
-		
-		//apro transazione
+
+		// apro transazione
 		Transaction transaction = session.beginTransaction();
-		
-		//esempio UPDATE
+
+		// esempio UPDATE
 //		Contatto contatto = session.get(Contatto.class, 1);
 //		System.out.println(contatto);
 //		contatto.setTelefono("432432421243");
 //		System.out.println(contatto);
-		
+
 //		//esempio INSERT
 //		Contatto contatto = new Contatto();
 //		contatto.setNome("Fiorenza");

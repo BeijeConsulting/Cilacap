@@ -8,14 +8,21 @@ import java.util.Scanner;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
 import it.beije.cilacap.crystal.GestoreReadCrystal;
 import static it.beije.cilacap.crystal.ParserXML.*;
 public class GestoreCrystalDB {
 
+	
+	private static Log logger = LogFactory.getLog(HDBtools.class);
+
 	public static void main(String[] args) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
 		
+		logger.debug("INIZIO");
+
 		
 		System.out.println("Menu:");
 		System.out.println("1-inserire testdata da file in db");
