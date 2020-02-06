@@ -10,10 +10,10 @@ import org.hibernate.query.Query;
 public class HibernateRubricaUtil {
 	
 	// read from DB and populate a list of Contatto
-	public static List<Contatto> readListOfContactsFromDB() {		
+	public static List<Contatto2> readListOfContactsFromDB() {		
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatto2.class);
 		
 		//chiedo generatore di sessioni
 		SessionFactory factory = configuration.buildSessionFactory();
@@ -26,18 +26,18 @@ public class HibernateRubricaUtil {
 
 		//esempio query HQL
 		String hql = "SELECT c FROM Contatto as c";
-		Query<Contatto> query = session.createQuery(hql);
+		Query<Contatto2> query = session.createQuery(hql);
 		System.out.println(query.list().size());
 		return query.list();
 	}
 	
 
 	// write a list of contacts on db
-	public static void writeListOfContactsOnDB(List<Contatto> lista) {
+	public static void writeListOfContactsOnDB(List<Contatto2> lista) {
 
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatto2.class);
 
 		//chiedo generatore di sessioni
 		SessionFactory factory = configuration.buildSessionFactory();
@@ -50,7 +50,7 @@ public class HibernateRubricaUtil {
 
 
 		//esempio INSERT
-		for(Contatto contatto : lista) {
+		for(Contatto2 contatto : lista) {
 			Transaction transaction = session.beginTransaction();
 			session.save(contatto);
 			transaction.commit();
@@ -62,11 +62,11 @@ public class HibernateRubricaUtil {
 	}
 
 	// write a single contact on db
-	public static void writeSingleContactOnDB(Contatto contatto) {
+	public static void writeSingleContactOnDB(Contatto2 contatto) {
 
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatto2.class);
 
 		//chiedo generatore di sessioni
 		SessionFactory factory = configuration.buildSessionFactory();
@@ -98,7 +98,7 @@ public class HibernateRubricaUtil {
 //		writeListOfContactsOnDB(MyRubrica.caricaArrayListDiContattiFromCSV(csvPath));
 		
 		// write in DB of a single Contatto
-		Contatto c = new Contatto();
+		Contatto2 c = new Contatto2();
 		c.setNome("Fiorenza");
 		c.setCognome("Volpe");
 		c.setTelefono("00000000");

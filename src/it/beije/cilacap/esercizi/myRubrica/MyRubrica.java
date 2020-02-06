@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 public class MyRubrica {
 
 	// Aggiorna il file CSV della rubrica con i nuovi contatti inseriti dall'utente
-	public static void updateConattiOnFileCSV(String path, List<Contatto> listaContatti) throws IOException {
+	public static void updateConattiOnFileCSV(String path, List<Contatto2> listaContatti) throws IOException {
 
 		String intestazione = "COGNOME;NOME;TELEFONO;EMAIL\n";
 		StringBuilder newFileContent = new StringBuilder();
@@ -33,7 +33,7 @@ public class MyRubrica {
 			newFileContent.append(intestazione);
 		}
 
-		for(Contatto c : listaContatti) {
+		for(Contatto2 c : listaContatti) {
 			newFileContent.append(c.getCsvString() + "\n");
 		}
 
@@ -43,12 +43,12 @@ public class MyRubrica {
 
 	}
 
-	public static void insertNewContattiOnFileCSV(String path, List<Contatto> listaContatti) throws IOException {
+	public static void insertNewContattiOnFileCSV(String path, List<Contatto2> listaContatti) throws IOException {
 
 		String intestazione = "COGNOME;NOME;TELEFONO;EMAIL\n";
 		StringBuilder newFileContent = new StringBuilder();
 
-		for(Contatto c : listaContatti) {
+		for(Contatto2 c : listaContatti) {
 			newFileContent.append(c.getCsvString() + "\n");
 		}
 
@@ -60,10 +60,10 @@ public class MyRubrica {
 	}
 	
 	// Aggiorna il file XML della rubrica con i nuovi contatti inseriti dall'utente
-	public static void updateConattiOnFileXML(String pathXML, List<Contatto> listaContatti) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+	public static void updateConattiOnFileXML(String pathXML, List<Contatto2> listaContatti) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 
 		// prendo il contenuto già presente nell'XML e lo carico nella lista
-		List<Contatto> listaFromXMLOld = caricaArrayListDiContattiFromXML(pathXML);
+		List<Contatto2> listaFromXMLOld = caricaArrayListDiContattiFromXML(pathXML);
 
 		// aggiungo i nuovi contatti che l'utente ha inserito da terminale
 		listaFromXMLOld.addAll(listaContatti);
@@ -75,7 +75,7 @@ public class MyRubrica {
 		Element docElement = document.createElement("rubrica");
 		document.appendChild(docElement);
 
-		for (Contatto c : listaFromXMLOld) {
+		for (Contatto2 c : listaFromXMLOld) {
 			Element contatto = document.createElement("contatto");
 			Element nome = document.createElement("nome");
 			Element cognome = document.createElement("cognome");
@@ -109,9 +109,9 @@ public class MyRubrica {
 	}
 
 	// Leggo file XML e carico in lista ci Contatto
-	public static List<Contatto> caricaArrayListDiContattiFromXML(String pathXML) throws ParserConfigurationException, SAXException, IOException {
+	public static List<Contatto2> caricaArrayListDiContattiFromXML(String pathXML) throws ParserConfigurationException, SAXException, IOException {
 
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		List<Contatto2> listaContatti = new ArrayList<Contatto2>();
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -136,7 +136,7 @@ public class MyRubrica {
 				Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
 				Element email = (Element)utente.getElementsByTagName("email").item(0);
 
-				Contatto contatto = new Contatto();
+				Contatto2 contatto = new Contatto2();
 				contatto.setNome(nome.getTextContent());
 				contatto.setCognome(cognome.getTextContent());
 				contatto.setTelefono(telefono.getTextContent());
@@ -151,16 +151,16 @@ public class MyRubrica {
 
 
 	// Leggo file csv e carico in lista ci Contatto
-	public static List<Contatto> caricaArrayListDiContattiFromCSV(String filePath) throws IOException {
+	public static List<Contatto2> caricaArrayListDiContattiFromCSV(String filePath) throws IOException {
 
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		List<Contatto2> listaContatti = new ArrayList<Contatto2>();
 
 		File file = new File(filePath);
 		List<String> rows = TextFileManager.readFileRows(file);
 
 		for (int r = 1; r < rows.size(); r++) {
 			String [] array = rows.get(r).split(";");
-			Contatto contatto = new Contatto();
+			Contatto2 contatto = new Contatto2();
 			for(int i = 0; i < array.length; i++) {
 				contatto.setCognome(array[0]);
 				contatto.setNome(array[1]);
@@ -174,17 +174,17 @@ public class MyRubrica {
 	}
 
 	// inserimento nuovi contatti
-	public static List<Contatto> insertNewContatti() {
+	public static List<Contatto2> insertNewContatti() {
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		List<Contatto2> listaContatti = new ArrayList<Contatto2>();
 		String st = "";
 		System.out.println("Vuoi inserire nuovi contatti in rubrica? [ s / n ]");
 		st = s.nextLine();
 
 		while (!st.equalsIgnoreCase("N")) {
 
-			Contatto contatto = new Contatto();
+			Contatto2 contatto = new Contatto2();
 
 			// cognome
 			String cognome = "";
@@ -231,7 +231,7 @@ public class MyRubrica {
 	}
 
 	public static void readXMLwriteCSV(String pathCVS, String pathXML) throws SAXException, IOException, ParserConfigurationException {
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		List<Contatto2> listaContatti = new ArrayList<Contatto2>();
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -255,7 +255,7 @@ public class MyRubrica {
 			Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
 			Element email = (Element)utente.getElementsByTagName("email").item(0);
 
-			Contatto contatto = new Contatto();
+			Contatto2 contatto = new Contatto2();
 			contatto.setNome(nome.getTextContent());
 			contatto.setCognome(cognome.getTextContent());
 			contatto.setTelefono(telefono.getTextContent());
@@ -272,7 +272,7 @@ public class MyRubrica {
 	public static void readCSVwriteXML(String pathCSV, String pathXML) throws IOException, ParserConfigurationException, TransformerException {
 
 		// leggo CSV e carico contatti in una lista di Contatto
-		List<Contatto> listaContatti = caricaArrayListDiContattiFromCSV(pathCSV);
+		List<Contatto2> listaContatti = caricaArrayListDiContattiFromCSV(pathCSV);
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -281,7 +281,7 @@ public class MyRubrica {
 		Element docElement = document.createElement("rubrica");
 		document.appendChild(docElement);
 
-		for (Contatto c : listaContatti) {
+		for (Contatto2 c : listaContatti) {
 			Element contatto = document.createElement("contatto");
 			Element nome = document.createElement("nome");
 			Element cognome = document.createElement("cognome");
@@ -321,7 +321,7 @@ public class MyRubrica {
 		String pathCSV = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.csv";
 		String pathXML = "C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.xml";
 
-		List<Contatto> listaContatti;
+		List<Contatto2> listaContatti;
 
 		// nuovi contatti nella lista
 		listaContatti = insertNewContatti();

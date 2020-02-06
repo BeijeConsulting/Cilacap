@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DBtools {
 	
-	public static int updateContatti(Contatto c, String newCognome) throws ClassNotFoundException {
+	public static int updateContatti(Contatto2 c, String newCognome) throws ClassNotFoundException {
 		Connection connection = null;
 		Statement stmt = null;
 		
@@ -39,8 +39,8 @@ public class DBtools {
 		return updatedContatti;
 	}
 
-	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
-		List<Contatto> contatti = new ArrayList<Contatto>();
+	public static List<Contatto2> leggiContatti() throws ClassNotFoundException, SQLException {
+		List<Contatto2> contatti = new ArrayList<Contatto2>();
 		
 		Connection connection = null;
 		Statement stmt = null;
@@ -51,9 +51,9 @@ public class DBtools {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.rubrica");
 			
-			Contatto contatto = null;
+			Contatto2 contatto = null;
 			while (rs.next()) {
-				contatto = new Contatto();
+				contatto = new Contatto2();
 				contatto.setId(rs.getInt("id"));
 	        	contatto.setNome(rs.getString("nome"));
 	        	contatto.setCognome(rs.getString("cognome"));
@@ -80,7 +80,7 @@ public class DBtools {
 		return contatti;
 	}
 	
-	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException {
+	public static boolean insertContatto(Contatto2 contatto) throws ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		boolean esito = false;
@@ -123,7 +123,7 @@ public class DBtools {
 		
 		try {
 			//insertContatto(leggiContatti().get(0));
-			Contatto c = new Contatto();
+			Contatto2 c = new Contatto2();
 			c.setNome("Riccardo");
 			c.setCognome("pippo");
 			c.setTelefono("025896369");

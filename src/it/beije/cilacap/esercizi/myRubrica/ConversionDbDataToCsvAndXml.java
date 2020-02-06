@@ -12,9 +12,9 @@ public class ConversionDbDataToCsvAndXml {
 	
 	public static int importInDbFromCsv(String csvPath) throws IOException, ClassNotFoundException {
 		
-		List<Contatto> contatti = MyRubrica.caricaArrayListDiContattiFromCSV(csvPath);
+		List<Contatto2> contatti = MyRubrica.caricaArrayListDiContattiFromCSV(csvPath);
 		
-		for(Contatto contatto: contatti) {
+		for(Contatto2 contatto: contatti) {
 			DBtools.insertContatto(contatto);
 		}
 		
@@ -23,9 +23,9 @@ public class ConversionDbDataToCsvAndXml {
 	
 	public static int importInDbFromXml(String xmlPath) throws ParserConfigurationException, IOException, ClassNotFoundException, SAXException {
 		
-		List<Contatto> contatti = MyRubrica.caricaArrayListDiContattiFromXML(xmlPath);
+		List<Contatto2> contatti = MyRubrica.caricaArrayListDiContattiFromXML(xmlPath);
 		
-		for(Contatto contatto : contatti) {
+		for(Contatto2 contatto : contatti) {
 			DBtools.insertContatto(contatto);
 		}
 		
@@ -35,7 +35,7 @@ public class ConversionDbDataToCsvAndXml {
 	
 	public static int exportDbInCsv(String csvPath) throws ClassNotFoundException, SQLException, IOException {
 		
-		List<Contatto> contatti = DBtools.leggiContatti();
+		List<Contatto2> contatti = DBtools.leggiContatti();
 		MyRubrica.insertNewContattiOnFileCSV(csvPath, contatti);
 		
 		return contatti.size();
@@ -43,7 +43,7 @@ public class ConversionDbDataToCsvAndXml {
 	
 	public static int exportDbInXml(String xmlPath) throws ParserConfigurationException, SAXException, IOException, TransformerException, ClassNotFoundException, SQLException {
 		
-		List<Contatto> contatti = DBtools.leggiContatti();
+		List<Contatto2> contatti = DBtools.leggiContatti();
 		MyRubrica.updateConattiOnFileXML(xmlPath, contatti);
 		
 		return contatti.size();
