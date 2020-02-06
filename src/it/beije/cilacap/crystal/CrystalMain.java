@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,9 +31,14 @@ public class CrystalMain {
 		System.out.println("Inserisci il percorso");
 		String path = "C:\\Users\\Padawan09\\git\\Cilacap\\crystal";
 		ArrayList<File> files = gestisciDirectory(path);
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager entityManager = factory.createEntityManager();
+		
 		for(File file : files) {
 			try {
-				TestData test = new TestData(file);
+				TestData.createTestDataJPDB(file, entityManager);
+	
 //				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 //		        DocumentBuilder builder = factory.newDocumentBuilder();
 //		        Document document = builder.newDocument();
@@ -40,19 +48,13 @@ public class CrystalMain {
 //				DOMSource source = new DOMSource(document);
 //				StreamResult result = new StreamResult(test.getPathFile());
 //				transformer.transform(source, result);
-				Connection conn = DBManager.getMySqlConnection("", "", "");
-				test.toDB(conn);
-				conn.close();
+//				Connection conn = DBManager.getMySqlConnection("", "", "");
+//				test.toDB(conn);
+//				conn.close();
 				System.out.println("File convertito correttamente");
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Errore nel file");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} 
 		}
 		
@@ -69,5 +71,4 @@ public class CrystalMain {
 			}
 		return files;
 	}
-
 }

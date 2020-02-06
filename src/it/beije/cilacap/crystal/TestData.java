@@ -14,38 +14,82 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.hibernate.annotations.Where;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javassist.expr.NewArray;
+
+
+@Entity
+@Table(name="testdata")
 public class TestData {
 	
-	private String pathDestination;
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd H:mm:ss");
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
 	
+	@Column(name="id_computer")
 	private String idComputer; 
-	private String version;  
-	private String os;    
-	private String type;    
-	private int iterations;  
+	
+	@Column(name="versionData")
+	private String version; 
+	
+	@Column(name="osData")
+	private String os;  
+	
+	@Column(name="typeData")
+	private String type;
+	
+	@Column(name="iterationsData")
+	private int iterations;
+	
+	@Column(name="intervalData")
 	private int intervalInSeconds;
+	
+	@Column(name="dateData")
 	private LocalDateTime date;
+	
+	@OneToMany(targetEntity=TestRow.class, cascade= CascadeType.ALL)
+	@Where(clause="test_type='r'")
+	@JoinColumn(name="testdata_id")
+	private List<TestRow> read = new ArrayList<TestRow>();
+	
+	@OneToMany(targetEntity=TestRow.class, cascade= CascadeType.ALL)
+	@Where(clause="test_type='w'")
+	private List<TestRow> write = new ArrayList<TestRow>();
 
+	
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd H:mm:ss");
 	private static final String regexVersion = "CrystalDiskMark[ ][0-9]+[\\.][0-9]+[\\.][0-9][ ]+[x][0-9]+[ ]\\(C\\)"; 
 	private static final String regexOs = "([ ]+)?OS:[ ]+";
 	private static final String regexTypeIterInt = "([ ]+)?Test:[ ]+";
 	private static final String regexDate = "([ ]+)?Date:[ ]+";
-	
-	private List<TestRow> read = new ArrayList<TestRow>();
-	private List<TestRow> write = new ArrayList<TestRow>();
+	@Transient
+	ArrayList<ArrayList<String>> strRead = new ArrayList<>();
+	@Transient
+	ArrayList<ArrayList<String>> strWrite = new ArrayList<>();
 	
 	public TestData(File file) throws IOException {
 		String pathFile = file.getAbsolutePath().toString();
 		System.out.println("Elaboro il file: "+ pathFile);
 		String backSlashPattern = Pattern.quote(System.getProperty("file.separator"));
 		idComputer = pathFile.split("crystal"+backSlashPattern)[1].split(backSlashPattern)[0];
-		pathDestination = pathFile.split(idComputer+backSlashPattern)[0]+"XML\\"+idComputer+"\\"+file.getName().replace(".txt", ".xml"); 
+		String pathDestination = pathFile.split(idComputer+backSlashPattern)[0]+"XML\\"+idComputer+"\\"+file.getName().replace(".txt", ".xml"); 
 		ArrayList<String> splitted = fromFileToArray(file);
 		for(int i=0; i<splitted.size(); i++) {
 			String s = splitted.get(i);
@@ -62,21 +106,45 @@ public class TestData {
 				this.iterations=Integer.parseInt(presplit.split("\\)")[0].split("\\(x")[1]);
 				this.intervalInSeconds=Integer.parseInt(presplit.split("Interval:")[1].trim());
 			}
-		//ricerca data ( elimina toString() per cambiare tipo)
+		//ricerca data
 			else if(Pattern.compile(regexDate).matcher(s).find())
 				this.date=LocalDateTime.parse(s.split("ate: ")[1].trim(), formatter);
 		//crea testRow read e testRow write
 			else if(s.equals("[Read]")) {
 				int j=0;
-				for(j=i+1; j<splitted.size()&&!splitted.get(j).equals(""); j++)
-					read.add(new TestRow(splitted.get(j)));
+				ArrayList<String> tempR = new ArrayList<>();
+				for(j=i+1; j<splitted.size()&&!splitted.get(j).equals(""); j++) {
+					tempR.add(splitted.get(j));
+				}
+				strRead.add(tempR);
 			}
 			else if(s.equals("[Write]")) {
 				int j=0;
-				for(j=i+1; j<splitted.size()&&!splitted.get(j).equals(""); j++)
-					write.add(new TestRow(splitted.get(j)));
+				ArrayList<String> tempW = new ArrayList<>();
+				for(j=i+1; j<splitted.size()&&!splitted.get(j).equals(""); j++) {
+					tempW.add(splitted.get(j));
+				}
+				strRead.add(tempW);
 			}
 		}
+	}
+	
+	public void addRW() {
+		for(ArrayList<String> arrRead : strRead) {
+			for(String sRead : arrRead) read.add(new TestRow(sRead, "r", id));
+		}
+		for(ArrayList<String> arrWrite : strWrite) {
+			for(String sWrite : arrWrite) write.add(new TestRow(sWrite, "w", id));
+		}
+	}
+	
+	public static void createTestDataJPDB(File file, EntityManager em) throws IOException {
+		TestData test = new TestData(file);
+		em.getTransaction().begin();
+		em.persist(test);
+		test.addRW();
+		em.persist(test);
+		em.getTransaction().commit();
 	}
 	
 	public String getIdComputer() {
@@ -140,10 +208,6 @@ public class TestData {
 	}
 	public void setWrite(List<TestRow> write) {
 		this.write = write;
-	}
-	
-	public String getPathFile() {
-		return pathDestination;
 	}
 	
 	public void toDB(Connection conn) throws SQLException {
