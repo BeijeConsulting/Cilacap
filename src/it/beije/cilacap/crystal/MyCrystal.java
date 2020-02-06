@@ -66,25 +66,32 @@ public class MyCrystal
 				dato.setDate(righe.get(i).substring(righe.get(i).indexOf("Date")+6));
 			}
 			
-			if(righe.get(i).contains("CrystalDiskMark"))
+			if(righe.get(i).contains("Test:"))
 			{
-				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")));
+				dato.setInterval(righe.get(i).substring(righe.get(i).indexOf("[")+11, righe.get(i).indexOf("sec")-1));
 			}
 			
-			if(righe.get(i).contains("OS"))
+			if(righe.get(i).contains("Test:"))
 			{
-				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")));
+				dato.setIterations(righe.get(i).substring(righe.get(i).indexOf("(x")+2, righe.get(i).indexOf(")")));
 			}
 			
 			if(righe.get(i).contains("Test:"))
 			{
 				dato.setType(righe.get(i).substring(righe.get(i).indexOf("Test")+6, righe.get(i).indexOf("GiB")-1));
 			}
+			
+			if(righe.get(i).contains("OS"))
+			{
+				dato.setOs(righe.get(i).substring(righe.get(i).indexOf("OS:")+4, righe.get(i).indexOf("[")-1));
+			}
+			
+			if(righe.get(i).contains("CrystalDiskMark"))
+			{
+				dato.setVersion(righe.get(i).substring(righe.get(i).indexOf("Mark")+5, righe.get(i).indexOf("(C)")-1));
+			}
 		}
-		
-//		dato.setType(righe.get(40).substring(19, 29).trim());
-//		dato.setIterations(righe.get(40).substring(righe.get(40).indexOf('x')+2, righe.get(40).indexOf(')')).trim());
-//		dato.setInterval(righe.get(40).substring(righe.get(40).indexOf('[')+22, righe.get(40).indexOf(']')-6).trim());
+
 		
 		dati.add(dato);
 	}
@@ -102,8 +109,8 @@ public class MyCrystal
         	Element test = document.createElement("test");
         	
         	test.setAttribute("date", c.getDate()); //aggiungo attributi utilizzando i metodi get
-//        	test.setAttribute("interval", c.getInterval());
-//        	test.setAttribute("iterations", c.getIterations());
+        	test.setAttribute("interval", c.getInterval());
+        	test.setAttribute("iterations", c.getIterations());
         	test.setAttribute("type", c.getType());
         	test.setAttribute("os", c.getOs());
         	test.setAttribute("version", c.getVersion());
