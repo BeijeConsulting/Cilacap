@@ -92,10 +92,10 @@ public class HibernateRubricaUtil {
 		String csvPath = "C:\\Users\\Padawan04\\Desktop\\rubricaNew.csv";
 		
 		// read from XML and write in DB		
-//		writeListOfContactsOnDB(ParserXML.getContattiFromFile(pathXml));
+		writeListOfContactsOnDB(ParserXML.getContattiFromFile(pathXml));
 		
 		// read from CSV and write in DB
-//		writeListOfContactsOnDB(MyRubrica.caricaArrayListDiContattiFromCSV(csvPath));
+		writeListOfContactsOnDB(MyRubrica.caricaArrayListDiContattiFromCSV(csvPath));
 		
 		// write in DB of a single Contatto
 		Contatto2 c = new Contatto2();
@@ -106,7 +106,7 @@ public class HibernateRubricaUtil {
 //		writeSingleContactOnDB(c);
 		
 		// read from DB and put all contacts in a list
-//		readListOfContactsFromDB();
+		readListOfContactsFromDB();
 
 	}
 

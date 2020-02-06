@@ -2,14 +2,11 @@ package it.beije.cilacap.esercizi.myRubrica;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import javax.persistence.*;
 
-public class JpaDbTools {
+public class JpaRubricaUtils {
 
+	// read from DB with JPA
 	public static void writeJPAListOfContactsIntoDB(List<Contatto2> lista) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
@@ -25,6 +22,7 @@ public class JpaDbTools {
 
 	}
 	
+	// write list of Contatto2 in DB with JPA
 	@SuppressWarnings("unchecked")
 	public static List<Contatto2> readJPAListOfContactsFromDB() {
 		
