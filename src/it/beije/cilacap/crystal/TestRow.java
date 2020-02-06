@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -36,8 +37,9 @@ public class TestRow {
 	@Column(name="us")
 	private double us;
 	
-	@Column(name="id_testdata")
-	private String id_testdata;
+	@GeneratedValue
+	@Column(name="testdata_id")
+	private int testdataId;
 	
 	@Column(name="test_type")
 	private String testType;
@@ -48,11 +50,11 @@ public class TestRow {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getId_testdata() {
-		return id_testdata;
+	public int getTestdataId() {
+		return testdataId;
 	}
-	public void setId_testdata(String id_computer) {
-		this.id_testdata = id_computer;
+	public void setTestdataId(int id_computer) {
+		this.testdataId = id_computer;
 	}
 	public String getTestType() {
 		return testType;

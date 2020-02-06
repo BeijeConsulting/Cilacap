@@ -43,7 +43,7 @@ public class MainCrystal {
     public static void main(String[] args) throws Exception 
     { 
     	CrystalTestManager c = new CrystalTestManager();
-    	List<TestData> testFromDB = c.getTestFromHDB();
+    	List<TestData> testFromDB = c.getTestFromJPAHDB();
 //    	List<TestData> testFromDB = c.getTestFromDB();
 
     	// Provide full path for directory(change accordingly)   
@@ -92,14 +92,14 @@ public class MainCrystal {
 
 	    	   }
 	       }
-	       //List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
+//	       List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
 	       c.writeTestToXML(newTests, pathFile + "\\crystalOutput.xml",true);
 		   
 	       for(TestData test : testFromDB) {
 	    	   boolean esito = newTests.removeIf(a -> a.getIdComputer().contentEquals(test.getIdComputer()));	
 	       }
 	       boolean esito1 = newTests.removeIf(a -> a.getIdComputer().equals(null));
-	       c.insertTestInHDB(newTests);
+	       c.insertTestInJPAHDB(newTests);
        }
 	}
     

@@ -11,6 +11,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -121,6 +128,8 @@ public class CrystalTestManager {
 					tests.getRead().get(indexRead).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
 //					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
 					
+					tests.getRead().get(indexRead).setTestType("r");
+					
 					indexRead++;
 					inReadSeq--;
 				}
@@ -146,6 +155,8 @@ public class CrystalTestManager {
 					
 					tests.getWrite().get(indexWrite).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
 //					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
+					
+					tests.getWrite().get(indexWrite).setTestType("w");
 					
 					indexWrite++;
 					inWriteSeq--;
@@ -173,6 +184,8 @@ public class CrystalTestManager {
 					tests.getRead().get(indexRead).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
 //					System.out.println("Read"+indexRead+" -us: " + tests.getRead().get(indexRead).getUs());
 					
+					tests.getRead().get(indexRead).setTestType("r");
+					
 					indexRead++;
 					inReadRan--;
 				}
@@ -198,6 +211,8 @@ public class CrystalTestManager {
 					
 					tests.getWrite().get(indexWrite).setUs(Double.parseDouble(row.split("<")[1].trim().split("us>")[0].trim()));
 //					System.out.println("Write"+indexWrite+" -us: " + tests.getWrite().get(indexWrite).getUs());
+					
+					tests.getWrite().get(indexWrite).setTestType("w");
 					
 					indexWrite++;
 					inWriteRan--;
@@ -272,13 +287,9 @@ public class CrystalTestManager {
 		
 		for (TestData test : tests) {
 			for (TestRow row : test.getRead()) {
-				row.setId_testdata(test.getIdComputer());
-				row.setTestType("r");
 				session.save(row);
 			}
 			for (TestRow row : test.getWrite()) {
-				row.setId_testdata(test.getIdComputer());
-				row.setTestType("w");
 				session.save(row);
 			}
 			session.save(test);
@@ -301,6 +312,70 @@ public class CrystalTestManager {
 		
 		return true;
 	}
+	public  boolean insertTestInJPAHDB(List<TestData> tests) throws ClassNotFoundException ,NullPointerException {
+		System.out.println("INIZIO");
+	
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		System.out.println("is open? " + factory.isOpen());
+		
+		//apro transazione
+		entityManager.getTransaction().begin();
+		int i = 0;
+		for (TestData test : tests) {
+//			for (TestRow testRow : test.getRead()) {
+//				entityManager.persist(testRow);
+//			}
+//			for (TestRow testRow : test.getWrite()) {
+//				entityManager.persist(testRow);
+//			}
+			System.out.println(test.getIdComputer());
+			System.out.println(test.getRead().get(0).getMbs());
+			System.out.println(test.getRead().get(0).getTestType());
+			entityManager.persist(test); 
+			
+		}
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		factory.close();
+		System.out.println("session is open? " + factory.isOpen());
+	
+	return true;
+	}
+
+//	public  boolean insertTestInJPAHDB(List<TestData> tests) throws ClassNotFoundException ,NullPointerException{
+//		System.out.println("INIZIO");
+//	
+//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+//		EntityManager entityManager = factory.createEntityManager();
+//		
+//		System.out.println("is open? " + factory.isOpen());
+//		
+//		//apro transazione
+//		entityManager.getTransaction().begin();
+//		
+//		for (TestData test : tests) {
+//			for (TestRow row : test.getRead()) {
+//				row.setId_testdata(test.getIdComputer());
+//				row.setTestType("r");
+//				entityManager.persist(row);
+//			}
+//			for (TestRow row : test.getWrite()) {
+//				row.setId_testdata(test.getIdComputer());
+//				row.setTestType("w");
+//				entityManager.persist(row);
+//			}
+//			entityManager.persist(test);
+//		}
+//		
+//		entityManager.getTransaction().commit();
+//		factory.close();
+//		System.out.println("session is open? " + factory.isOpen());
+//		
+//		return true;
+//	}
 	
 	public  List<TestData> getTestFromHDB() throws ClassNotFoundException ,NullPointerException{
 		System.out.println("INIZIO");
@@ -391,6 +466,62 @@ public class CrystalTestManager {
 		
 		return tests;
 	}
+	
+	public  List<TestData> getTestFromJPAHDB() throws ClassNotFoundException ,NullPointerException{
+		System.out.println("INIZIO");
+	
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+		EntityManager entityManager = factory.createEntityManager();
+		
+		System.out.println("is open? " + factory.isOpen());
+		
+		//esempio TypedQuery
+
+		TypedQuery<TestData> query = entityManager.createQuery("SELECT td FROM TestData as td",TestData.class);
+		List<TestData> tests = query.getResultList();
+		
+		for (TestData test : tests) {
+
+			test.setRead(test.getRead());
+		
+			test.setWrite(test.getWrite());
+		}
+		
+		factory.close();
+		System.out.println("Factory is open? " + factory.isOpen());
+		
+		return tests;
+	}
+		
+//	public  List<TestData> getTestFromJPAHDB() throws ClassNotFoundException ,NullPointerException{
+//		System.out.println("INIZIO");
+//	
+//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+//		EntityManager entityManager = factory.createEntityManager();
+//		
+//		System.out.println("is open? " + factory.isOpen());
+//		
+//		//esempio TypedQuery
+//
+//		TypedQuery<TestData> query = entityManager.createQuery("SELECT td FROM TestData as td",TestData.class);
+//		List<TestData> tests = query.getResultList();
+//		
+//		for (TestData test : tests) {
+//
+//			TypedQuery<TestRow> queryRead = entityManager.createQuery("SELECT t FROM TestRow t WHERE id_testdata ='"+ test.getIdComputer() + "' AND testType='r'", TestRow.class);
+//
+//			test.setRead(queryRead.getResultList());
+//			
+//			TypedQuery<TestRow> queryWrite = entityManager.createQuery("SELECT t FROM TestRow t WHERE id_testdata ='"+ test.getIdComputer() + "' AND testType='w'", TestRow.class);
+//			
+//			test.setWrite(queryWrite.getResultList());
+//		}
+//		
+//		factory.close();
+//		System.out.println("Factory is open? " + factory.isOpen());
+//		
+//		return tests;
+//	}
 	
 	public List<TestData> readTestFromXML(String pathFile) throws Exception{
 		
