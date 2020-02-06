@@ -219,7 +219,7 @@ public class TestData {
 			rId.next();
 			int id = rId.getInt(1); 
 			for(TestRow tr : read) tr.toDB(conn, id, "r");
-			for(TestRow tr : write) tr.toDB(conn, id, "r");
+			for(TestRow tr : write) tr.toDB(conn, id, "w");
 		}catch(NullPointerException e) {
 			System.out.println("File non valido");
 		}
