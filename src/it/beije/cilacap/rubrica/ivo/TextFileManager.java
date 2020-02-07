@@ -1,4 +1,4 @@
-package it.beije.cilacap.rubrica;
+package it.beije.cilacap.rubrica.ivo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

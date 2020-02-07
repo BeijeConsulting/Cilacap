@@ -665,6 +665,9 @@ public class Utility {
 			Element read = (Element) test.getElementsByTagName("read").item(0);
 			Element write = (Element) test.getElementsByTagName("write").item(0);
 			NodeList rows = read.getElementsByTagName("*");
+			for(int j= 0; j < rows.getLength(); j++) {
+				System.out.println(j + ": " + rows.item(j)); 
+			}
 //			for (int j = 0; j <  row; j++) {
 //
 //				row = (Element) read.getElementsByTagName("*").item(j);
