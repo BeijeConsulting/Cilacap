@@ -16,7 +16,7 @@ public class ResourceManager {
 	public Resource getResource() {
 		for(int i=0; i<MAX_RES; i++) {
 			if(resList[i] == null) return resList[i] = new Resource(false);
-			if(resList[i].isAvailable()) return resList[i];
+			else if(resList[i].isAvailable()) return resList[i];
 		}
 		System.out.println("Numero max risorse raggiunto");
 		throw new NullPointerException();
