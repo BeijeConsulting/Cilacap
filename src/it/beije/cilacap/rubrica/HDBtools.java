@@ -67,7 +67,7 @@ public class HDBtools {
 		Contatto contatto = new Contatto();
 		contatto.setNome("Fiorenza");
 		contatto.setCognome("Volpe");
-		contatto.setEmail("fiore@volpe.it");
+		contatto.setEmail("fiore@volpe.itt");
 		contatto.setTelefono("34556616");
 
 		System.out.println("id : " + contatto.getId());
