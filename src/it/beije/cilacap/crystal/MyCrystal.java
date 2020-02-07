@@ -96,7 +96,7 @@ public class MyCrystal
 	}
 	
 	public static void setRow(List<String> contenuto, List<TestRow> row)
-	{
+	{int j = -1;
 		for(int i=0; i<contenuto.size(); i++)
 		{
 			if (contenuto.get(i).contains("Read") || contenuto.get(i).contains("Write"))
@@ -108,15 +108,37 @@ public class MyCrystal
 				{
 					if(contenuto.get(i).contains("Sequential") || contenuto.get(i).contains("Random"))
 					{
-						//riga.setQ(Integer.parseInt(contenuto.get(i).substring(contenuto.get(i).indexOf("(Q")+4, contenuto.get(i).indexOf(",")-1)));
-						System.out.println(contenuto.get(i));
+						String s;
+						
+						s = contenuto.get(i).substring(contenuto.get(i).indexOf("(Q")+4, contenuto.get(i).indexOf(","));
+						s = s.replace(" ", "");
+						riga.setQ(Integer.parseInt(s));
+						
+						s = contenuto.get(i).substring(contenuto.get(i).indexOf("T")+3, contenuto.get(i).indexOf(")"));
+						s = s.replace(" ", "");
+						riga.setT(Integer.parseInt(s));
+
+						s = contenuto.get(i).substring(contenuto.get(i).indexOf(":")+4, contenuto.get(i).indexOf("MB"));
+						s = s.replace(" ", "");
+						riga.setMbs(Double.parseDouble(s));
+						
+						s = contenuto.get(i).substring(contenuto.get(i).indexOf("[")+1, contenuto.get(i).indexOf("IOPS"));
+						s = s.replace(" ", "");
+						riga.setIops(Double.parseDouble(s));
+						
+						s = contenuto.get(i).substring(contenuto.get(i).indexOf("<")+1, contenuto.get(i).indexOf("us"));
+						s = s.replace(" ", "");
+						System.out.println(s);
+						riga.setUs(Double.parseDouble(s));
 						
 					}
+					
 					i++;
+					j++;
+					row.add(riga);
+					
 				}
 				while((!contenuto.get(i).contains("Read") || !contenuto.get(i).contains("Write")) && !contenuto.get(i).contains("Profile"));
-				
-				row.add(riga);
 			}
 		}
 	}
