@@ -223,6 +223,7 @@ public class Utility {
 
 	}// fine metodo
 
+	// ------------------------------------------------------------------------------------//
 	// PARTE JDBC Rubrica.
 	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException { // inserisci Contatto in DB
 																							// cilacap.rubrica
@@ -685,4 +686,10 @@ public class Utility {
 
 		return listaTestData;
 	}
+
+
+
+	
+
+
 }

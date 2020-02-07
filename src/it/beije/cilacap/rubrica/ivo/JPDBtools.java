@@ -1,4 +1,4 @@
-package it.beije.cilacap.rubrica;
+package it.beije.cilacap.rubrica.ivo;
 
 import java.util.List;
 
@@ -7,8 +7,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import it.beije.cilacap.rubrica.Contatto;
+
 public class JPDBtools {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");

@@ -10,11 +10,11 @@ import org.hibernate.query.Query;
 
 public class MyRubricaHibernate {
 
-	
 	@SuppressWarnings("unchecked")
 	public static List<Contatto> leggiContatti() { // preleva da DB tutti i contatti. [Hibernate]
 
-		Configuration configuration = DBManager.getHibernateConfiguration();
+		Configuration configuration = DBManager.getHibernateConfigurationRubrica();
+
 		SessionFactory factory = configuration.buildSessionFactory();
 
 		// query HQL
@@ -27,7 +27,7 @@ public class MyRubricaHibernate {
 		return listaContatti;
 	}
 
-	public static void readFromDBWriteInCSV() throws Exception { 
+	public static void readFromDBWriteInCSV() throws Exception {
 		List<Contatto> listaContatti = MyRubricaHibernate.leggiContatti();
 		Utility.esportaRubricaInCSV(Utility.choosePath(false), listaContatti);
 		System.out.println("### Scrittura In File CSV effettuata con Successo ! ! !");
@@ -42,15 +42,14 @@ public class MyRubricaHibernate {
 	public static void writeInDBFromCSV() throws Exception {
 		List<Contatto> listaContatti = Utility.caricaContattiDaCSV(Utility.choosePath(false));
 		// INSERT
-		Configuration configuration = DBManager.getHibernateConfiguration();
+		Configuration configuration = DBManager.getHibernateConfigurationRubrica();
 		SessionFactory factory = configuration.buildSessionFactory();
 		Session session = factory.openSession();
 		for (Contatto c : listaContatti) {
-			
+
 			session.save(c);
 			Transaction transaction = session.beginTransaction();
 			transaction.commit();
-			
 
 		}
 		session.close(); // chiudo la sessione
@@ -61,19 +60,18 @@ public class MyRubricaHibernate {
 	public static void writeInDBFromXML() throws Exception {
 		List<Contatto> listaContatti = Utility.caricaContattiDaXML(Utility.choosePath(true));
 
-		Configuration configuration = DBManager.getHibernateConfiguration();
+		Configuration configuration = DBManager.getHibernateConfigurationRubrica();
 		SessionFactory factory = configuration.buildSessionFactory();
 		Session session = factory.openSession();
 		for (Contatto c : listaContatti) {
-			
+
 			session.save(c);
 			Transaction transaction = session.beginTransaction();
 			transaction.commit();
-			
+
 		}
 		session.close(); // chiudo la sessione
 		System.out.println("### Scrittura In DB effettuata con Successo ! ! !");
 	}
 
-	
 }

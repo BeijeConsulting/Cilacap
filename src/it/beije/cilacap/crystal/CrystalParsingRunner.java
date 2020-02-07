@@ -24,6 +24,7 @@ public class CrystalParsingRunner {
 		List<TestData> listaTests = Utility.importaTestDaXML(file);
 		System.out.println(listaTests);
 		
+		
 	}
 
 

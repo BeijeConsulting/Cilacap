@@ -6,6 +6,9 @@ import java.sql.SQLException;
 
 import org.hibernate.cfg.Configuration;
 
+import it.beije.cilacap.crystal.TestData;
+import it.beije.cilacap.crystal.TestRow;
+
 public class DBManager {
 
 	public static final String DB_USER = "root";
@@ -19,12 +22,21 @@ public class DBManager {
 		return DriverManager.getConnection(url, user, password);
 	}
 
-	public static Configuration getHibernateConfiguration() {
+	public static Configuration getHibernateConfigurationRubrica(){
 
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+		configuration = configuration.configure()
 				.addAnnotatedClass(Contatto.class);
 //				.addAnnotatedClass(altra classe)
+		return configuration;
+	}
+	
+	public static Configuration getHibernateConfigurationCrystal() {
+		
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure()
+				.addAnnotatedClass(TestData.class)
+				.addAnnotatedClass(TestRow.class);
 		return configuration;
 	}
 
