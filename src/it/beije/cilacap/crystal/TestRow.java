@@ -9,6 +9,11 @@ public class TestRow { //per ciascuna iterazione identifica delle variabili
 	private double iops; //valore IOPS
 	private double us; //valore us
 	
+	@Override
+	public String toString() {
+		return "TestRow [type=" + type + ", q=" + q + ", t=" + t + ", mbs=" + mbs + ", iops=" + iops + ", us=" + us
+				+ "]";
+	}
 	public String getType() {
 		return type;
 	}

@@ -21,7 +21,6 @@ import org.w3c.dom.Element;
 import com.sun.istack.logging.Logger;
 
 import it.beije.cilacap.crystal.TestData;
-import it.beije.cilacap.rubrica.Contatto;
 
 public class MyCrystal
 {
@@ -36,7 +35,7 @@ public class MyCrystal
 		readContent(contenuto, f); //lettura e salvataggio del file .txt in ArrayList di stringhe contenuto
 		setData(contenuto, data); //Metodo che utilizza i metodi di TestData e popola il bean
 		setRow(contenuto, row); //Metodo che utilizza i metodi di TestRow e popola il bean
-		writeInXML(data, "xml\\MyCrystal.xml");
+		writeInXML(data, row, "xml\\MyCrystal.xml");
 		
 		
 	}
@@ -96,19 +95,22 @@ public class MyCrystal
 	}
 	
 	public static void setRow(List<String> contenuto, List<TestRow> row)
-	{int j = -1;
+	{
 		for(int i=0; i<contenuto.size(); i++)
 		{
 			if (contenuto.get(i).contains("Read") || contenuto.get(i).contains("Write"))
 			{
+				String tipo = null;
 				TestRow riga = new TestRow();
-				if (contenuto.get(i).contains("Read")) riga.setType("Read");
-				else riga.setType("Write");
 				do
 				{
+					if (contenuto.get(i).contains("[Read]")) tipo = "Read";
+					else if (contenuto.get(i).contains("[Write]")) tipo = "Write";
+					
 					if(contenuto.get(i).contains("Sequential") || contenuto.get(i).contains("Random"))
 					{
 						String s;
+						riga.setType(tipo);
 						
 						s = contenuto.get(i).substring(contenuto.get(i).indexOf("(Q")+4, contenuto.get(i).indexOf(","));
 						s = s.replace(" ", "");
@@ -128,22 +130,23 @@ public class MyCrystal
 						
 						s = contenuto.get(i).substring(contenuto.get(i).indexOf("<")+1, contenuto.get(i).indexOf("us"));
 						s = s.replace(" ", "");
-						System.out.println(s);
 						riga.setUs(Double.parseDouble(s));
 						
+						row.add(riga);
+						
+						for(int j=0; j<row.size(); j++)
+				    	{
+				    		System.out.println(row.get(j));
+				    	}
 					}
-					
-					i++;
-					j++;
-					row.add(riga);
-					
+					i++;					
 				}
-				while((!contenuto.get(i).contains("Read") || !contenuto.get(i).contains("Write")) && !contenuto.get(i).contains("Profile"));
+				while(!contenuto.get(i).contains("Profile"));
 			}
 		}
 	}
 	
-	public static void writeInXML(TestData dati, String pathfile) throws Exception
+	public static void writeInXML(TestData dati, List<TestRow> row, String pathfile) throws Exception
 	{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
