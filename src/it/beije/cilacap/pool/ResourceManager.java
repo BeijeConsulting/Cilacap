@@ -14,6 +14,16 @@ public class ResourceManager {
 		return resMan;
 	}
 	
+	public void openingRes() throws BadResourcesException {
+		if(currentRes<MAX_RES) currentRes++;
+		else throw new BadResourcesException("Max resources");
+	}
+	
+	public void closingRes() throws BadResourcesException {
+		if(currentRes>0) currentRes--;
+		else throw new BadResourcesException("???");
+	}
+	
 //	public void open(Resource res) throws MaxResourcesException {
 //		if(currentRes>=MAX_RES) throw new MaxResourcesException();
 //		if(!res.isAvailable()) {
@@ -28,16 +38,4 @@ public class ResourceManager {
 //			currentRes--;
 //		}
 //	}
-
-	public void openingRes() throws BadResourcesException {
-		if(currentRes<MAX_RES) currentRes++;
-		else throw new BadResourcesException("Max resources");
-	}
-	
-	public void closingRes() throws BadResourcesException {
-		if(currentRes>0) currentRes--;
-		else throw new BadResourcesException("???");
-	}
-
-
 }

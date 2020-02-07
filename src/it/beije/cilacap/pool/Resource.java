@@ -14,17 +14,9 @@ public class Resource {
 		}
 	}
 	
-//	public Resource(boolean available) {
-//		this.available = available;
-//	}
-
 	public boolean isAvailable() {
 		return avaliable;
 	}
-
-//	public void setAvailable(boolean available) {
-//		this.available = available;
-//	}
 	
 	public void close() {
 		if(avaliable) {
@@ -34,6 +26,19 @@ public class Resource {
 			} catch (BadResourcesException e) {
 				e.printStackTrace();
 			}
-		}
+		}else System.out.println("Risorsa non aperta");
 	}
+	
+	
+//	public Resource(boolean available) {
+//		this.available = available;
+//	}
+
+	
+
+//	public void setAvailable(boolean available) {
+//		this.available = available;
+//	}
+	
+	
 }
