@@ -70,6 +70,7 @@ public class MainCrystal {
         	System.out.println(PATHS_TEST.get(i));
         	
        }
+       List<TestData> newTests = new ArrayList<>();
        for (int x = 0; x < DIR_TEST.size(); x++) {
     	   System.out.println(DIR_TEST.get(x));
 	       
@@ -79,7 +80,7 @@ public class MainCrystal {
 	       creaDir(pathFile);
 	       System.out.println("\n");
 	        
-	       List<TestData> newTests = new ArrayList<>();
+	       
 	        
 	        
 	       for (int i = 0; i < PATHS_TEST.size(); i++) {
@@ -93,14 +94,15 @@ public class MainCrystal {
 	    	   }
 	       }
 //	       List<TestData> oldTests = c.readTestFromXML(DIR_TEST.get(x) + "\\output\\crystalOutput.xml");
-	       c.writeTestToXML(newTests, pathFile + "\\crystalOutput.xml",true);
+//	       c.writeTestToXML(newTests, pathFile + "\\crystalOutput.xml",true);
 		   
 	       for(TestData test : testFromDB) {
-	    	   boolean esito = newTests.removeIf(a -> a.getIdComputer().contentEquals(test.getIdComputer()));	
+	    	   System.out.println(newTests.removeIf(a -> a.getIdComputer().contentEquals(test.getIdComputer())));	
 	       }
-	       boolean esito1 = newTests.removeIf(a -> a.getIdComputer().equals(null));
-	       c.insertTestInJPAHDB(newTests);
+	       System.out.println(newTests.removeIf(a -> a.getIdComputer().equals(null)));
+	       
        }
+       c.insertTestInJPAHDB(newTests);
 	}
     
    

@@ -319,23 +319,35 @@ public class CrystalTestManager {
 		EntityManager entityManager = factory.createEntityManager();
 		
 		System.out.println("is open? " + factory.isOpen());
+		List<TestRow> read = new ArrayList<>();
+		List<TestRow> write = new ArrayList<>();
 		
 		//apro transazione
 		entityManager.getTransaction().begin();
-		int i = 0;
+		
+
 		for (TestData test : tests) {
-//			for (TestRow testRow : test.getRead()) {
-//				entityManager.persist(testRow);
-//			}
-//			for (TestRow testRow : test.getWrite()) {
-//				entityManager.persist(testRow);
-//			}
-			System.out.println(test.getIdComputer());
-			System.out.println(test.getRead().get(0).getMbs());
-			System.out.println(test.getRead().get(0).getTestType());
-			entityManager.persist(test); 
+			read = test.getRead();
+			write = test.getWrite();
+			test.setRead(null);
+			test.setWrite(null);
+			entityManager.persist(test);
+			for (TestRow row : read) {
+				row.setTestdataId(test.getId());
+			}
+			for (TestRow row : write) {
+				row.setTestdataId(test.getId());
+			}
 			
+			test.setRead(read);
+			test.setWrite(write);
+			entityManager.persist(test);
 		}
+		
+			
+			
+		
+		
 		
 		entityManager.getTransaction().commit();
 		entityManager.close();

@@ -1,12 +1,17 @@
 package it.beije.cilacap.crystal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.Type;
 
@@ -17,7 +22,10 @@ public class TestRow {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private int id_testRow;
+	
+	@Column(name = "testdata_id")
+	private int testdataId;
 	
 	@Column(name="mood_type")
 	private String type;
@@ -37,18 +45,18 @@ public class TestRow {
 	@Column(name="us")
 	private double us;
 	
-	@GeneratedValue
-	@Column(name="testdata_id")
-	private int testdataId;
-	
 	@Column(name="test_type")
 	private String testType;
 	
+	
+	
+	
+	
 	public int getId() {
-		return id;
+		return id_testRow;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.id_testRow = id;
 	}
 	public int getTestdataId() {
 		return testdataId;

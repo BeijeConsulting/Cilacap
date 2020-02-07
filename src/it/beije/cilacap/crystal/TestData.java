@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,15 +47,16 @@ public class TestData {
 	@Column(name="date")
 	private String date;
 	
-	@OneToMany(targetEntity=TestRow.class)
-	@JoinColumn(name = "testdataId")
-	@Where (clause = "TestRow.testType='r'")
+	@OneToMany(targetEntity=TestRow.class,cascade = CascadeType.ALL)
+	@Where (clause = "testType='r'")
+	@JoinColumn(name = "testdata_id")
 	private List<TestRow> read = new ArrayList<TestRow>();
 	
-	@OneToMany(targetEntity=TestRow.class)
-	@JoinColumn(name = "testdataId")
-	@Where (clause = "TestRow.testType='w'")
+	@OneToMany(targetEntity=TestRow.class,cascade = CascadeType.ALL)
+	@Where (clause = "testType='w'")
+	@JoinColumn(name = "testdata_id")
 	private List<TestRow> write = new ArrayList<TestRow>();
+
 	
 	
 	public String getIdComputer() {
