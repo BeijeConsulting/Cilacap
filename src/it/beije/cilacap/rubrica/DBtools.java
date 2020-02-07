@@ -8,11 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
+//import org.hibernate.query.Query;
+
 
 public class DBtools {
 	public static String csvSplitBy=";";
@@ -127,31 +134,32 @@ public class DBtools {
 		List<Contatto> lc= DBtools.leggiContatti();
 		Methods.writeToCsvFile(Methods.getCsvListFromXmlFile(lc), csvSplitBy, csvPath);
 	}
-    public static Query<Contatto> leggiContattiH()throws ClassNotFoundException, SQLException{
-    	//inizializzo configurazione
-    	Configuration configuration = new Configuration();
-    	configuration = configuration.configure()
-    				.addAnnotatedClass(Contatto.class);
-    	//chiedo generatore di sessioni
-    	SessionFactory factory = configuration.buildSessionFactory();
-    			
-    	System.out.println("is open? " + factory.isOpen());
-    	//apro sessione
-    	Session session = factory.openSession();
-    	System.out.println("session is open? " + session.isOpen());
-    	String hql = "SELECT c FROM Contatto as c";
-    	Query<Contatto> query = session.createQuery(hql);
-    	for (Contatto contatto : query.list()) {
-    		System.out.println("id : " + contatto.getId());
-			System.out.println("nome : " + contatto.getNome());
-			System.out.println("cognome : " + contatto.getCognome());
-			System.out.println("telefono : " + contatto.getTelefono());
-			System.out.println("email : " + contatto.getEmail());
-    	}
-    	session.close();
-    	System.out.println("session is open? " + session.isOpen());
-    	return query;
-}
+//    public static Query<Contatto> leggiContattiH()throws ClassNotFoundException, SQLException{
+	// da errore in quanto ho importato query di persistance ed ho commentato import query hibernate che faceva conflitto.
+//    	//inizializzo configurazione
+//    	Configuration configuration = new Configuration();
+//    	configuration = configuration.configure()
+//    				.addAnnotatedClass(Contatto.class);
+//    	//chiedo generatore di sessioni
+//    	SessionFactory factory = configuration.buildSessionFactory();
+//    			
+//    	System.out.println("is open? " + factory.isOpen());
+//    	//apro sessione
+//    	Session session = factory.openSession();
+//    	System.out.println("session is open? " + session.isOpen());
+//    	String hql = "SELECT c FROM Contatto as c";
+//    	Query<Contatto> query = session.createQuery(hql);
+//    	for (Contatto contatto : query.list()) {
+//    		System.out.println("id : " + contatto.getId());
+//			System.out.println("nome : " + contatto.getNome());
+//			System.out.println("cognome : " + contatto.getCognome());
+//			System.out.println("telefono : " + contatto.getTelefono());
+//			System.out.println("email : " + contatto.getEmail());
+//    	}
+//    	session.close();
+//    	System.out.println("session is open? " + session.isOpen());
+//    	return query;
+//}
     public static boolean insertContattoH(Contatto contatto)throws ClassNotFoundException{
     	//inizializzo configurazione
     			Configuration configuration = new Configuration();
@@ -241,7 +249,33 @@ public class DBtools {
 		System.out.println("session is open? " + session.isOpen());
 			
 	}
-	
+	public static void leggiContattiJpa()throws ClassNotFoundException,SQLException{
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager entityManager = factory.createEntityManager();
+		String jpql= "select c from Contatto as c";
+		TypedQuery<Contatto> query=entityManager.createQuery(jpql,Contatto.class);
+		List<Contatto> contatti= query.getResultList();
+		System.out.println(contatti.size());
+		for (Contatto contatto: contatti) {
+			System.out.println("id :"+contatto.getId());
+			System.out.println("nome : "+contatto.getNome());
+			System.out.println("congnome : "+contatto.getCognome());
+			System.out.println("telefono : "+contatto.getTelefono());
+			System.out.println("email : "+contatto.getEmail());
+			System.out.println(contatto.getClass());
+		}
+	}
+	public static  void insertContattoJpa(Contatto contatto ) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager entityManager = factory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(contatto);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		System.out.println("Contatto inserito correttamente");
+	}
+//	public static void updateContattoJpa
+//	public static void deleteContattoJpa
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
 //		Scanner read= new Scanner(System.in);
@@ -280,9 +314,12 @@ public class DBtools {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-	    leggiContattiH();
+//	    leggiContattiH(); ok funziona!
 //		insertContattoH(contatto);
 //		deleteContattoH(contatto);
+//		leggiContattiJpa(); funziona
+		insertContattoJpa(contatto);
+//		deleteContattoJpa();
 		
 	}
 }

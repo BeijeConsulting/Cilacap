@@ -28,7 +28,7 @@ public class JPDBtools {
 		System.out.println("contatto id : " + contatto.getId());
 		entityManager.persist(contatto);
 		System.out.println("contatto id : " + contatto.getId());
-		//entityManager.getTransaction().commit();
+		entityManager.getTransaction().commit();
 		//entityManager.getTransaction().rollback();
 		
 		entityManager.close();
