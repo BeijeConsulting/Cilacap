@@ -3,23 +3,14 @@ package it.beije.cilacap;
 import java.io.*;
 import java.util.*;
 
-
 import it.beije.cilacap.rubrica.Contatto;
 
 public class CSVTool {
 	
 	static List<Contatto> listaContatti = new ArrayList<Contatto>();
-	
-	public static void main(String[] args) throws IOException {
-		
-//		String path = "csv/copia1.txt";
-//		listaContatti = ReaderCSV(path);
-//		path = "C:/work/Provaa.txt";
-//		WriterCSV(path, listaContatti);
-	}
 
 	//Legge file CSV
-	public static List<Contatto> ReaderCSV(String path) throws IOException{	
+	public List<Contatto> ReaderCSV(String path) throws IOException{	
 		
 		File file = new File(path);
 		FileReader fileReader = new FileReader(file);
@@ -64,7 +55,7 @@ public class CSVTool {
 	
 	
 	//Scrive file CSV
-	public static void WriterCSV(String path, List<Contatto> listaContatti) throws IOException{
+	public void WriterCSV(String path, List<Contatto> listaContatti) throws IOException{
 		
 		ArrayList<String> arrayContatti = new ArrayList<>();
 		
