@@ -1,9 +1,7 @@
 package it.beije.cilacap.rubrica;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 public class JPDBtools {
 
 	public static void main(String[] args) {
