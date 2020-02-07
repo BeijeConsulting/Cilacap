@@ -15,69 +15,103 @@ import org.hibernate.query.Query;
 
 public class HDBtools {
 	
-<<<<<<< HEAD
-	//public static void 
-=======
 	private static Log logger = LogFactory.getLog(HDBtools.class);
->>>>>>> refs/remotes/origin/master
-
-	public static void main(String[] args) {
+	
+	public static List<Contatto> getContactFromHDB() {
+		
 		logger.debug("INIZIO");
-
-		//Initialize configuration
+		
+		//Configuration opener 
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatto.class); // Specification of the used object
 		
-		//Session generator
+		//Session generator 
 		SessionFactory factory = configuration.buildSessionFactory();
-		
 		System.out.println("Is it open? " + factory.isOpen());
 		
 		//Session opener
 		Session session = factory.openSession();
-		System.out.println("Is session open? " + session.isOpen());
-
-		//Example - query HQL
-		String hql = "SELECT c FROM Contatto as c WHERE cognome = 'rossi'";
+		
+		//Creation of the string with command in HQL dialect
+		String hql = "SELECT c FROM Contatto as c";
 		Query<Contatto> query = session.createQuery(hql);
-		System.out.println(query.list().size());
 		
-		//Example - Criteria
-//		Criteria criteria = session.createCriteria(Contatto.class);
-//		criteria.add(Restrictions.eq("cognome", "rossi"));
-//		List<Contatto> contatti = criteria.list();
+		return query.list();
 		
-		for (Contatto contatto : query.list()) {
-		//for (Contatto contatto : contatti) {
-			System.out.println("id : " + contatto.getId());
-			System.out.println("nome : " + contatto.getNome());
-			System.out.println("cognome : " + contatto.getCognome());
-			System.out.println("telefono : " + contatto.getTelefono());
-			System.out.println("email : " + contatto.getEmail());
+	}
+	
+	public static void insertInHDB(List<Contatto> contatti) {
+		
+		logger.debug("INIZIO");
+		
+		//Configuration opener 
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+				.addAnnotatedClass(Contatto.class); // Specification of object used
+		
+		//Session generator 
+		SessionFactory factory = configuration.buildSessionFactory();
+		System.out.println("Is it open? " + factory.isOpen());
+		
+		//Session opener
+		Session session = factory.openSession();	
+		
+		//Transaction opener
+		Transaction transaction = session.beginTransaction();
+		
+		//Example INSERT
+//		Contatto contatto = new Contatto();
+//		contatto.setNome("Marco");
+//		contatto.setCognome("Polo");
+//		contatto.setEmail("marco@polo.it");
+//		contatto.setTelefono("34553567");
+		
+		//Saving each contact
+		for (Contatto c : contatti) {
+			session.save(c);
 		}
+		
+		//Confirmation of insertion in DB	
+		transaction.commit();
+		
+		//Session Closer
+		session.close();
+		System.out.println("Is session open? " + session.isOpen());
+		factory.close();
+		
+		logger.debug("FINE");
+		
+	}
+	
+	public static void updateHDB(List<Contatto> contatti) {
+		
+logger.debug("INIZIO");
+		
+		//Configuration opener 
+		Configuration configuration = new Configuration();
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+				.addAnnotatedClass(Contatto.class); // Specification of object used
+		
+		//Session generator 
+		SessionFactory factory = configuration.buildSessionFactory();
+		System.out.println("Is it open? " + factory.isOpen());
+		
+		//Session opener
+		Session session = factory.openSession();	
 		
 		//Transaction opener
 		Transaction transaction = session.beginTransaction();
 		
 		//Example UPDATE
-//		Contatto contatto = session.get(Contatto.class, 1);
-//		System.out.println(contatto);
-//		contatto.setTelefono("432432421243");
-//		System.out.println(contatto);
+		Contatto contatto = session.get(Contatto.class, 1);
+		System.out.println(contatto);
+		contatto.setTelefono("432432421243");
+		System.out.println(contatto);
 		
-		//Example INSERT
-		Contatto contatto = new Contatto();
-		contatto.setNome("Fiorenza");
-		contatto.setCognome("Volpe");
-		contatto.setEmail("fiore@volpe.it");
-		contatto.setTelefono("34556616");
-
 		System.out.println("id : " + contatto.getId());
 		session.save(contatto);
 		System.out.println("id : " + contatto.getId());
-
-//		session.save(contatto);
 		
 		//Confirm of update in DB
 		transaction.commit();
@@ -87,15 +121,11 @@ public class HDBtools {
 		
 		//Session close
 		session.close();
-<<<<<<< HEAD
+
 		System.out.println("Is session open? " + session.isOpen());
 
-=======
-		System.out.println("session is open? " + session.isOpen());
-		
 		logger.debug("FINE");
->>>>>>> refs/remotes/origin/master
-	}
 
+	}
 	
 }

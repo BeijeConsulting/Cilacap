@@ -1,37 +1,40 @@
 package it.beije.cilacap.rubrica;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class JPDBtools {
 
-	public static void main(String[] args) {
-
+	public static List<Contatto> getContattoFromJPAHDB() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
-		EntityManager entityManager = factory.createEntityManager();
-	
-		//esempio SELECT
-//		Contatto contatto = entityManager.find(Contatto.class, 1);
-//		
-//		System.out.println(contatto);
+		EntityManager em = factory.createEntityManager();
 		
+		String jpql = "SELECT c FROM Contatto as c";
 		
-		//esempio INSERT
-		Contatto contatto = new Contatto();
-		contatto.setNome("Gianna");
-		contatto.setCognome("Nanni");
-		contatto.setEmail("gianna@nannino.it");
-		contatto.setTelefono("3455661634");
+		Query query = em.createQuery(jpql);
+		List<Contatto> contatti = query.getResultList();
 		
-		entityManager.getTransaction().begin();
-		System.out.println("contatto id : " + contatto.getId());
-		entityManager.persist(contatto);
-		System.out.println("contatto id : " + contatto.getId());
-		//entityManager.getTransaction().commit();
-		//entityManager.getTransaction().rollback();
-		
-		entityManager.close();
+		return contatti;
 	}
+	
+	public static void insertInJPAHDB(List<Contatto> contatti) {
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager em = factory.createEntityManager();
+		
+		em.getTransaction().begin();
+		
+		for (Contatto contatto : contatti) {
+			em.persist(contatto);
+		}
+			
+		em.getTransaction().commit();
 
+		em.close();
+		System.out.println("Is session open? " + factory.isOpen());
+	}
 }
