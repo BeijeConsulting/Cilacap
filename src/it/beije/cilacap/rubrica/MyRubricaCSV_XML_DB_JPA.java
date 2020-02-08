@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 
-public class MyRubricaJpa {
+public class MyRubricaCSV_XML_DB_JPA {
 
 	@SuppressWarnings("unchecked")
 	public static List<Contatto> leggiContatti() { // preleva da DB tutti i contatti. [Hibernate]
@@ -24,21 +24,20 @@ public class MyRubricaJpa {
 		return listaContatti;
 	}	
 	
-
 	public static void readFromDBWriteInCSV() throws Exception {
-		List<Contatto> listaContatti = MyRubricaJpa.leggiContatti();
-		Utility.esportaRubricaInCSV(Utility.choosePath(false), listaContatti);
+		List<Contatto> listaContatti = MyRubricaCSV_XML_DB_JPA.leggiContatti();
+		MyRubricaCSV_XML_General.esportaRubricaInCSV(Utility.choosePath(false), listaContatti);
 		System.out.println("### Scrittura In File CSV effettuata con Successo ! ! !");
 	}
 
 	public static void readFromDBWriteInXML() throws Exception {
-		List<Contatto> listaContatti = MyRubricaJpa.leggiContatti();
-		Utility.esportaRubricaInXML(Utility.choosePath(true), listaContatti);
+		List<Contatto> listaContatti = MyRubricaCSV_XML_DB_JPA.leggiContatti();
+		MyRubricaCSV_XML_General.esportaRubricaInXML(Utility.choosePath(true), listaContatti);
 		System.out.println("### Scrittura In File XML effettuata con Successo ! ! !");
 	}
 
 	public static void writeInDBFromCSV() throws Exception {
-		List<Contatto> listaContatti = Utility.caricaContattiDaCSV(Utility.choosePath(false));
+		List<Contatto> listaContatti = MyRubricaCSV_XML_General.caricaContattiDaCSV(Utility.choosePath(false));
 		// INSERT
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
 		EntityManager entityManager = factory.createEntityManager();
@@ -55,7 +54,7 @@ public class MyRubricaJpa {
 	}
 
 	public static void writeInDBFromXML() throws Exception {
-		List<Contatto> listaContatti = Utility.caricaContattiDaXML(Utility.choosePath(true));
+		List<Contatto> listaContatti = MyRubricaCSV_XML_General.caricaContattiDaXML(Utility.choosePath(true));
 
 		// INSERT
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
