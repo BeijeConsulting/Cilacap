@@ -15,7 +15,7 @@ public class MyRubricaCSV_XML_DB_JPA {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
 		EntityManager entityManager = factory.createEntityManager();
-
+	
 		// esempio query JPQL
 		String jpql = "SELECT c FROM Contatto as c";
 		Query query = entityManager.createQuery(jpql);
