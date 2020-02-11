@@ -2,15 +2,66 @@ package it.beije.cilacap.crystal;
 
 import java.util.ArrayList;
 
-public class TestRow {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="test_row")
+public class TestRow {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
+	
+	@Column(name="test_type")
 	private String type;
+	
+	@Column(name="q")
 	private int q;
+	
+	@Column(name="t")
 	private int t;
+	
+	@Column(name="mbs")
 	private double mbs;
+	
+	@Column(name="iops")
 	private double iops;
+	
+	@Column(name="us")
 	private double us;
 	
+	@Column(name="id_testdata")
+	private Integer id_testdata;
+	
+	@Column(name="mood_type")
+	private String mood_type;
+	
+	
+	
+	public Integer getId_testdata() {
+		return id_testdata;
+	}
+	public void setId_testdata(Integer id_testdata) {
+		this.id_testdata = id_testdata;
+	}
+	public String getMood_type() {
+		return mood_type;
+	}
+	public void setMood_type(String mood_type) {
+		this.mood_type = mood_type;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getType() {
 		return type;
 	}

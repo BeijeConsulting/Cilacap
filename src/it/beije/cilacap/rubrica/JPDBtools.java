@@ -18,7 +18,7 @@ public class JPDBtools {
 		
 		
 		//esempio INSERT
-		Contatto contatto = new Contatto();
+		Contatti contatto = new Contatti();
 		contatto.setNome("Gianna");
 		contatto.setCognome("Nanni");
 		contatto.setEmail("gianna@nannino.it");

@@ -10,8 +10,8 @@ import java.util.List;
 
 public class DBtools {
 
-	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
-		List<Contatto> contatti = new ArrayList<Contatto>();
+	public static List<Contatti> leggiContatti() throws ClassNotFoundException, SQLException {
+		List<Contatti> contatti = new ArrayList<Contatti>();
 		
 		Connection connection = null;
 		Statement stmt = null;
@@ -22,9 +22,9 @@ public class DBtools {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.rubrica");
 			
-			Contatto contatto = null;
+			Contatti contatto = null;
 			while (rs.next()) {
-				contatto = new Contatto();
+				contatto = new Contatti();
 				contatto.setId(rs.getInt("id"));
 	        	contatto.setNome(rs.getString("nome"));
 	        	contatto.setCognome(rs.getString("cognome"));
@@ -57,7 +57,7 @@ public class DBtools {
 		return contatti;
 	}
 	
-	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException {
+	public static boolean insertContatto(Contatti contatto) throws ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		boolean esito = false;

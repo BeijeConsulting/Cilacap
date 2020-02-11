@@ -23,7 +23,7 @@ public class HDBtools {
 		//inizializzo configurazione
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatti.class);
 //				.addAnnotatedClass(altra classe)
 		
 		//chiedo generatore di sessioni
@@ -64,7 +64,7 @@ public class HDBtools {
 //		System.out.println(contatto);
 		
 		//esempio INSERT
-		Contatto contatto = new Contatto();
+		Contatti contatto = new Contatti();
 		contatto.setNome("Fiorenza");
 		contatto.setCognome("Volpe");
 		contatto.setEmail("fiore@volpe.it");

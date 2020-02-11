@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -27,13 +30,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import it.beije.cilacap.esercizi.TextFileManager;
-import it.beije.cilacap.rubrica.Contatto;
+import it.beije.cilacap.rubrica.Contatti;
 
 public class DBtools {	
 	public static void main(String[] args) throws Exception {
-		ArrayList <Contatto> ListaContattiCaricati = new ArrayList<Contatto>();
-		List <Contatto> ListaContattiCaricatiXML = new ArrayList<Contatto>();
-		List <Contatto> LeggiContattiDB = new ArrayList<Contatto>();
+		ArrayList <Contatti> ListaContattiCaricati = new ArrayList<Contatti>();
+		List <Contatti> ListaContattiCaricatiXML = new ArrayList<Contatti>();
+		List <Contatti> LeggiContattiDB = new ArrayList<Contatti>();
 		ListaContattiCaricati = CaricareContattiCSV();
 		ListaContattiCaricatiXML = CaricaContattiXML();
 //		for(int i=0 ; i<ListaContattiCaricati.size();i++) {
@@ -44,16 +47,16 @@ public class DBtools {
 //			//insertContatto(ListaContattiCaricatiXML.get(i));
 //			InserimentoHibernate(ListaContattiCaricatiXML.get(i));
 //		}
-		LetturaHibernate();
+		LetturaJPA();
 //		LeggiContattiDB = leggiContattiDalDB();
 //		writeContattiInFile(LeggiContattiDB, "PathdelFIleXML");
 //		ScrivereContattiCsv(LeggiContattiDB);
 		
 		
 	}
-	public static List<Contatto> CaricaContattiXML() throws Exception {
+	public static List<Contatti> CaricaContattiXML() throws Exception {
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\EsCsv.xml");
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+		List<Contatti> listaContatti = new ArrayList<Contatti>();
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -78,7 +81,7 @@ public class DBtools {
         	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
         	Element email = (Element)utente.getElementsByTagName("email").item(0);
         	
-        	Contatto contatto = new Contatto();
+        	Contatti contatto = new Contatti();
         	contatto.setNome(nome.getTextContent());
         	contatto.setCognome(cognome.getTextContent());
         	contatto.setTelefono(telefono.getTextContent());
@@ -95,13 +98,13 @@ public class DBtools {
         return listaContatti;
 	}
 
-	public static ArrayList <Contatto> CaricareContattiCSV() throws IOException { 
+	public static ArrayList <Contatti> CaricareContattiCSV() throws IOException { 
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\EsCsv.csv");
 		List <String> FileCaricato = TextFileManager.readFileRows(file);
-		ArrayList <Contatto> ListaContattiCaricati = new ArrayList<Contatto>();
+		ArrayList <Contatti> ListaContattiCaricati = new ArrayList<Contatti>();
 		String[] split;
 		for(int i=1;i<FileCaricato.size();i++) {
-			Contatto appoggio = new Contatto();
+			Contatti appoggio = new Contatti();
 			split = FileCaricato.get(i).split(";");
 			for(int i1=0;i1<split.length;i1++) {
 				if(i1==0)
@@ -121,7 +124,7 @@ public class DBtools {
 		
 	}
 	
-	public static boolean insertContatto(Contatto contatto) throws ClassNotFoundException {
+	public static boolean insertContatto(Contatti contatto) throws ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		boolean esito = false;
@@ -152,8 +155,8 @@ public class DBtools {
 		}
 		return esito;
 	}
-	public static List<Contatto> leggiContattiDalDB() throws ClassNotFoundException, SQLException {
-		List<Contatto> contatti = new ArrayList<Contatto>();
+	public static List<Contatti> leggiContattiDalDB() throws ClassNotFoundException, SQLException {
+		List<Contatti> contatti = new ArrayList<Contatti>();
 		
 		Connection connection = null;
 		Statement stmt = null;
@@ -164,9 +167,9 @@ public class DBtools {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM cilacap.rubrica");
 			
-			Contatto contatto = null;
+			Contatti contatto = null;
 			while (rs.next()) {
-				contatto = new Contatto();
+				contatto = new Contatti();
 				contatto.setId(rs.getInt("id"));
 	        	contatto.setNome(rs.getString("nome"));
 	        	contatto.setCognome(rs.getString("cognome"));
@@ -199,7 +202,7 @@ public class DBtools {
 		return contatti;
 	}
 	
-	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception {
+	public static void writeContattiInFile(List<Contatti> contatti, String pathfile) throws Exception {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -208,7 +211,7 @@ public class DBtools {
         Element docElement = document.createElement("rubrica");
         document.appendChild(docElement);
         
-        for (Contatto c : contatti) {
+        for (Contatti c : contatti) {
         	Element contatto = document.createElement("contatto");
         	Element nome = document.createElement("nome");
         	Element cognome = document.createElement("cognome");
@@ -241,7 +244,7 @@ public class DBtools {
 
 		System.out.println("File saved!");
 	}
-	public static void ScrivereContattiCsv( List<Contatto> prova) throws IOException {
+	public static void ScrivereContattiCsv( List<Contatti> prova) throws IOException {
 		
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\EsCsv.csv");
 		TextFileManager we = new TextFileManager();
@@ -262,10 +265,10 @@ public class DBtools {
 		
 	}
 	
-	public static void InserimentoHibernate(Contatto contatto) {
+	public static void InserimentoHibernate(Contatti contatto) {
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatti.class);
 		
 		SessionFactory factory = configuration.buildSessionFactory();
 		
@@ -282,24 +285,35 @@ public class DBtools {
 	public static void LetturaHibernate() {
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(Contatti.class);
 		
 		SessionFactory factory = configuration.buildSessionFactory();
 		
 		Session session = factory.openSession();
 		
 		String hql = "SELECT c FROM Contatto as c";
-		Query<Contatto> query = session.createQuery(hql);
+		Query<Contatti> query = session.createQuery(hql);
 		
-		for (Contatto contatto : query.list()) {
+		for (Contatti contatto : query.list()) {
 			System.out.println(contatto);
-		}
+		}	
+	}
+	
+	public static void LetturaJPA() {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager entityManager = factory.createEntityManager();
 		
-		
-		
-		
+		Contatti contatto = entityManager.find(Contatti.class, 74);
+		System.out.println(contatto);
 	}
 	
 	
-	
+	public static void ScritturaJPA(Contatti contatto) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
+		EntityManager entityManager = factory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(contatto);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.beije.cilacap.esercizi.TextFileManager;
-import it.beije.cilacap.rubrica.Contatto;
+import it.beije.cilacap.rubrica.Contatti;
 import it.beije.cilacap.rubrica.ParserXML;
 
 public class EsercizioCSV {
@@ -26,8 +26,8 @@ public class EsercizioCSV {
 		
 	}
 
-	public ArrayList<Contatto> CreaFileCsv() {      //crea i dati da mettere nel csv
-		ArrayList<Contatto> prova = new ArrayList<>();
+	public ArrayList<Contatti> CreaFileCsv() {      //crea i dati da mettere nel csv
+		ArrayList<Contatti> prova = new ArrayList<>();
 		System.out.println("Inserisci dei dati");
 		String nome = new String();
 		String cognome = new String();
@@ -36,7 +36,7 @@ public class EsercizioCSV {
 		String continuare = new String();
 		Scanner sc = new Scanner(System.in);
 		while(!continuare.equalsIgnoreCase("N")){
-			Contatto contatto =  new Contatto();
+			Contatti contatto =  new Contatti();
 			while(nome.equals("")) {
 			System.out.println("Nome:");
 			nome= sc.nextLine();
@@ -70,7 +70,7 @@ public class EsercizioCSV {
 		}
 		return prova;
 	}
-	public void ScrivereContattiCsv( List<Contatto> prova) throws IOException { //Prendo l'array di contatti scritto in precedenza e li metto in un file csv
+	public void ScrivereContattiCsv( List<Contatti> prova) throws IOException { //Prendo l'array di contatti scritto in precedenza e li metto in un file csv
 		
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\EsCsv.csv");
 		TextFileManager we = new TextFileManager();
@@ -94,10 +94,10 @@ public class EsercizioCSV {
 	public void CaricareContatti() throws IOException { //riprendo il file csv che ho nel desktop e inserisco i contatti in un array
 		File file = new File("C:\\Users\\Padawan03\\Desktop\\EsCsv.csv");
 		List <String> FileCaricato = TextFileManager.readFileRows(file);
-		ArrayList <Contatto> ListaContattiCaricati = new ArrayList<Contatto>();
+		ArrayList <Contatti> ListaContattiCaricati = new ArrayList<Contatti>();
 		String[] split;
 		for(int i=1;i<FileCaricato.size();i++) {
-			Contatto appoggio = new Contatto();
+			Contatti appoggio = new Contatti();
 			split = FileCaricato.get(i).split(";");
 			for(int i1=0;i1<split.length;i1++) {
 				if(i1==0)
@@ -120,13 +120,13 @@ public class EsercizioCSV {
 	public void CreaFileXml() throws Exception {     //prendo l'arraylist di contatti che in precedenza ho popolato partendo dal file csv e ne creo uno xml
 		ParserXML xml = new ParserXML();
 		EsercizioCSV provaz = new EsercizioCSV();
-		List<Contatto> prova = provaz.CreaFileCsv(); 
+		List<Contatti> prova = provaz.CreaFileCsv(); 
 		xml.writeContattiInFile(prova,"C:\\Users\\Padawan03\\Desktop\\EsCsv.xml");	
 	}
 	
 	public void CreaCSVdaXML() throws Exception {   //prendo il file xml creato in precedenza e lo traduco in file csv
 		EsercizioCSV provaz = new EsercizioCSV();
-		List<Contatto> prova = new ArrayList<Contatto>();
+		List<Contatti> prova = new ArrayList<Contatti>();
 		ParserXML xml = new ParserXML();
 		prova= xml.getContattiFromFile("C:\\Users\\Padawan03\\Desktop\\EsCsv.xml");
 		provaz.ScrivereContattiCsv(prova);

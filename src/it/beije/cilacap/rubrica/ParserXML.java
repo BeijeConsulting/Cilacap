@@ -18,14 +18,14 @@ import org.w3c.dom.NodeList;
 
 public class ParserXML {
 
-	public static List<Contatto> getContattiFromFile(String pathfile) throws Exception {
+	public static List<Contatti> getContattiFromFile(String pathfile) throws Exception {
 		File file = new File(pathfile);
 		
 		return getContattiFromFile(file);
 	}
 
-	public static List<Contatto> getContattiFromFile(File file) throws Exception {
-		List<Contatto> listaContatti = new ArrayList<Contatto>();
+	public static List<Contatti> getContattiFromFile(File file) throws Exception {
+		List<Contatti> listaContatti = new ArrayList<Contatti>();
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -50,7 +50,7 @@ public class ParserXML {
         	Element telefono = (Element)utente.getElementsByTagName("telefono").item(0);
         	Element email = (Element)utente.getElementsByTagName("email").item(0);
         	
-        	Contatto contatto = new Contatto();
+        	Contatti contatto = new Contatti();
         	contatto.setNome(nome.getTextContent());
         	contatto.setCognome(cognome.getTextContent());
         	contatto.setTelefono(telefono.getTextContent());
@@ -67,7 +67,7 @@ public class ParserXML {
         return listaContatti;
 	}
 	
-	public static void writeContattiInFile(List<Contatto> contatti, String pathfile) throws Exception {
+	public static void writeContattiInFile(List<Contatti> contatti, String pathfile) throws Exception {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -76,7 +76,7 @@ public class ParserXML {
         Element docElement = document.createElement("rubrica");
         document.appendChild(docElement);
         
-        for (Contatto c : contatti) {
+        for (Contatti c : contatti) {
         	Element contatto = document.createElement("contatto");
         	Element nome = document.createElement("nome");
         	Element cognome = document.createElement("cognome");
@@ -111,7 +111,7 @@ public class ParserXML {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		List<Contatto> contatti = getContattiFromFile("xml/rubrica.xml");
+		List<Contatti> contatti = getContattiFromFile("xml/rubrica.xml");
 		writeContattiInFile(contatti, "xml/rubrica-copia.xml");
 	}
 

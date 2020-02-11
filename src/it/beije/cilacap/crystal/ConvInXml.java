@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,8 +31,10 @@ public class ConvInXml {
 		ArrayList<String> RigaPerRiga = new ArrayList<>(); 
 		RigaPerRiga = RiuoviCarattereStrano(file);
 		testData=testData.Popola(RigaPerRiga);
-		testData.InserisciInDB(testData);
-		testData.InserisciReadWrite(testData);
+		
+		InserisciConJPA(testData);
+		//testData.InserisciInDB(testData);
+		//testData.InserisciReadWrite(testData);
 		
 		//CreaXml(testData);
 		
@@ -148,11 +153,29 @@ public class ConvInXml {
 		
 	}
 	
-	public static void CreaXMLdaDB() {
+	public static void InserisciConJPA(TestData testdata) {
 		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapCrystal");
+		EntityManager entityManager = factory.createEntityManager();
 		
+		entityManager.getTransaction().begin();
+		entityManager.persist(testdata);
+		int id = testdata.getId();
+		for(int i=0;i<testdata.getRead().size();i++) {
+			testdata.getRead().get(i).setMood_type("r");
+			testdata.getRead().get(i).setId_testdata(id);
+			entityManager.persist(testdata.getRead().get(i));
+		}
+		for(int i=0;i<testdata.getWrite().size();i++) {
+			testdata.getWrite().get(i).setMood_type("w");
+			testdata.getWrite().get(i).setId_testdata(id);
+			entityManager.persist(testdata.getWrite().get(i));
+		}
+		entityManager.getTransaction().commit();
 		
-		
+		entityManager.close();
+		System.out.println("bella");
+	
 	}
 
 }
