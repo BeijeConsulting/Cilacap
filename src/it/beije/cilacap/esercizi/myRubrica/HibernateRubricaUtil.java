@@ -28,6 +28,8 @@ public class HibernateRubricaUtil {
 		String hql = "SELECT c FROM Contatto as c";
 		Query<Contatto2> query = session.createQuery(hql);
 		System.out.println(query.list().size());
+		
+		session.close();
 		return query.list();
 	}
 	

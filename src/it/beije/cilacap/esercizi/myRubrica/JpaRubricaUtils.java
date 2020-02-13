@@ -9,7 +9,7 @@ public class JpaRubricaUtils {
 	// read from DB with JPA
 	public static void writeJPAListOfContactsIntoDB(List<Contatto2> lista) {
 
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
 		EntityManager entityManager = factory.createEntityManager();
 
 		for(Contatto2 contatto : lista) {
@@ -28,7 +28,7 @@ public class JpaRubricaUtils {
 		
 		List<Contatto2> lista = new ArrayList<Contatto2>();
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Cilacap");
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CilacapUnit");
 		EntityManager entityManager = factory.createEntityManager();
 		
 		String jpql = "SELECT c FROM Contatto as c";

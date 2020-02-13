@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	
-	<persistence-unit name="Cilacap" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="CilacapUnit" transaction-type="RESOURCE_LOCAL">
 		<class>it.beije.cilacap.myRubrica.Contatto2</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -10,17 +10,4 @@
 			<property name="javax.persistence.jdbc.user" value="root"/>
 		</properties>
 	</persistence-unit>
-	
-	<persistence-unit name="CilacapCrystal" transaction-type="RESOURCE_LOCAL">
-		<class>it.beije.cilacap.myCrystal.TestRow</class>
-		<class>it.beije.cilacap.myCrystal.TestData</class>
-		
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cilacap?serverTimezone=CET"/>
-			<property name="javax.persistence.jdbc.password" value="Beije04"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
-		</properties>
-	</persistence-unit>
-	
 </persistence>
