@@ -8,6 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 public class DBtools {
 
 	public static List<Contatto> leggiContatti() throws ClassNotFoundException, SQLException {
@@ -65,20 +70,15 @@ public class DBtools {
 		try {
 			connection = DBManager.getMySqlConnection(DBManager.DB_URL, DBManager.DB_USER, DBManager.DB_PASSWORD);
 			
-//			StringBuilder insert = new StringBuilder("INSERT into cilacap.rubrica VALUES (null,")
-//					.append('\'').append(contatto.getNome()).append("\',")
-//					.append('\'').append(contatto.getCognome()).append("\',")
-//					.append('\'').append(contatto.getTelefono()).append("\',")
-//					.append('\'').append(contatto.getEmail()).append('t').append("\')");
-//			System.out.println(insert.toString());
-			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
-			pstmt.setString(1, contatto.getNome());
-			pstmt.setString(2, contatto.getCognome());
-			pstmt.setString(3, contatto.getTelefono());
-			pstmt.setString(4, contatto.getEmail());
 			
-			esito = pstmt.execute();
-			System.out.println(pstmt.getUpdateCount());
+//			pstmt = connection.prepareStatement("INSERT into cilacap.rubrica (nome,cognome,telefono,email) VALUES (?,?,?,?)");
+//			pstmt.setString(1, contatto.getNome());
+//			pstmt.setString(2, contatto.getCognome());
+//			pstmt.setString(3, contatto.getTelefono());
+//			pstmt.setString(4, contatto.getEmail());
+//			
+//			esito = pstmt.execute();
+//			System.out.println(pstmt.getUpdateCount());
 			
 			//pstmt.executeUpdate();
 			
