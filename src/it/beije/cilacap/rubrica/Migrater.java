@@ -55,5 +55,9 @@ public class Migrater {
 	public static void fromXMLtoHDB(File f) throws Exception {
 		ParserHDB.writeContattiInHDB(ParserXML.getContattiFromFile(f));
 	}
+	
+	public static void fromXMLtoJPDB(File f) throws Exception {
+		ParserJPDB.writeContattiInJPDB(ParserXML.getContattiFromFile(f));
+	}
 
 }
