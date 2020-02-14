@@ -23,11 +23,17 @@ public class DBManager {
 	public static Configuration getHibernateConfiguration() {
 		
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure().addAnnotatedClass(TestData.class);
+		configuration = configuration.configure().addAnnotatedClass(TestData.class).addAnnotatedClass(TestRow.class);
 		
 		return configuration;
 	}
-
+//public static Configuration getHibernateConfigurationTestRow() {
+//		
+//		Configuration configuration = new Configuration();
+//		configuration = configuration.configure().addAnnotatedClass(TestRow.class);
+//		
+//		return configuration;
+//	}
 
 
 }

@@ -81,6 +81,7 @@ public class ReadCrystal {
 
 			}
 		}
+		
 		return info;
 	}
 
@@ -155,13 +156,13 @@ public class ReadCrystal {
 										break;
 										
 					case "Random":
-										raccoltaDatiRead.setType(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+ createWord(riga[j]).substring(1));
+										raccoltaDatiRead.setype(createWord(riga[j])+ "_"+createWord(riga[++j]).charAt(0)+ createWord(riga[j]).substring(1));
 //										System.out.println(raccoltaDatiRead.getType());
 										break;
 					default: break;
 					}
 				}
-			
+				raccoltaDatiRead.setIdTestData(info.getIdComputer());
 				if(!(raccoltaDatiRead.getType()==null))
 				listaDati.add(raccoltaDatiRead);
 			

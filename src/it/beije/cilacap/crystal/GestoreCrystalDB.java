@@ -24,10 +24,16 @@ public class GestoreCrystalDB {
 		System.out.println("1-inserire testdata da file in db JDBC");
 		System.out.println("2- inserire testdata da xml in db JDBC");
 		System.out.println("3- export db  a xml con JDBC \n");
+		
 		System.out.println("Utilizzando HIBERNATE:");
 		System.out.println("4-inserire testdata da file in db HIBERNATE");
 		System.out.println("5-inserire testdata da xml in db HIBERNATE");
-		System.out.println("6- export db a xml con HIBERNATE");
+		System.out.println("6- export db a xml con HIBERNATE \n");
+		
+		System.out.println("Utilizzando JPA:");
+		System.out.println("7-inserire testdata da file in db JPA");
+		System.out.println("8-inserire testdata da xml in db JPA");
+		System.out.println("9- export db a xml con JPA");
 
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
@@ -76,7 +82,36 @@ public class GestoreCrystalDB {
 			DBtools.scriviTestDataHibernate(testDataCrystal);
 			// DBtools.scriviTestDataHibernate(testData);
 			break;
+		
+		case 6: 
+			System.out.println(DBtools.leggiTestDataHibernate().size());
+			testDataCrystal=DBtools.leggiTestDataHibernate().get(0);
+			createXML(testDataCrystal);
+			break;
 			
+		case 7:
+
+			contenutoCrystal = ReadCrystal.readFileRows(fileCrystalCSV);
+
+			testDataCrystal = ReadCrystal.getTestData(contenutoCrystal);
+
+			testDataCrystal
+					.setIdComputer(fileCrystalCSV.getPath().substring(15, fileCrystalCSV.getPath().length() - 4));
+
+			DBtools.insertTestDataJPA(testDataCrystal);
+			break;
+
+		case 8:
+			testDataCrystal = getTestDataFromFileXML(fileCrystalXML);
+			DBtools.insertTestDataJPA(testDataCrystal);
+			// DBtools.scriviTestDataHibernate(testData);
+			break;
+
+		case 9:
+			testDataCrystal = DBtools.leggiTestDataJDBC();
+			createXML(testDataCrystal);
+
+			break;
 
 		}
 	}

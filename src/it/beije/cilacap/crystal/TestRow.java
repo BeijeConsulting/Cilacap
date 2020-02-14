@@ -17,6 +17,9 @@ public class TestRow {
 	@Column(name = "id")
 	private int id;
 
+	@Column(name="mode_type")
+	private String modeType;
+	
 	@Column(name = "test_type")
 	private String type;
 
@@ -25,6 +28,14 @@ public class TestRow {
 
 	@Column(name = "t")
 	private int t;
+
+	public String getModeType() {
+		return modeType;
+	}
+
+	public void setModeType(String modeType) {
+		this.modeType = modeType;
+	}
 
 	@Column(name = "mbs")
 	private double mbs;

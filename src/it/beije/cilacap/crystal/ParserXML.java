@@ -170,10 +170,10 @@ public class ParserXML {
 //    		System.out.println(r.getType());
 //    		System.out.println(r.getType()=="Sequential_1MIb");
 
-			if (r.getType() == null) {
-				continue CICLO;
-			}
-			if (r.getType().equalsIgnoreCase("Sequential_1MIB")) {
+//			if (r.getModeType()== null) {
+//				continue CICLO;
+//			}
+			if (r.getModeType().equalsIgnoreCase("Sequential_1MIB")) {
 				Element sequential = document.createElement("Sequential_1MiB");
 				sequential.setAttribute("q", Integer.toString(r.getQ()));
 				sequential.setAttribute("t", Integer.toString(r.getT()));
@@ -191,7 +191,7 @@ public class ParserXML {
 				read.appendChild(sequential);
 
 			}
-			if (r.getType().equalsIgnoreCase("Random_4Kib")) {
+			if (r.getModeType().equalsIgnoreCase("Random_4Kib")) {
 				Element random = document.createElement("Random_4KiB");
 				random.setAttribute("q", Integer.toString(r.getQ()));
 				random.setAttribute("t", Integer.toString(r.getT()));
@@ -220,7 +220,7 @@ public class ParserXML {
 //    		if(r.getType()==null){
 //    			continue CICLO ;
 //    		}
-			if (r.getType().equalsIgnoreCase("Sequential_1MIB")) {
+			if (r.getModeType().equalsIgnoreCase("Sequential_1MIB")) {
 				Element sequential = document.createElement("Sequential_1MiB");
 				sequential.setAttribute("q", Integer.toString(r.getQ()));
 				sequential.setAttribute("t", Integer.toString(r.getT()));
@@ -238,7 +238,7 @@ public class ParserXML {
 				write.appendChild(sequential);
 
 			}
-			if (r.getType().equalsIgnoreCase("Random_4Kib")) {
+			if (r.getModeType().equalsIgnoreCase("Random_4Kib")) {
 				Element random = document.createElement("Random_4KiB");
 				random.setAttribute("q", Integer.toString(r.getQ()));
 				random.setAttribute("t", Integer.toString(r.getT()));
