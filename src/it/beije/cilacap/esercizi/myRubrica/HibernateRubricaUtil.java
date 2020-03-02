@@ -25,7 +25,7 @@ public class HibernateRubricaUtil {
 		System.out.println("session is open? " + session.isOpen());
 
 		//esempio query HQL
-		String hql = "SELECT c FROM Contatto as c";
+		String hql = "SELECT c FROM Contatto2 as c";
 		Query<Contatto2> query = session.createQuery(hql);
 		System.out.println(query.list().size());
 		
