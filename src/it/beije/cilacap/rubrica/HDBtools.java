@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Criteria;
+//import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
+//import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
 
@@ -23,7 +23,7 @@ public class HDBtools {
 		
 		//Configuration opener 
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg3.xml")
 				.addAnnotatedClass(Contatto.class); // Specification of the used object
 		
 		//Session generator 
@@ -35,6 +35,8 @@ public class HDBtools {
 		
 		//Creation of the string with command in HQL dialect
 		String hql = "SELECT c FROM Contatto as c";
+		
+		//Query creation
 		Query<Contatto> query = session.createQuery(hql);
 		
 		return query.list();
@@ -47,7 +49,7 @@ public class HDBtools {
 		
 		//Configuration opener 
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg3.xml")
 				.addAnnotatedClass(Contatto.class); // Specification of object used
 		
 		//Session generator 
@@ -61,16 +63,17 @@ public class HDBtools {
 		Transaction transaction = session.beginTransaction();
 		
 		//Example INSERT
-//		Contatto contatto = new Contatto();
-//		contatto.setNome("Marco");
-//		contatto.setCognome("Polo");
-//		contatto.setEmail("marco@polo.it");
-//		contatto.setTelefono("34553567");
+		Contatto contatto = new Contatto();
+		contatto.setNome("Marco");
+		contatto.setCognome("Polo");
+		contatto.setEmail("marco@polo.it");
+		contatto.setTelefono("34553567");
+		session.save(contatto);
 		
 		//Saving each contact
-		for (Contatto c : contatti) {
-			session.save(c);
-		}
+//		for (Contatto c : contatti) {
+//			session.save(c);
+//		}
 		
 		//Confirmation of insertion in DB	
 		transaction.commit();
@@ -86,11 +89,11 @@ public class HDBtools {
 	
 	public static void updateHDB(List<Contatto> contatti) {
 		
-logger.debug("INIZIO");
+		logger.debug("INIZIO");
 		
 		//Configuration opener 
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg.xml")
+		configuration = configuration.configure("it/beije/cilacap/rubrica/hibernate.cfg3.xml")
 				.addAnnotatedClass(Contatto.class); // Specification of object used
 		
 		//Session generator 
@@ -104,14 +107,12 @@ logger.debug("INIZIO");
 		Transaction transaction = session.beginTransaction();
 		
 		//Example UPDATE
-		Contatto contatto = session.get(Contatto.class, 1);
+		Contatto contatto = session.get(Contatto.class, 3);
 		System.out.println(contatto);
-		contatto.setTelefono("432432421243");
+		contatto.setTelefono("777777777");
 		System.out.println(contatto);
-		
-		System.out.println("id : " + contatto.getId());
 		session.save(contatto);
-		System.out.println("id : " + contatto.getId());
+		
 		
 		//Confirm of update in DB
 		transaction.commit();
