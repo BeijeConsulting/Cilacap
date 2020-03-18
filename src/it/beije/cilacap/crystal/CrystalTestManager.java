@@ -3,11 +3,14 @@ package it.beije.cilacap.crystal;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOError;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,9 @@ import org.w3c.dom.NodeList;
 
 
 public class CrystalTestManager {
+	
+
+	
 	public static final char[] CARATTERI_AMMESSI = {'A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i',
 													'J','j','K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r'
 													,'S','s','T','t','U','u','V','v','W','w','X','x','Y','y','Z','z',
@@ -416,7 +422,6 @@ public class CrystalTestManager {
 		Criteria criteria = session.createCriteria(TestData.class);
 		
 		List<TestData> tests = criteria.list();
-		
 		for (TestData test : tests) {
 
 			Criteria criteriaRowRead = session.createCriteria(TestRow.class);
