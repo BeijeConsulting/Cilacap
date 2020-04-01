@@ -45,9 +45,9 @@ public class JpaRubricaUtils {
 	
 	public static void main(String[] args) throws Exception {
 		
-		readJPAListOfContactsFromDB();
+		System.out.println(readJPAListOfContactsFromDB().size());
 		
-		writeJPAListOfContactsIntoDB(ParserXML.getContattiFromFile("C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.xml"));
+		//writeJPAListOfContactsIntoDB(ParserXML.getContattiFromFile("C:\\Users\\Padawan04\\Desktop\\LaMiaRubrica.xml"));
 		
 	}
 
